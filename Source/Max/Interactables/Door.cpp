@@ -12,9 +12,11 @@ ADoor::ADoor()
 
 	//creating the collider/object for a door
 	DoorCollider = CreateAbstractDefaultSubobject<UBoxComponent>(TEXT("DoorCollider"));
+	RootComponent = DoorCollider;
 
 	//creating a mesh component for the door (model)
 	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DoorMesh"));
+	DoorMesh->AttachTo(RootComponent);
 
 }
 
