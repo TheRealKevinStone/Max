@@ -20,9 +20,9 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
-	UFUNCTION(BlueprintNativeEvent,Category=Projectile)
-	void Collision(AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector
-			NormalImpulse, const FHitResult& Hit);
+	//UFUNCTION(BlueprintNativeEvent,Category=Projectile)
+	//void Collision(AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector
+	//		NormalImpulse, const FHitResult& Hit);
 
 	void SetEnemyThatShot(AActor* EnemyThatShot);
 

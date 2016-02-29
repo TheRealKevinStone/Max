@@ -12,7 +12,7 @@ ABaseProjectile::ABaseProjectile()
 
 	ColliderSphere = CreateDefaultSubobject<USphereComponent>(TEXT("ColliderSphere"));
 	RootComponent = ColliderSphere;
-	ColliderSphere->OnComponentHit.AddDynamic(this, &ABaseProjectile::Collision);
+	//ColliderSphere->OnComponentHit.AddDynamic(this, &ABaseProjectile::Collision);
 	Damage = 1;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
@@ -35,9 +35,13 @@ void ABaseProjectile::Tick( float DeltaTime )
 
 }
 
-void ABaseProjectile::Collision(AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector
-	NormalImpulse, const FHitResult& Hit)
-{
-	Destroy();
-}
+//void ABaseProjectile::Collision(AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector
+//	NormalImpulse, const FHitResult& Hit)
+//{
+//	Destroy();
+//}
 
+void ABaseProjectile::SetEnemyThatShot(AActor* EnemyThatShot)
+{
+
+}
