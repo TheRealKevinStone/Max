@@ -26,6 +26,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UBoxComponent* DoorCollider;
 
+	//mesh
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* DoorMesh;
 
