@@ -11,37 +11,39 @@ ABaseProjectile::ABaseProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 
 	ColliderSphere = CreateDefaultSubobject<USphereComponent>(TEXT("ColliderSphere"));
+	ColliderSphere->BodyInstance.SetCollisionProfileName("Projectile");
+	ColliderSphere->SetWalkableSlopeOverride(FWalkableSlopeOverride(WalkableSlope_Unwalkable, 0.f));
+	ColliderSphere->CanCharacterStepUpOn = ECB_No;
+
 	RootComponent = ColliderSphere;
-	//ColliderSphere->OnComponentHit.AddDynamic(this, &ABaseProjectile::Collision);
 	Damage = 1;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->AttachTo(RootComponent);
 
+	ProjectileComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
+	ProjectileComp->UpdatedComponent = ColliderSphere;
+	ProjectileComp->InitialSpeed = 1200.f;
+	ProjectileComp->MaxSpeed = 1200.f;
+	ProjectileComp->bRotationFollowsVelocity = true;
+	ProjectileComp->bShouldBounce = false;
+
+	OnActorBeginOverlap.AddDynamic(this, &ABaseProjectile::OnActorOverlap);
+
+	InitialLifeSpan = 10.f;
 
 }
 
-// Called when the game starts or when spawned
-void ABaseProjectile::BeginPlay()
+void ABaseProjectile::OnActorOverlap(AActor * OtherActor)
 {
-	Super::BeginPlay();
-	
+	if (OtherActor != GetOwner())
+	{
+		//Appply Damage
+		//Cast to player
+		//Add knockback
+		//Add sounds
+		this->Destroy();
+		GEngine->AddOnScreenDebugMessage(0, 2.f, FColor::Black, FString(TEXT("Collision")));
+	}
 }
 
-// Called every frame
-void ABaseProjectile::Tick( float DeltaTime )
-{
-	Super::Tick( DeltaTime );
-
-}
-
-//void ABaseProjectile::Collision(AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector
-//	NormalImpulse, const FHitResult& Hit)
-//{
-//	Destroy();
-//}
-
-void ABaseProjectile::SetEnemyThatShot(AActor* EnemyThatShot)
-{
-
-}

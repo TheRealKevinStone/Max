@@ -4,6 +4,7 @@
 
 #include "GameFramework/Character.h"
 #include "BehaviorTree/BehaviorTree.h"
+#include "AI_Weapons/BaseProjectile.h"
 #include "BanditCharacter.generated.h"
 
 UCLASS()
@@ -22,10 +23,17 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
+	UFUNCTION(BlueprintCallable,Category="BaseBandit")
+	void FireProjectile();
+
 public:
 	UPROPERTY(EditDefaultsOnly)
-		UBehaviorTree* BehaviorTree;
+	UBehaviorTree* BehaviorTree;
 
-	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USceneComponent* ProjectilePoint;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<ABaseProjectile> ProjectileClass;
 	
 };

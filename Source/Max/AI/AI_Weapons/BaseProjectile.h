@@ -14,17 +14,13 @@ public:
 	// Sets default values for this actor's properties
 	ABaseProjectile();
 
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	
-	// Called every frame
-	virtual void Tick( float DeltaSeconds ) override;
 
-	//UFUNCTION(BlueprintNativeEvent,Category=Projectile)
-	//void Collision(AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector
-	//		NormalImpulse, const FHitResult& Hit);
+	UPROPERTY(EditDefaultsOnly)
+	UProjectileMovementComponent* ProjectileComp;
 
-	void SetEnemyThatShot(AActor* EnemyThatShot);
+	UFUNCTION(BlueprintCallable,Category="Projectile")
+	virtual void OnActorOverlap(AActor* OtherActor);
+
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
@@ -39,6 +35,9 @@ public:
 	USphereComponent* ColliderSphere;
 
 	AActor* EnemyThatShot;
+
+private:
+	float Speed;
 
 
 
