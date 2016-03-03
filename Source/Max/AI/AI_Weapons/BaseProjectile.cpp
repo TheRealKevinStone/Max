@@ -31,6 +31,7 @@ ABaseProjectile::ABaseProjectile()
 	OnActorBeginOverlap.AddDynamic(this, &ABaseProjectile::OnActorOverlap);
 
 	InitialLifeSpan = 10.f;
+	SetActorEnableCollision(true);
 
 }
 
@@ -43,7 +44,6 @@ void ABaseProjectile::OnActorOverlap(AActor * OtherActor)
 		//Add knockback
 		//Add sounds
 		this->Destroy();
-		GEngine->AddOnScreenDebugMessage(0, 2.f, FColor::Black, FString(TEXT("Collision")));
 	}
 }
 

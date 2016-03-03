@@ -4,6 +4,7 @@
 
 #include "AIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
+#include "Navigation/JumpPathComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BanditController.generated.h"
 
@@ -16,7 +17,7 @@ class MAX_API ABanditController : public AAIController
 	GENERATED_BODY()
 	
 public:
-	ABanditController();
+	ABanditController(/*const FObjectInitializer& ObjectInitializer*/);
 	virtual void Possess(APawn* Pawn)override;
 
 protected:

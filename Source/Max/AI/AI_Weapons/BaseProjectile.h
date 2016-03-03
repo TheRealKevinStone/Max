@@ -18,13 +18,13 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	UProjectileMovementComponent* ProjectileComp;
 
-	UFUNCTION(BlueprintCallable,Category="Projectile")
+	UFUNCTION()
 	virtual void OnActorOverlap(AActor* OtherActor);
 
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
-		float Damage;
+	float Damage;
 
 	FVector forward;
 

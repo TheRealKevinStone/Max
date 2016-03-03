@@ -4,7 +4,8 @@
 #include "BanditCharacter.h"
 #include "BanditController.h"
 
-ABanditController::ABanditController()
+ABanditController::ABanditController(/*const FObjectInitializer& ObjectInitializer*/)
+	//:Super(ObjectInitializer.SetDefaultSubobjectClass<UJumpPathComponent>(TEXT("PathFollowingComponent")))
 {
 	BehaviorTreeComp = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorTreeComp"));
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
