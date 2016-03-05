@@ -3,3 +3,5 @@
 #include "Max.h"
 
 IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, Max, "Max" );
+
+DEFINE_LOG_CATEGORY(LogMax)
