@@ -11,6 +11,9 @@ ABanditController::ABanditController(const FObjectInitializer& ObjectInitializer
 	BehaviorTreeComp = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorTreeComp"));
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
 
+	PawnSensing = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSenseingComp"));
+
+
 }
 
 void ABanditController::Possess(APawn* Pawn)
@@ -24,5 +27,14 @@ void ABanditController::Possess(APawn* Pawn)
 		BlackboardComp->InitializeBlackboard(*Bandit->BehaviorTree->BlackboardAsset);
 		BehaviorTreeComp->StartTree(*Bandit->BehaviorTree);
 	}
+
+	if (PawnSensing)
+	{
+		PawnSensing->OnSeePawn.AddDynamic(this, &ABanditController::OnSeenPlayer);
+	}
 }
 
+void ABanditController::OnSeenPlayer(APawn* Player)
+{
+
+}

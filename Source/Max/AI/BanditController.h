@@ -5,6 +5,7 @@
 #include "AIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Perception/PawnSensingComponent.h"
 #include "BanditController.generated.h"
 
 /**
@@ -25,5 +26,13 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	UBlackboardComponent* BlackboardComp;
+
+	UPROPERTY(VisibleAnywhere)
+	UPawnSensingComponent* PawnSensing;
+
+	UFUNCTION()
+	void OnSeenPlayer(APawn* Player);
 	
+	
+
 };
