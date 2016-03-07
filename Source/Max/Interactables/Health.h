@@ -3,16 +3,16 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include "Currency.generated.h"
+#include "Health.generated.h"
 
 UCLASS()
-class MAX_API ACurrency : public AActor
+class MAX_API AHealth : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ACurrency();
+	AHealth();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -20,9 +20,9 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
-	//value for the pickup. default for now at 100
+	//how much health you'll get
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	uint8 CurrencyVal = 100;
+	float HealthValue = 15.f;
 
 	//axis rotations (for effect)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -33,29 +33,27 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float ZAxisRotate;
-	
 
 protected:
 
-	//money pickup sfx
+	//used to play the pickup sound when collected
 	UPROPERTY(EditAnywhere, Category = Sound)
-		USoundCue* CurrencySFX;
+		USoundCue* HealthSFX;
 
-	//collider for currency pick up
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		USphereComponent* CurrencyCollider;
+		USphereComponent* HealthCollider;
 
-	//mesh for currency pick up
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UStaticMeshComponent* CurrencyMesh;
+		UStaticMeshComponent* HealthMesh;
 
 protected:
 
 	//when an actor overlaps with this one (will be player)
 	//UFUNCTION()
 	//virtual void OnOverLap(class AActor* OtherActor);
-	
+
 	//UFUNCTION(BlueprintImplementableEvent, Category = Drop, meta = (DisplayName = "Apply to Player")) 
 	//void Event_ApplyToPlayer(AMax* Max);
 
+	
 };

@@ -3,16 +3,16 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include "Currency.generated.h"
+#include "Mana.generated.h"
 
 UCLASS()
-class MAX_API ACurrency : public AActor
+class MAX_API AMana : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ACurrency();
+	AMana();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -20,42 +20,30 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
-	//value for the pickup. default for now at 100
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	uint8 CurrencyVal = 100;
-
-	//axis rotations (for effect)
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float XAxisRotate;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float YAxisRotate;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float ZAxisRotate;
-	
+		float ManaValue = 15.f;
 
 protected:
 
-	//money pickup sfx
-	UPROPERTY(EditAnywhere, Category = Sound)
-		USoundCue* CurrencySFX;
+	//Mana pickup SFX
+	UPROPERTY(EditANywhere, Category = Sound)
+		USoundCue* ManaSFX;
 
 	//collider for currency pick up
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		USphereComponent* CurrencyCollider;
+		USphereComponent* ManaCollider;
 
 	//mesh for currency pick up
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UStaticMeshComponent* CurrencyMesh;
+		UStaticMeshComponent* ManaMesh;
 
 protected:
-
+	
 	//when an actor overlaps with this one (will be player)
 	//UFUNCTION()
 	//virtual void OnOverLap(class AActor* OtherActor);
-	
+
 	//UFUNCTION(BlueprintImplementableEvent, Category = Drop, meta = (DisplayName = "Apply to Player")) 
 	//void Event_ApplyToPlayer(AMax* Max);
-
+	
 };

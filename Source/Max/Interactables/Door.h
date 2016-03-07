@@ -21,6 +21,12 @@ public:
 	virtual void Tick( float DeltaSeconds ) override;
 
 protected:
+
+	UPROPERTY(EditAnywhere, Category = Sound)
+		USoundCue* DoorOpenSFX;
+
+	UPROPERTY(EditAnywhere, Category = Sound)
+		USoundCue* DoorClosedSFX;
 	
 	//collider
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -30,6 +36,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* DoorMesh;
 
-	
+protected:
+	//when an actor overlaps with this one (will be player)
+	//UFUNCTION()
+	//virtual void OnOverLap(class AActor* OtherActor);
+
+	//UFUNCTION(BlueprintImplementableEvent, Category = Drop, meta = (DisplayName = "Apply to Player")) 
+	//void Event_ApplyToPlayer(AMax* Max);
 	
 };

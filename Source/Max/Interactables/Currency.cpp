@@ -66,3 +66,11 @@ void ACurrency::Tick( float DeltaTime )
 	CurrencyCollider->AddRelativeRotation(FRotator(XAxisRotate, YAxisRotate, ZAxisRotate), true, false);
 
 }
+
+//void AHealth::OnOverLap(class AActor* OtherActor)
+//{
+	//if (CurrencySFX)
+	//{
+		//UGameplayStatics::PlaySoundAtLocation(this, CurrencySFX, GetActorLocation(), 1, 1);
+	//}
+//}
