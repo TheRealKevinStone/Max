@@ -33,11 +33,11 @@ void AHealth::Tick( float DeltaTime )
 
 }
 
-//void AHealth::OnOverLap(class AActor* OtherActor)
-//{
+void AHealth::OnOverLap(class AActor* OtherActor)
+{
 	//if (HealthSFX)
 	//{
 		//UGameplayStatics::PlaySoundAtLocation(this, HealthSFX, GetActorLocation(), 1, 1);
 	//}
-//}
+}
 
