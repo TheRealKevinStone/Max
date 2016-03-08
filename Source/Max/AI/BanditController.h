@@ -5,6 +5,7 @@
 #include "AIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Perception/PawnSensingComponent.h"
 #include "BanditController.generated.h"
 
 /**
@@ -16,7 +17,7 @@ class MAX_API ABanditController : public AAIController
 	GENERATED_BODY()
 	
 public:
-	ABanditController();
+	ABanditController(const FObjectInitializer& ObjectInitializer);
 	virtual void Possess(APawn* Pawn)override;
 
 protected:
@@ -25,5 +26,13 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	UBlackboardComponent* BlackboardComp;
+
+	UPROPERTY(VisibleAnywhere)
+	UPawnSensingComponent* PawnSensing;
+
+	UFUNCTION()
+	void OnSeenPlayer(APawn* Player);
 	
+	
+
 };

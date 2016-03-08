@@ -12,8 +12,7 @@ UCLASS()
 class MAX_API AMaxGameMode : public AGameMode
 {
 	GENERATED_BODY()
-	
-	
-	
-	
+
+public:
+	AMaxGameMode();
 };

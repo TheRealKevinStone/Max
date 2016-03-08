@@ -2,12 +2,17 @@
 
 #include "Max.h"
 #include "BanditCharacter.h"
+#include "Navigation/JumpPathComponent.h"
 #include "BanditController.h"
 
-ABanditController::ABanditController()
+ABanditController::ABanditController(const FObjectInitializer& ObjectInitializer)
+	:Super(ObjectInitializer.SetDefaultSubobjectClass<UJumpPathComponent>(TEXT("PathFollowingComponent")))
 {
 	BehaviorTreeComp = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorTreeComp"));
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
+
+	PawnSensing = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSenseingComp"));
+
 
 }
 
@@ -22,5 +27,14 @@ void ABanditController::Possess(APawn* Pawn)
 		BlackboardComp->InitializeBlackboard(*Bandit->BehaviorTree->BlackboardAsset);
 		BehaviorTreeComp->StartTree(*Bandit->BehaviorTree);
 	}
+
+	if (PawnSensing)
+	{
+		PawnSensing->OnSeePawn.AddDynamic(this, &ABanditController::OnSeenPlayer);
+	}
 }
 
+void ABanditController::OnSeenPlayer(APawn* Player)
+{
+
+}
