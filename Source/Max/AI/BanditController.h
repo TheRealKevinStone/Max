@@ -34,5 +34,10 @@ protected:
 	void OnSeenPlayer(APawn* Player);
 	
 	
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float SightRange;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName PlayerKeyName;
 };

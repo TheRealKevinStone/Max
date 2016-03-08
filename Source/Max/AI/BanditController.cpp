@@ -2,6 +2,7 @@
 
 #include "Max.h"
 #include "BanditCharacter.h"
+#include "CharacterControls/MaxCharacter.h"
 #include "Navigation/JumpPathComponent.h"
 #include "BanditController.h"
 
@@ -36,5 +37,16 @@ void ABanditController::Possess(APawn* Pawn)
 
 void ABanditController::OnSeenPlayer(APawn* Player)
 {
+	float Distance = FVector::Dist(Player->GetActorLocation(), this->GetCharacter()->GetActorLocation());
+	if (Distance < SightRange)
+	{
+		AMaxCharacter* Max = Cast<AMaxCharacter>(Player->GetController()->GetCharacter());
+
+		if (Max)
+		{
+			GEngine->AddOnScreenDebugMessage(2, 1.f, FColor::Black, TEXT("Found Player!"));
+			BlackboardComp->SetValueAsObject(PlayerKeyName, Player);
+		}
+	}
 
 }
