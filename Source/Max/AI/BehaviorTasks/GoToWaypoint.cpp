@@ -2,6 +2,8 @@
 
 #include "Max.h"
 #include "AI/TestTargetPoint.h"
+#include "AI/BanditController.h"
+#include "AIController.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyAllTypes.h"
 #include "GoToWaypoint.h"
 
@@ -13,18 +15,37 @@ EBTNodeResult::Type UGoToWaypoint::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 	{
 		return EBTNodeResult::Failed;
 	}
+	AAIController* MyController = OwnerComp.GetAIOwner();
+	ABanditController* CurrBanditController = Cast<ABanditController>(MyController);
 
-	for (TActorIterator<ATestTargetPoint> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	if (CurrBanditController)
 	{
-		ATestTargetPoint* Waypoint = *ActorItr;
-		if (Waypoint)
+		ATestTargetPoint* CurrentWaypoint = CurrBanditController->CurrentWaypoint();
+		if (CurrentWaypoint)
 		{
-			//OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Object>(BlackboardKey.GetSelectedKeyID(), Waypoint);
-			OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), Waypoint);
-			
+			OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("CurrentTarget"), CurrentWaypoint);
 			return EBTNodeResult::Succeeded;
 		}
+		else
+		{
+			return EBTNodeResult::Failed;
+		}
 	}
+	else
+	{
+		return EBTNodeResult::Failed;
+	}
+	//for (TActorIterator<ATestTargetPoint> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	//{
+	//	ATestTargetPoint* Waypoint = *ActorItr;
+	//	if (Waypoint)
+	//	{
+	//		OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("Target1"), Waypoint);
+	//		OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("CurrentTarget"), Waypoint);
+	//		
+	//		return EBTNodeResult::Succeeded;
+	//	}
+	//}
 	return EBTNodeResult::Failed;
 }
 

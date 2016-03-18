@@ -4,6 +4,8 @@
 
 #include "GameFramework/Character.h"
 #include "BehaviorTree/BehaviorTree.h"
+#include "BanditController.h"
+#include "AI/TestTargetPoint.h"
 #include "AI_Weapons/BaseProjectile.h"
 #include "BanditCharacter.generated.h"
 
@@ -36,4 +38,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<ABaseProjectile> ProjectileClass;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<ATestTargetPoint*> WaypointList;
+
+	ABanditController* BanditController;
+
+	uint32 ArrayReserveNumber=10;
 };

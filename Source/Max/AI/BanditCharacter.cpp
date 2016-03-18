@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Max.h"
-#include "BanditController.h"
 #include "BanditCharacter.h"
 
 
@@ -13,13 +12,26 @@ ABanditCharacter::ABanditCharacter()
 	AIControllerClass = ABanditController::StaticClass();
 	ProjectilePoint = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSpawnPoint"));
 	ProjectilePoint->AttachTo(RootComponent);
+	WaypointList.Reserve(ArrayReserveNumber);
 }
 
 // Called when the game starts or when spawned
 void ABanditCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	BanditController = Cast<ABanditController>(GetController());
 	
+	for (ATestTargetPoint* Waypoint : WaypointList)
+	{
+		if (Waypoint)
+		{
+			if (BanditController)
+			{
+				BanditController->SetWaypoint(Waypoint);
+			}
+		}
+
+	}
 }
 
 // Called every frame

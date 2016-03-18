@@ -13,9 +13,10 @@ ABanditController::ABanditController(const FObjectInitializer& ObjectInitializer
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
 
 	PawnSensing = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSenseingComp"));
-
+	WaypointArray.Reserve(ArrayMax);
 
 }
+
 
 void ABanditController::Possess(APawn* Pawn)
 {
@@ -44,9 +45,77 @@ void ABanditController::OnSeenPlayer(APawn* Player)
 
 		if (Max)
 		{
-			GEngine->AddOnScreenDebugMessage(2, 1.f, FColor::Black, TEXT("Found Player!"));
+			//GEngine->AddOnScreenDebugMessage(2, 1.f, FColor::Black, TEXT("Found Player!"));
 			BlackboardComp->SetValueAsObject(PlayerKeyName, Player);
+			BlackboardComp->SetValueAsObject(TEXT("CurrentTarget"), Player);
 		}
 	}
 
 }
+
+void ABanditController::UpdateControlRotation(float DeltaTime, bool bUpdatePawn)
+{
+	//Look towards focus
+	FVector FocalPoint = GetCurrentTarget();
+
+	if (!FocalPoint.IsZero() && GetPawn())
+	{
+		FVector Direction = FocalPoint - GetPawn()->GetActorLocation();
+		FRotator NewControlRotation = Direction.Rotation();
+
+		NewControlRotation.Yaw = FRotator::ClampAxis(NewControlRotation.Yaw);
+		SetControlRotation(NewControlRotation);
+		
+		APawn* const Pawn = GetPawn();
+		if (Pawn&&bUpdatePawn)
+		{
+			Pawn->FaceRotation(NewControlRotation, DeltaTime);
+		}
+	}
+
+}
+
+FVector ABanditController::GetCurrentTarget()
+{
+	CurrentTarget = BlackboardComp->GetValueAsObject(TEXT("CurrentTarget"));
+	if (CurrentTarget)
+	{
+		AActor* Target = Cast<AActor>(CurrentTarget);
+		return Target->GetActorLocation();
+	}
+	return FVector::ZeroVector;
+}
+
+void ABanditController::SetWaypoint(ATestTargetPoint* Waypoint)
+{
+	WaypointArray.Add(Waypoint);
+}
+
+
+
+ATestTargetPoint* ABanditController::CurrentWaypoint()
+{
+	if (WaypointIndex <= WaypointArray.Num()-1)
+	{
+		ATestTargetPoint* CurrWaypoint = WaypointArray[WaypointIndex];
+		WaypointIndex++;
+		return CurrWaypoint;
+	}
+	else
+	{
+		if (WaypointArray.Num() >= 2)
+		{
+			WaypointIndex = 0;
+			ATestTargetPoint* CurrWaypoint = WaypointArray[WaypointIndex];
+			WaypointIndex++;
+			return CurrWaypoint;
+		}
+		else
+		{
+			return NULL;
+		}
+
+	}
+	
+}
+

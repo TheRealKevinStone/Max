@@ -15,12 +15,9 @@ EBTNodeResult::Type UGoToRandomPoint::ExecuteTask(UBehaviorTreeComponent& OwnerC
 		return EBTNodeResult::Failed;
 	}
 
-	if (!Controller)
-	{
-		Controller = OwnerComp.GetAIOwner();
-	}
 	if (!CurrentBanditController)
 	{
+		Controller = OwnerComp.GetAIOwner();
 		CurrentBanditController = Cast<ABanditController>(Controller);
 	}
 	else
