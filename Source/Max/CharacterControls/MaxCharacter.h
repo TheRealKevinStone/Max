@@ -48,6 +48,8 @@ protected:
 	*/
 	void LookUpAtRate(float Rate);
 
+	void Dash();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

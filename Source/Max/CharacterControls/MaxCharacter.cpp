@@ -67,6 +67,8 @@ void AMaxCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 	InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
+	InputComponent->BindAction("Dash", IE_Pressed, this, &AMaxCharacter::Dash);
+
 	InputComponent->BindAxis("MoveForward", this, &AMaxCharacter::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &AMaxCharacter::MoveRight);
 
@@ -118,4 +120,12 @@ void AMaxCharacter::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
+}
+
+void AMaxCharacter::Dash()
+{
+
+
+	FVector LaunchVelocity(600.f, 0.f, 0.f);
+	this->LaunchCharacter(LaunchVelocity, true, true);
 }
