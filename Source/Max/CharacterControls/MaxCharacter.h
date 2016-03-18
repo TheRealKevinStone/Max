@@ -49,6 +49,7 @@ protected:
 	void LookUpAtRate(float Rate);
 
 	void Dash();
+	void StopDashing();
 
 protected:
 	// Called when the game starts or when spawned

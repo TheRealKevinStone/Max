@@ -55,6 +55,7 @@ void AMaxCharacter::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
+	GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Yellow, TEXT("AM I WORKING?"));
 }
 
 // Called to bind functionality to input
@@ -68,6 +69,7 @@ void AMaxCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 	InputComponent->BindAction("Dash", IE_Pressed, this, &AMaxCharacter::Dash);
+	InputComponent->BindAction("Dash", IE_Released, this, &AMaxCharacter::StopDashing);
 
 	InputComponent->BindAxis("MoveForward", this, &AMaxCharacter::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &AMaxCharacter::MoveRight);
@@ -124,8 +126,11 @@ void AMaxCharacter::MoveRight(float Value)
 
 void AMaxCharacter::Dash()
 {
-
-
 	FVector LaunchVelocity(600.f, 0.f, 0.f);
 	this->LaunchCharacter(LaunchVelocity, true, true);
+}
+
+void AMaxCharacter::StopDashing()
+{
+
 }
