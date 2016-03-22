@@ -8,7 +8,7 @@
 AMaxCharacter::AMaxCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -55,7 +55,26 @@ void AMaxCharacter::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Yellow, TEXT("AM I WORKING?"));
+	GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Yellow, FString::Printf(TEXT("Dashing: %s"), bIsDashing ? TEXT("true") : TEXT("false")));
+	if (bIsDashing && Controller != NULL)
+	{
+		//// find out which way is forward
+		//const FRotator Rotation = Controller->GetControlRotation();
+		//const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		//// get forward vector
+		//const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+		//// get right vector 
+		//const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+		//FVector LaunchVelocity = GetVelocity().SafeNormal() * 1200.f;
+		//DashVelocity.Z = 0.f;
+		//LaunchCharacter(DashVelocity, true, false);
+
+		//FVector MovementDirection = GetVelocity().SafeNormal();
+		//AddMovementInput(MovementDirection, 1.0f);
+	}
 }
 
 // Called to bind functionality to input
@@ -105,6 +124,8 @@ void AMaxCharacter::MoveForward(float Value)
 
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
 }
@@ -119,6 +140,7 @@ void AMaxCharacter::MoveRight(float Value)
 
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
@@ -126,11 +148,10 @@ void AMaxCharacter::MoveRight(float Value)
 
 void AMaxCharacter::Dash()
 {
-	FVector LaunchVelocity(600.f, 0.f, 0.f);
-	this->LaunchCharacter(LaunchVelocity, true, true);
+	bIsDashing = true;
 }
 
 void AMaxCharacter::StopDashing()
 {
-
+	bIsDashing = false;
 }
