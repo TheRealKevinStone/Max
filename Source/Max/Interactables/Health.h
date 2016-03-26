@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "Max/CharacterControls/MaxCharacter.h"
 #include "Health.generated.h"
 
 UCLASS()
@@ -53,7 +54,7 @@ protected:
 	virtual void OnOverLap(class AActor* OtherActor);
 
 	//UFUNCTION(BlueprintImplementableEvent, Category = Drop, meta = (DisplayName = "Apply to Player")) 
-	//void Event_ApplyToPlayer(AMax* Max);
+	//void Event_ApplyToPlayer(AMaxCharacter* Max);
 
 	
 };
