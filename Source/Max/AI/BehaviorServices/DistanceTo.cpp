@@ -7,19 +7,60 @@ void UDistanceTo::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * NodeMemor
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
+	//if (BanditController != NULL)
+	//{
+	//	BanditController = Cast<ABanditController>(Blackboard->GetOwner());
+	//}
+	//if (TickerController != NULL)
+	//{
+	//	TickerController = Cast<ATickerController>(Blackboard->GetOwner());
+	//}
 	//Grabbing blackboard from current bandit
-	UBlackboardComponent* Blackboard = OwnerComp.GetBlackboardComponent();
-	//Find player
-	AActor* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	//Get controller of bandit
-	ABanditController* AIController = Cast<ABanditController>(Blackboard->GetOwner());
 
-	//check if their valid then get distance between player and bandit
-	if (AIController && Player)
+	if (!Blackboard)
 	{
-		Distance = FVector::Dist(Player->GetActorLocation(), AIController->GetPawn()->GetActorLocation());
-
-		Blackboard->SetValue<UBlackboardKeyType_Float>(BlackboardKey.GetSelectedKeyID(),Distance);
+		Blackboard = OwnerComp.GetBlackboardComponent();
 	}
+	else
+	{
+		if (BanditController)
+		{
+			if (!Player)
+			{
+				Player = Cast<AMaxCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			}
+
+
+			if (Player && BanditController)
+			{
+				Distance = FVector::Dist(Player->GetActorLocation(), BanditController->GetPawn()->GetActorLocation());
+				Blackboard->SetValueAsFloat(TEXT("DistanceToPlayer"), Distance);
+			}
+		}
+		else
+		{
+			BanditController = Cast<ABanditController>(Blackboard->GetOwner());
+		}
+
+		if (TickerController)
+		{
+			if (!Player)
+			{
+				Player = Cast<AMaxCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+			}
+
+			if (Player && TickerController)
+			{
+				Distance = FVector::Dist(Player->GetActorLocation(), TickerController->GetPawn()->GetActorLocation());
+				Blackboard->SetValueAsFloat(TEXT("DistanceToPlayer"), Distance);
+			}
+		}
+		else
+		{
+			TickerController = Cast<ATickerController>(Blackboard->GetOwner());
+		}
+	}
+
+
 
 }

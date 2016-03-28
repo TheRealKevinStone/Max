@@ -15,7 +15,7 @@ void ATickerBandit::ThrowTicker()
 		
 		if (Ticker)
 		{
-			Ticker->LaunchCharacter(Forward*TickerImpulse,true,true);
+			//Ticker->CapsuleComponent->AddImpulse(Curve);
 		}
 	}
 }

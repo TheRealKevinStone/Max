@@ -6,6 +6,7 @@
 #include "BehaviorTree/Blackboard/BlackboardKeyAllTypes.h"
 #include "CharacterControls/MaxCharacter.h"
 #include "AI/BanditController.h"
+#include "AI/AI_Weapons/TickerController.h"
 #include "DistanceTo.generated.h"
 
 /**
@@ -21,7 +22,12 @@ protected:
 
 	float Distance = 0.0f;
 	
+	UBlackboardComponent* Blackboard;
 
+	AMaxCharacter* Player;
 
+	ABanditController* BanditController;
+
+	ATickerController* TickerController;
 	
 };

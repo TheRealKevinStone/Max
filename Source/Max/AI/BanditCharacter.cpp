@@ -47,7 +47,12 @@ void ABanditCharacter::FireProjectile()
 
 	if (ProjectileClass != NULL)
 	{
-		GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, ProjectilePoint->GetComponentLocation(), ProjectilePoint->GetComponentRotation());
+		if (!Shot)
+		{
+			GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, ProjectilePoint->GetComponentLocation(), ProjectilePoint->GetComponentRotation());
+			Shot = true;
+		}
+		
 
 	}
 }

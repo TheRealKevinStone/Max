@@ -43,5 +43,7 @@ public:
 
 	ABanditController* BanditController;
 
+	bool Shot;
+
 	uint32 ArrayReserveNumber=10;
 };

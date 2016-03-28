@@ -24,6 +24,8 @@ public:
 	virtual void BeginPlay() override;
 
 	virtual void Possess(APawn* Pawn)override;
+
+	virtual void UpdateControlRotation(float DeltaTime, bool bUpdatePawn = true) override;
 protected:
 	UPROPERTY(VisibleAnywhere)
 	UBehaviorTreeComponent* BehaviorTreeTicker;
@@ -32,4 +34,10 @@ protected:
 	UBlackboardComponent* BlackboardTicker;
 	
 	AMaxCharacter* Player;
+
+public:
+	/*    Returns BlackboardComp Subobject   */
+	FORCEINLINE UBlackboardComponent* GetBlackboardComp() const { return BlackboardTicker; }
+	/** Returns BehaviorComp subobject **/
+	FORCEINLINE UBehaviorTreeComponent* GetBehaviorComp() const { return BehaviorTreeTicker; }
 };
