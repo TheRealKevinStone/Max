@@ -4,9 +4,9 @@
 
 #include "GameFramework/Character.h"
 #include "CharacterControls/MaxCharacter.h"
-#include "TickerController.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BaseTicker.generated.h"
+
 
 UCLASS()
 class MAX_API ABaseTicker : public ACharacter
@@ -20,8 +20,8 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// Called every frame
-	virtual void Tick( float DeltaSeconds ) override;
+	//// Called every frame
+	//virtual void Tick( float DeltaSeconds ) override;
 
 	//virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 

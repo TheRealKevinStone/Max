@@ -39,6 +39,7 @@ public:
 	//Getting waypoint from Array
 	ATestTargetPoint* CurrentWaypoint();
 
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	UBehaviorTreeComponent* BehaviorTreeComp;

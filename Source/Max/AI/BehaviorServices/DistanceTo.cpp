@@ -7,16 +7,6 @@ void UDistanceTo::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * NodeMemor
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
-	//if (BanditController != NULL)
-	//{
-	//	BanditController = Cast<ABanditController>(Blackboard->GetOwner());
-	//}
-	//if (TickerController != NULL)
-	//{
-	//	TickerController = Cast<ATickerController>(Blackboard->GetOwner());
-	//}
-	//Grabbing blackboard from current bandit
-
 	if (!Blackboard)
 	{
 		Blackboard = OwnerComp.GetBlackboardComponent();

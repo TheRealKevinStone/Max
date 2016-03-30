@@ -23,9 +23,19 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// Called every frame
+	//virtual void Tick(float DeltaSeconds) override;
+
 	virtual void Possess(APawn* Pawn)override;
 
 	virtual void UpdateControlRotation(float DeltaTime, bool bUpdatePawn = true) override;
+
+	void Sleep();
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ticker")
+	float DetectionRadius;
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	UBehaviorTreeComponent* BehaviorTreeTicker;
@@ -33,7 +43,17 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UBlackboardComponent* BlackboardTicker;
 	
+	ABaseTicker* Ticker;
+
 	AMaxCharacter* Player;
+
+	FVector PlayerLocation;
+
+	FVector TickerLocation;
+
+	float DistanceDifference;
+
+	bool Sleeping;
 
 public:
 	/*    Returns BlackboardComp Subobject   */

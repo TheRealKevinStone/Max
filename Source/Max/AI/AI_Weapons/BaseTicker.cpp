@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Max.h"
+#include "TickerController.h"
 #include "BaseTicker.h"
 
 
@@ -8,11 +9,9 @@
 ABaseTicker::ABaseTicker()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	//PrimaryActorTick.bCanEverTick = true;
 	//AIController = ATickerController::StaticClass();
 }
-
-
 
 void ABaseTicker::BeginPlay()
 {
@@ -32,12 +31,12 @@ void ABaseTicker::BeginPlay()
 
 }
 
-// Called every frame
-void ABaseTicker::Tick( float DeltaTime )
-{
-	Super::Tick( DeltaTime );
-
-}
+//// Called every frame
+//void ABaseTicker::Tick( float DeltaTime )
+//{
+//	Super::Tick( DeltaTime );
+//
+//}
 
 
 //float ABaseTicker::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
