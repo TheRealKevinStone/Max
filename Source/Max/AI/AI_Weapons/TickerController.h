@@ -32,15 +32,22 @@ public:
 
 	void Sleep();
 
+	FVector GetTickerPosition()
+	{
+		if (GetPawn())
+			return GetPawn()->GetActorLocation();
+		else
+			return FVector::ZeroVector;
+	}
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ticker")
 	float DetectionRadius;
 
-protected:
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(transient)
 	UBehaviorTreeComponent* BehaviorTreeTicker;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(transient)
 	UBlackboardComponent* BlackboardTicker;
 	
 	ABaseTicker* Ticker;

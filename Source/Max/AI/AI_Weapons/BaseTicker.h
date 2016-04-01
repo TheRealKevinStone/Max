@@ -4,6 +4,7 @@
 
 #include "GameFramework/Character.h"
 #include "CharacterControls/MaxCharacter.h"
+#include "AI/AI_Aesthetic/Gib.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BaseTicker.generated.h"
 
@@ -25,10 +26,15 @@ public:
 
 	//virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
+	UFUNCTION(BlueprintCallable,Category= "Ticker")
+	void ExplosionGib();
 	
 public:
 	UPROPERTY(EditDefaultsOnly)
 	UBehaviorTree* BehaviorTreeBaseTick;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<AGib> Explosion;
 
 	//ATickerController* TickerController;
 
@@ -36,5 +42,5 @@ protected:
 	
 	AMaxCharacter* Player;
 
-	
+	bool Exploded;
 };

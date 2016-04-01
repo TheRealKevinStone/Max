@@ -23,8 +23,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float Speed;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool EnableExplosion;
+
 public:
 	virtual void NativeUpdateAnimation(float DeltaTime) override;
 	

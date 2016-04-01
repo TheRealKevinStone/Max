@@ -9,6 +9,7 @@ ATickerController::ATickerController(const FObjectInitializer& ObjectInitializer
 
 	BehaviorTreeTicker= CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorTreeTicker"));
 	BlackboardTicker= CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardTicker"));
+
 }
 
 void ATickerController::BeginPlay()
@@ -45,11 +46,18 @@ void ATickerController::Possess(APawn * Pawn)
 {
 	Super::Possess(Pawn);
 
+	//Cast ticker from pawn overload
 	Ticker = Cast<ABaseTicker>(Pawn);
 
+	//check for ticker and if theres a behavior tree
 	if (Ticker&&Ticker->BehaviorTreeBaseTick)
 	{
-		BlackboardTicker->InitializeBlackboard(*Ticker->BehaviorTreeBaseTick->BlackboardAsset);
+		//intialize blackboard
+		if (Ticker->BehaviorTreeBaseTick->BlackboardAsset)
+		{
+			BlackboardTicker->InitializeBlackboard(*Ticker->BehaviorTreeBaseTick->BlackboardAsset);
+		}
+		
 		BehaviorTreeTicker->StartTree(*Ticker->BehaviorTreeBaseTick);
 	}
 }
@@ -98,5 +106,7 @@ void ATickerController::Sleep()
 	ATickerController::SetActorTickEnabled(true);
 	Sleeping = true;*/
 }
+
+
 
 

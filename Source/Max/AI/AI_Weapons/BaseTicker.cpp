@@ -10,7 +10,7 @@ ABaseTicker::ABaseTicker()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	//PrimaryActorTick.bCanEverTick = true;
-	//AIController = ATickerController::StaticClass();
+	AIControllerClass = ATickerController::StaticClass();
 }
 
 void ABaseTicker::BeginPlay()
@@ -29,6 +29,29 @@ void ABaseTicker::BeginPlay()
 		}
 	}
 
+}
+
+void ABaseTicker::ExplosionGib()
+{
+	if (Explosion)
+	{
+		if (!Exploded)
+		{
+			FVector TickerLocation = GetActorLocation();
+			AGib* Corpse= GetWorld()->SpawnActor<AGib>(Explosion, TickerLocation, FRotator::ZeroRotator);
+			Exploded = true;
+			
+			if (Corpse)
+			{
+				ATickerController* TickerController = Cast<ATickerController>(GetController());
+				TickerController->BehaviorTreeTicker->StopTree();
+				Destroy();
+
+			}
+		}
+
+		
+	}
 }
 
 //// Called every frame
