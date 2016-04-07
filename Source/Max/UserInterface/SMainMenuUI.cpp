@@ -3,6 +3,7 @@
 #include "Max.h"
 #include "SMainMenuUI.h"
 #include "SlateOptMacros.h"
+#include "Engine.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SMainMenuUI::Construct(const FArguments& args)
@@ -10,8 +11,11 @@ void SMainMenuUI::Construct(const FArguments& args)
 
 	MainMenuHUD = args._MainMenuHUD;
 
+	//child slot operator will define widgets that are children of
+	//the custom (compound) widget; SNew(____)
 	ChildSlot
 	[
+		//
 		SNew(SOverlay)
 		+ SOverlay::Slot()
 		.HAlign(HAlign_Center) //text position (horizontal center)
@@ -43,7 +47,6 @@ void SMainMenuUI::Construct(const FArguments& args)
 							]
 				]
 	];
-
 }
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
@@ -58,7 +61,7 @@ FReply SMainMenuUI::StartButtonClicked()
 		//uncomment if you want to handle the OnClick via Blueprint
 
 		//MainMenuHUD->StartButtonClicked();
-		return FReply::Handled();
+		return FReply::Handled(); //to know we've handled the click events
 }
 
 FReply SMainMenuUI::ExitButtonClicked()
@@ -71,5 +74,5 @@ FReply SMainMenuUI::ExitButtonClicked()
 	//uncomment if you want to handle the OnClick via Blueprint
 
 	//MainMenuHUD->StartButtonClicked();
-	return FReply::Handled();
+	return FReply::Handled(); //to know we've handled the click events
 }
