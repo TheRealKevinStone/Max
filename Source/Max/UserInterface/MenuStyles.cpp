@@ -31,6 +31,7 @@ FName FMenuStyles::GetStyleSetName()
 TSharedRef<FSlateStyleSet> FMenuStyles::Create()
 {
 	TSharedRef<FSlateStyleSet> StyleRef = FSlateGameResources::New(FMenuStyles::GetStyleSetName(), "/Game/UI/Styles", "/Game/UI/Styles");
+	return StyleRef;
 }
 
 const ISlateStyle& FMenuStyles::Get()
