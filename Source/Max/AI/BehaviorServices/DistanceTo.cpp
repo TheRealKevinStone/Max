@@ -13,29 +13,33 @@ void UDistanceTo::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * NodeMemor
 	}
 	else
 	{
-		if (BanditController)
+		if (!BanditController)
 		{
-
+			BanditController = Cast<ABanditController>(Blackboard->GetOwner());
+		}
+		else
+		{
 			Player = Cast<AMaxCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 
 			if (Player)
 			{
 				FVector PlayerLocation = Player->GetActorLocation();
-				FVector BanditLocation = BanditController->GetPawn()->GetActorLocation();
-				Distance = FVector::Dist(PlayerLocation, BanditLocation);
-				if (Distance)
+				APawn* TempPawn = BanditController->GetPawn();
+				if (TempPawn)
 				{
-					Blackboard->SetValueAsFloat(TEXT("DistanceToPlayer"), Distance);
+					FVector BanditLocation = TempPawn->GetActorLocation();
+					Distance = FVector::Dist(PlayerLocation, BanditLocation);
+					if (Distance)
+					{
+						Blackboard->SetValueAsFloat(TEXT("DistanceToPlayer"), Distance);
+					}
 				}
+				
 			}
 			else
 			{
 				return;
 			}
-		}
-		else
-		{
-			BanditController = Cast<ABanditController>(Blackboard->GetOwner());
 		}
 
 		if (TickerController)

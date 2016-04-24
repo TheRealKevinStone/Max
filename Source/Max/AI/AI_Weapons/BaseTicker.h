@@ -23,24 +23,35 @@ public:
 
 	//// Called every frame
 	//virtual void Tick( float DeltaSeconds ) override;
-
+	//Check for collisions
+	UFUNCTION()
+	virtual void OnOverlap(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	//Taking Damage from player
 	//virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
+	//Explosion function to spawn gibs
 	UFUNCTION(BlueprintCallable,Category= "Ticker")
 	void ExplosionGib();
 	
 public:
+	//Property for behavior tree
 	UPROPERTY(EditDefaultsOnly)
 	UBehaviorTree* BehaviorTreeBaseTick;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	//selection of gibs
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="Ticker")
 	TSubclassOf<AGib> Explosion;
+
+	//Explosion Detect Radius
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ticker")
+	float ExplodeDistance;
 
 	//ATickerController* TickerController;
 
 protected:
-	
+	//Cache for player
 	AMaxCharacter* Player;
-
+	//check if you exploded
 	bool Exploded;
+	//Check if player is near
+	bool PlayerNear;
 };

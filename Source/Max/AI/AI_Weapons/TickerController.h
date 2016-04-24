@@ -3,6 +3,8 @@
 #pragma once
 
 #include "AIController.h"
+#include "Navigation/CrowdFollowingComponent.h"
+#include "DetourCrowdAIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "CharacterControls/MaxCharacter.h"
@@ -61,6 +63,9 @@ public:
 	float DistanceDifference;
 
 	bool Sleeping;
+
+	UCrowdFollowingComponent* CrowdComp;
+
 
 public:
 	/*    Returns BlackboardComp Subobject   */
