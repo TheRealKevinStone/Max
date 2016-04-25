@@ -4,9 +4,11 @@
 #include "TickerController.h"
 
 ATickerController::ATickerController(const FObjectInitializer& ObjectInitializer)
+:Super(ObjectInitializer.SetDefaultSubobjectClass<UCrowdFollowingComponent>(TEXT("PathFollowingComponent")))
 {
-	//PrimaryActorTick.bCanEverTick = true;
 
+	//PrimaryActorTick.bCanEverTick = true;
+	CrowdComp = Cast<UCrowdFollowingComponent>(Cast<ATickerController>(this)->GetPathFollowingComponent());
 	BehaviorTreeTicker= CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorTreeTicker"));
 	BlackboardTicker= CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardTicker"));
 

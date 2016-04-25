@@ -31,24 +31,47 @@ void ABaseTicker::BeginPlay()
 
 }
 
+void ABaseTicker::OnOverlap(AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	ABaseTicker* OtherTicker = Cast<ABaseTicker>(OtherActor);
+	if (OtherTicker)
+	{
+		//Launch Ticker to opposite direction.
+		FVector OtherTickerLocation = OtherTicker->GetActorForwardVector();
+		FVector CurrentTickerLocation = this->GetActorForwardVector();
+
+	}
+}
+
 void ABaseTicker::ExplosionGib()
 {
 	if (Explosion)
 	{
-		if (!Exploded)
+		Player = Cast<AMaxCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		if (Player)
 		{
-			FVector TickerLocation = GetActorLocation();
-			AGib* Corpse= GetWorld()->SpawnActor<AGib>(Explosion, TickerLocation, FRotator::ZeroRotator);
-			Exploded = true;
-			
-			if (Corpse)
+			FVector PlayerLocation = Player->GetActorLocation();
+			FVector TickerLocation = this->GetActorLocation();
+			float Distance = FVector::Dist(TickerLocation, PlayerLocation);
+			if (Distance >= ExplodeDistance)
 			{
-				ATickerController* TickerController = Cast<ATickerController>(GetController());
-				TickerController->BehaviorTreeTicker->StopTree();
-				Destroy();
+				if (!Exploded)
+				{
+					FVector TickerLocation = GetActorLocation();
+					AGib* Corpse = GetWorld()->SpawnActor<AGib>(Explosion, TickerLocation, FRotator::ZeroRotator);
+					Exploded = true;
 
+					if (Corpse)
+					{
+						ATickerController* TickerController = Cast<ATickerController>(GetController());
+						TickerController->BehaviorTreeTicker->StopTree();
+						Destroy();
+
+					}
+				}
 			}
 		}
+		
 
 		
 	}

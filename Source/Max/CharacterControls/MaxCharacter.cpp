@@ -149,6 +149,32 @@ void AMaxCharacter::MoveRight(float Value)
 void AMaxCharacter::Dash()
 {
 	bIsDashing = true;
+
+	if (GetVelocity().Z == 0.f)
+	{
+		// find out which way is forward
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		FVector LaunchVelocity = GetVelocity().SafeNormal() * DashForce;
+		LaunchVelocity.Z = 0.f;
+
+		LaunchCharacter(LaunchVelocity, true, false);
+	}
+
+
+	//// get forward vector
+	//const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
+	//// get right vector 
+	//const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+	//FVector LaunchVelocity = GetVelocity().SafeNormal() * 1200.f;
+	//DashVelocity.Z = 0.f;
+	//LaunchCharacter(DashVelocity, true, false);
+
+	//FVector MovementDirection = GetVelocity().SafeNormal();
+	//AddMovementInput(MovementDirection, 1.0f);
 }
 
 void AMaxCharacter::StopDashing()

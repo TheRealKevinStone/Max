@@ -29,8 +29,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	float BaseLookUpRate;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float BackHopForce;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float DashForce;
 
 protected:
 	bool bIsDashing;
