@@ -45,6 +45,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ticker")
 	float ExplodeDistance;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ticker")
+	float KnockbackMin;
 	//ATickerController* TickerController;
 
 protected:

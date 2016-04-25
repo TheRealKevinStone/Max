@@ -11,6 +11,8 @@ ABaseTicker::ABaseTicker()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	//PrimaryActorTick.bCanEverTick = true;
 	AIControllerClass = ATickerController::StaticClass();
+
+	CapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &ABaseTicker::OnOverlap);
 }
 
 void ABaseTicker::BeginPlay()
@@ -37,8 +39,10 @@ void ABaseTicker::OnOverlap(AActor * OtherActor, UPrimitiveComponent * OtherComp
 	if (OtherTicker)
 	{
 		//Launch Ticker to opposite direction.
-		FVector OtherTickerLocation = OtherTicker->GetActorForwardVector();
-		FVector CurrentTickerLocation = this->GetActorForwardVector();
+		FVector curForwardVector = OtherTicker->GetActorLocation() - this->GetActorLocation();
+		curForwardVector.ProjectOnTo(FVector(1, 1, 0));
+		//curForwardVector.Normalize();
+		LaunchCharacter(curForwardVector*KnockbackMin, true, true);
 
 	}
 }
