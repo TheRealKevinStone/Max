@@ -3,6 +3,7 @@
 #include "Max.h"
 #include "MaxGameMode.h"
 #include "CharacterControls/MaxCharacter.h"
+#include "Max/UserInterface/HealthBar.h"
 
 AMaxGameMode::AMaxGameMode()
 {
@@ -12,4 +13,7 @@ AMaxGameMode::AMaxGameMode()
 	//{
 	//	DefaultPawnClass = PlayerPawnBPClass.Class;
 	//}
+
+	HUDClass = AHealthBar::StaticClass();
+
 }
