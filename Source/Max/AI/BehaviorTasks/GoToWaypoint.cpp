@@ -20,6 +20,7 @@ EBTNodeResult::Type UGoToWaypoint::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 
 	if (CurrBanditController)
 	{
+		
 		ATestTargetPoint* CurrentWaypoint = CurrBanditController->CurrentWaypoint();
 		if (CurrentWaypoint)
 		{

@@ -109,6 +109,14 @@ void ATickerController::Sleep()
 	Sleeping = true;*/
 }
 
+void ATickerController::RandomMoveTo()
+{
+	if (BehaviorTreeTicker&&BlackboardTicker)
+	{
+
+	}
+}
+
 
 
 

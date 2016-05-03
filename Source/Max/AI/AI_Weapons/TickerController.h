@@ -34,6 +34,8 @@ public:
 
 	void Sleep();
 
+	void RandomMoveTo();
+
 	FVector GetTickerPosition()
 	{
 		if (GetPawn())
@@ -45,6 +47,12 @@ public:
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ticker")
 	float DetectionRadius;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ticker")
+	float RadiusMin;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ticker")
+	float RadiusMax;
 
 	UPROPERTY(transient)
 	UBehaviorTreeComponent* BehaviorTreeTicker;
