@@ -30,5 +30,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* EnemyMesh;
 
-	//UPROPERTY(EditAnywhere, Category = UI)
+	//UPROPERTY(EditAnywhere, Category = Arts)
+
+protected:
+
+	void 
 };
