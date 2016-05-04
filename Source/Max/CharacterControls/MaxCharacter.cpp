@@ -39,6 +39,10 @@ AMaxCharacter::AMaxCharacter()
 	FollowCamera->AttachTo(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	// Create SpellOffsetComponent
+	SpellOffsetComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SpellOffset"));
+	SpellOffsetComponent->AttachTo(RootComponent);
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
@@ -100,6 +104,14 @@ void AMaxCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 	InputComponent->BindAxis("TurnRate", this, &AMaxCharacter::TurnAtRate);
 	InputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	InputComponent->BindAxis("LookUpRate", this, &AMaxCharacter::LookUpAtRate);
+
+	// Spell Casting Inputs
+	InputComponent->BindAction("CastSpellOne", IE_Pressed, this, &AMaxCharacter::OnFire1);
+	//InputComponent->BindAction("CastSpellOne", IE_Released, this, &AMaxCharacter::OnFire);
+
+	InputComponent->BindAction("CastSpellTwo", IE_Pressed, this, &AMaxCharacter::OnFire2);
+
+
 }
 
 void AMaxCharacter::TurnAtRate(float Rate)
@@ -144,6 +156,78 @@ void AMaxCharacter::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
+}
+
+void AMaxCharacter::OnFire1()
+{
+	// try and fire a projectile
+	if (Fireball != NULL)
+	{
+		const FRotator SpawnRotation = GetControlRotation();
+		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
+
+		UWorld* const World = GetWorld();
+		if (World != NULL)
+		{
+			// spawn the projectile at the muzzle
+			World->SpawnActor<AActor>(Firedart, SpawnLocation, SpawnRotation);
+		}
+	}
+
+	// try and play the sound if specified
+	//if (FireSound != NULL)
+	//{
+	//	UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
+	//}
+
+	//// try and play a firing animation if specified
+	//if (FireAnimation != NULL)
+	//{
+	//	// Get the animation object for the arms mesh
+	//	UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+	//	if (AnimInstance != NULL)
+	//	{
+	//		AnimInstance->Montage_Play(FireAnimation, 1.f);
+	//	}
+	//}
+
+}
+
+void AMaxCharacter::OnFire2()
+{
+	// try and fire a projectile
+	if (Fireball != NULL)
+	{
+		const FRotator SpawnRotation = GetControlRotation();
+		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
+
+		UWorld* const World = GetWorld();
+		if (World != NULL)
+		{
+			// spawn the projectile at the muzzle
+			World->SpawnActor<AActor>(Fireball, SpawnLocation, SpawnRotation);
+		}
+	}
+
+	// try and play the sound if specified
+	//if (FireSound != NULL)
+	//{
+	//	UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
+	//}
+
+	//// try and play a firing animation if specified
+	//if (FireAnimation != NULL)
+	//{
+	//	// Get the animation object for the arms mesh
+	//	UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+	//	if (AnimInstance != NULL)
+	//	{
+	//		AnimInstance->Montage_Play(FireAnimation, 1.f);
+	//	}
+	//}
+
 }
 
 void AMaxCharacter::Dash()

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Character.h"
+#include "MaxSpellbook.h"
 #include "MaxCharacter.generated.h"
 
 UCLASS()
@@ -35,6 +36,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float DashForce;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USceneComponent* SpellOffsetComponent;
+
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class AActor> Firedart;
+
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class AActor> Fireball;
+
 protected:
 	bool bIsDashing;
 
@@ -57,6 +68,8 @@ protected:
 	*/
 	void LookUpAtRate(float Rate);
 
+	void OnFire1();
+	void OnFire2();
 	void Dash();
 	void StopDashing();
 
