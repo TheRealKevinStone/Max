@@ -22,6 +22,8 @@ AEnemyUITest::AEnemyUITest()
 void AEnemyUITest::BeginPlay()
 {
 	Super::BeginPlay();
+
+	AMaxCharacter* Max = Cast<AMaxCharacter>(*TActorIterator<AMaxCharacter>(GetWorld()));
 	
 }
 
@@ -30,4 +32,20 @@ void AEnemyUITest::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
+}
+
+void AEnemyUITest::OnEnemyOverlap(class AActor* OtherActor)
+{
+	//UI stuff here I guess
+	//first will debug message to make sure working
+	//then start adding a UI image of w.e pop u[
+	// from there align position of UI (above object)
+	//then change image to numbers
+	AMaxCharacter* Max = Cast<AMaxCharacter>(OtherActor);
+
+	if (Max)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("damage counter shows"));
+		Event_ApplyToEnemy(Max);
+	}
 }

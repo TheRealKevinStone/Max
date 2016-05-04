@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include  "CharacterControls/MaxCharacter.h"
 #include "EnemyUITest.generated.h"
 
 UCLASS()
@@ -33,5 +34,11 @@ protected:
 	//UPROPERTY(EditAnywhere, Category = Arts)
 
 protected:
+
+	UFUNCTION()
+	virtual void OnEnemyOverlap(class AActor* OtherActor);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = Damage, meta = (DisplayName = "Apply to Enemy"))
+	void Event_ApplyToEnemy(AMaxCharacter* MaxCharacter);
 
 };
