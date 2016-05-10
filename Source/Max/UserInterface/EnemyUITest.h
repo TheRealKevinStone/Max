@@ -33,12 +33,15 @@ protected:
 
 	//UPROPERTY(EditAnywhere, Category = Arts)
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TSubclassOf<AEnemyUITest> UIPop;
+
 protected:
 
 	UFUNCTION()
-	virtual void OnEnemyOverlap(class AActor* OtherActor);
+	virtual void OnOverlap(class AActor* OtherActor);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = Damage, meta = (DisplayName = "Apply to Enemy"))
-	void Event_ApplyToEnemy(AMaxCharacter* MaxCharacter);
+	 void Event_ApplyToEnemy(AMaxCharacter* MaxCharacter);
 
 };

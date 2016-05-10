@@ -9,10 +9,12 @@
 AHealthBar::AHealthBar(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	static ConstructorHelpers::FObjectFinder<UTexture2D> TextPath(TEXT("/Game/UI/RedTemp"));
+	static ConstructorHelpers::FObjectFinder<UTexture2D> TextPath(TEXT("/Game/UI/TempHealth"));
 
 	HealthBarTexture = TextPath.Object;
 }
+
+int32 TestHealth = 200;
 
 void AHealthBar::DrawHUD()
 {
@@ -25,7 +27,19 @@ void AHealthBar::DrawHealthBar()
 {
 	float ScaleHealthUI = Canvas->ClipY / Canvas->ClipX;
 
-	FCanvasIcon HealthBarIcon = UCanvas::MakeIcon(HealthBarTexture, 20, 20, 0);
+	if (GetAsyncKeyState(VK_NUMPAD7) != 0 && TestHealth < 196)
+	{
+		TestHealth += 5;
+	}
 
-	Canvas->DrawIcon(HealthBarIcon, Canvas->SizeX, 50);
+	if (GetAsyncKeyState(VK_NUMPAD4) != 0 && TestHealth > 5)
+	{
+		TestHealth -= 5;
+	}
+
+
+
+	FCanvasIcon HealthBarIcon = UCanvas::MakeIcon(HealthBarTexture, 0, 0, TestHealth, 20);
+
+	Canvas->DrawIcon(HealthBarIcon, (Canvas->SizeX)/5, 20, ScaleHealthUI);
 }
