@@ -4,8 +4,6 @@
 #include "HealthBar.h"
 #include "Engine/Canvas.h"
 
-
-
 AHealthBar::AHealthBar(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
@@ -36,8 +34,6 @@ void AHealthBar::DrawHealthBar()
 	{
 		TestHealth -= 5;
 	}
-
-
 
 	FCanvasIcon HealthBarIcon = UCanvas::MakeIcon(HealthBarTexture, 0, 0, TestHealth, 20);
 

@@ -16,6 +16,7 @@ AEnemyUITest::AEnemyUITest()
 	EnemyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Enemy Mesh"));
 	EnemyMesh->AttachTo(RootComponent);
 
+	OnActorBeginOverlap.AddDynamic(this, &AEnemyUITest::OnOverlap);
 }
 
 // Called when the game starts or when spawned
@@ -37,19 +38,16 @@ void AEnemyUITest::Tick( float DeltaTime )
 void AEnemyUITest::OnOverlap(class AActor* OtherActor)
 {
 	//UI stuff here I guess
-	//first will debug message to make sure working
+	//first will debug message to make sure working - DONE
 	//then start adding a UI image of w.e pop u[
 	// from there align position of UI (above object)
 	//then change image to numbers
 	AMaxCharacter* MaxCharacter = Cast<AMaxCharacter>(OtherActor);
 
-	GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Red, FString::Printf(TEXT("damage counter shows")));
-
 	if (MaxCharacter)
 	{
-		GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Red, FString::Printf(TEXT("damage counter shows")));
+		GEngine->AddOnScreenDebugMessage(2, 2.f, FColor::Red, FString::Printf(TEXT("damage counter shows")));
 		Event_ApplyToEnemy(MaxCharacter);
-
-		//Destroy();
+		///Destroy();
 	}
 }

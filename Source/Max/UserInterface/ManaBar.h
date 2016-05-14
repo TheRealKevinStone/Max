@@ -3,20 +3,20 @@
 #pragma once
 
 #include "GameFramework/HUD.h"
-#include "HealthBar.generated.h"
+#include "ManaBar.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MAX_API AHealthBar : public AHUD
+class MAX_API AManaBar : public AHUD
 {
 	GENERATED_UCLASS_BODY()
-
-	virtual void DrawHUD() override;
-
-	void DrawHealthBar();
 	
+	virtual void DrawHUD() override;
+	
+	void DrawManaBar();
+
 	//UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UTexture2D* HealthBarTexture;
+	UTexture2D* ManaBarTexture;
 };
