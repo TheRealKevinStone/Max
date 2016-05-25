@@ -2,6 +2,8 @@
 
 #include "Max.h"
 #include "FireDart.h"
+#include "AI/BanditCharacter.h"
+#include "AI/AI_Weapons/BaseTicker.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 
@@ -15,8 +17,8 @@ AFireDart::AFireDart()
 	CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
 	CollisionComp->InitSphereRadius(5.0f);
 	CollisionComp->BodyInstance.SetCollisionProfileName("Projectile");
-	CollisionComp->OnComponentHit.AddDynamic(this, &AFireDart::OnHit);		// set up a notification for when this component hits something blocking
-
+	//CollisionComp->OnComponentHit.AddDynamic(this, &AFireDart::OnHit);		// set up a notification for when this component hits something blocking
+	OnActorBeginOverlap.AddDynamic(this, &AFireDart::OnHit);
 	// Players can't walk on it
 	CollisionComp->SetWalkableSlopeOverride(FWalkableSlopeOverride(WalkableSlope_Unwalkable, 0.f));
 	CollisionComp->CanCharacterStepUpOn = ECB_No;
@@ -34,6 +36,7 @@ AFireDart::AFireDart()
 
 	// Die after 3 seconds by default
 	InitialLifeSpan = 3.0f;
+	SetActorEnableCollision(true);
 }
 
 // Called when the game starts or when spawned
@@ -50,13 +53,25 @@ void AFireDart::Tick( float DeltaTime )
 
 }
 
-void AFireDart::OnHit(AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+void AFireDart::OnHit_Implementation(AActor * OtherActor)
 {
-	//// Only add impulse and destroy projectile if we hit a physics
-	//if ((OtherActor != NULL) && (OtherActor != this) && (OtherComp != NULL) && OtherComp->IsSimulatingPhysics())
-	//{
-	//	OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
-
-	//	Destroy();
-	//}
+	if (OtherActor != GetOwner())
+	{
+		ABanditCharacter* Bandit = Cast<ABanditCharacter>(OtherActor);
+		ABaseTicker* Ticker = Cast<ABaseTicker>(OtherActor);
+		if (Bandit)
+		{
+			UGameplayStatics::ApplyDamage(Bandit, Damage, this->GetInstigatorController(), this, UDamageType::StaticClass());
+			this->Destroy();
+		}
+		else if (Ticker)
+		{
+			UGameplayStatics::ApplyDamage(Ticker, Damage, this->GetInstigatorController(), this, UDamageType::StaticClass());
+			this->Destroy();
+		}
+	}
+	
 }
+
+
+

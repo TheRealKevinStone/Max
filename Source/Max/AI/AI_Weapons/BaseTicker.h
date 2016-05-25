@@ -27,7 +27,8 @@ public:
 	UFUNCTION()
 	virtual void OnOverlap(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	//Taking Damage from player
-	//virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+	UFUNCTION()
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
 	//Explosion function to spawn gibs
 	UFUNCTION(BlueprintCallable,Category= "Ticker")

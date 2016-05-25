@@ -12,7 +12,7 @@ ABanditCharacter::ABanditCharacter()
 	AIControllerClass = ABanditController::StaticClass();
 	ProjectilePoint = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSpawnPoint"));
 	ProjectilePoint->AttachTo(RootComponent);
-	WaypointList.Reserve(ArrayReserveNumber);
+	//WaypointList.Reserve(ArrayReserveNumber);
 }
 
 // Called when the game starts or when spawned
@@ -21,17 +21,18 @@ void ABanditCharacter::BeginPlay()
 	Super::BeginPlay();
 	BanditController = Cast<ABanditController>(GetController());
 	
-	for (ATestTargetPoint* Waypoint : WaypointList)
-	{
-		if (Waypoint)
-		{
-			if (BanditController)
-			{
-				BanditController->SetWaypoint(Waypoint);
-			}
-		}
+	//To look for waypoints in the world.
+	//for (ATestTargetPoint* Waypoint : WaypointList)
+	//{
+	//	if (Waypoint)
+	//	{
+	//		if (BanditController)
+	//		{
+	//			BanditController->SetWaypoint(Waypoint);
+	//		}
+	//	}
 
-	}
+	//}
 }
 
 // Called every frame
@@ -55,5 +56,27 @@ void ABanditCharacter::FireProjectile()
 		
 
 	}
+}
+
+float ABanditCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+{
+	Health -= DamageAmount;
+	if (Health <= 0.f)
+	{
+		//Do Death Animation
+		//Play Death Audio
+		this->SetActorEnableCollision(false);
+		Destroy();
+	}
+	else
+	{
+		//Do Damage Animation
+		//Play Damage Audio
+		//Apply Knockback
+
+	}
+
+
+	return Health;
 }
 

@@ -12,7 +12,7 @@ ABaseTicker::ABaseTicker()
 	//PrimaryActorTick.bCanEverTick = true;
 	AIControllerClass = ATickerController::StaticClass();
 
-	CapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &ABaseTicker::OnOverlap);
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABaseTicker::OnOverlap);
 }
 
 void ABaseTicker::BeginPlay()
@@ -75,9 +75,6 @@ void ABaseTicker::ExplosionGib()
 				}
 			}
 		}
-		
-
-		
 	}
 }
 
@@ -89,8 +86,9 @@ void ABaseTicker::ExplosionGib()
 //}
 
 
-//float ABaseTicker::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
-//{
-//	//Explode
-//	return DamageAmount;
-//}
+float ABaseTicker::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
+{
+	//Explode
+	Destroy();
+	return DamageAmount;
+}

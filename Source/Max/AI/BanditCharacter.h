@@ -28,6 +28,11 @@ public:
 	UFUNCTION(BlueprintCallable,Category="BaseBandit")
 	void FireProjectile();
 
+	//Taking Damage from player
+	UFUNCTION()
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+
+
 public:
 	UPROPERTY(EditDefaultsOnly)
 	UBehaviorTree* BehaviorTree;
@@ -38,8 +43,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<ABaseProjectile> ProjectileClass;
 	
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	//TArray<ATestTargetPoint*> WaypointList;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<ATestTargetPoint*> WaypointList;
+	float Health;
 
 	ABanditController* BanditController;
 
