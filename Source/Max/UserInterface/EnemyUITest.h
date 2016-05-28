@@ -3,14 +3,15 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include  "CharacterControls/MaxCharacter.h"
+#include "GameFramework/HUD.h"
+#include "CharacterControls/MaxCharacter.h"
 #include "EnemyUITest.generated.h"
 
 UCLASS()
 class MAX_API AEnemyUITest : public AActor
 {
-	GENERATED_BODY()
-	
+	GENERATED_UCLASS_BODY()
+
 public:	
 	// Sets default values for this actor's properties
 	AEnemyUITest();
@@ -21,20 +22,21 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
+	//where we call the function that draws the texture
+	//virtual void DrawHUD();
+
+	//where we draw the texture
+	//void DrawDamageCounter();
+
 protected:
 
 	//collider for enemy
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UBoxComponent* EnemyCollider;
+	UBoxComponent* EnemyCollider;
 
 	//mesh for enemy
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UStaticMeshComponent* EnemyMesh;
-
-	//UPROPERTY(EditAnywhere, Category = Arts)
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		TSubclassOf<AEnemyUITest> UIPop;
+	UStaticMeshComponent* EnemyMesh;
 
 protected:
 
