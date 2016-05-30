@@ -15,16 +15,19 @@ class MAX_API UBanditAnimInstance : public UAnimInstance
 	
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool bEnableDamageState;
+	bool bEnableDamageState;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool bEnableDeathState;
+	bool bEnableDeathState;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float Speed;
+	float Speed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool EnableShoot;
+	bool EnableShoot;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool Shot;
 public:
 	virtual void NativeUpdateAnimation(float DeltaTime) override;
 	

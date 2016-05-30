@@ -36,16 +36,14 @@ void ABanditCharacter::BeginPlay()
 }
 
 // Called every frame
-void ABanditCharacter::Tick( float DeltaTime )
-{
-	Super::Tick( DeltaTime );
-
-}
+//void ABanditCharacter::Tick( float DeltaTime )
+//{
+//	Super::Tick( DeltaTime );
+//
+//}
 
 void ABanditCharacter::FireProjectile()
 {
-
-
 	if (ProjectileClass != NULL)
 	{
 		if (!Shot)
@@ -53,8 +51,6 @@ void ABanditCharacter::FireProjectile()
 			GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, ProjectilePoint->GetComponentLocation(), ProjectilePoint->GetComponentRotation());
 			Shot = true;
 		}
-		
-
 	}
 }
 
@@ -65,6 +61,7 @@ float ABanditCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Dama
 	{
 		//Do Death Animation
 		//Play Death Audio
+		
 		this->SetActorEnableCollision(false);
 		Destroy();
 	}
@@ -73,7 +70,7 @@ float ABanditCharacter::TakeDamage(float DamageAmount, FDamageEvent const & Dama
 		//Do Damage Animation
 		//Play Damage Audio
 		//Apply Knockback
-
+		
 	}
 
 

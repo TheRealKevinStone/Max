@@ -37,6 +37,9 @@ public:
 	float DashForce;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float Health;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USceneComponent* SpellOffsetComponent;
 
 protected:
@@ -84,6 +87,12 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
 public:
+
+	//Taking Damage from enemies
+	UFUNCTION()
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+
+
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/

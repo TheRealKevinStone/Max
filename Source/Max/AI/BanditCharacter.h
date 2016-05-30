@@ -22,8 +22,8 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
-	// Called every frame
-	virtual void Tick( float DeltaSeconds ) override;
+	//// Called every frame
+	//virtual void Tick( float DeltaSeconds ) override;
 
 	UFUNCTION(BlueprintCallable,Category="BaseBandit")
 	void FireProjectile();
@@ -32,6 +32,8 @@ public:
 	UFUNCTION()
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
+	UFUNCTION(BlueprintCallable, Category = "Bandit")
+	void ResetShot() { Shot = false; }
 
 public:
 	UPROPERTY(EditDefaultsOnly)
@@ -51,6 +53,7 @@ public:
 
 	ABanditController* BanditController;
 
+	//UPROPERTY(BlueprintReadWrite)
 	bool Shot;
 
 	uint32 ArrayReserveNumber=10;

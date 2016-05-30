@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Max.h"
+#include "CharacterControls/MaxCharacter.h"
 #include "BaseProjectile.h"
 
 
@@ -39,10 +40,17 @@ void ABaseProjectile::OnActorOverlap(AActor * OtherActor)
 {
 	if (OtherActor != GetOwner())
 	{
-		//Appply Damage
 		//Cast to player
+		AMaxCharacter* Player = Cast<AMaxCharacter>(OtherActor);
+		if (Player)
+		{
+			//Appply Damage
+			UGameplayStatics::ApplyDamage(Player, Damage, this->GetInstigatorController(), this, UDamageType::StaticClass());
+
+		}
 		//Add knockback
 		//Add sounds
+		//Add Explosion
 		this->Destroy();
 	}
 }

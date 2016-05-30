@@ -43,6 +43,9 @@ AMaxCharacter::AMaxCharacter()
 	SpellOffsetComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SpellOffset"));
 	SpellOffsetComponent->AttachTo(RootComponent);
 
+	//Setting Collision on
+	SetActorEnableCollision(true);
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
@@ -112,6 +115,29 @@ void AMaxCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 	InputComponent->BindAction("CastSpellTwo", IE_Pressed, this, &AMaxCharacter::OnFire2);
 
 
+}
+
+float AMaxCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+{
+	//Take away from health
+	Health -= DamageAmount;
+	//Check if player is alive
+	if (Health <= 0.f)
+	{
+		//Do Death Animation
+		//Play Audio
+		//Set collision off
+		GEngine->AddOnScreenDebugMessage(1, 2.f, FColor::Blue, TEXT("Player Dead"));
+		SetActorEnableCollision(false);
+	}
+	else
+	{
+		//Do Damage Animation
+		//Play Damage Audio
+		//Apply Knockback
+		GEngine->AddOnScreenDebugMessage(1, 50.f, FColor::Blue, TEXT("Player Damaged"));
+	}
+	return Health;
 }
 
 void AMaxCharacter::TurnAtRate(float Rate)

@@ -14,6 +14,11 @@ void UBanditAnimInstance::NativeUpdateAnimation(float DeltaTime)
 	if (Owner)
 	{
 		Speed = Owner->GetVelocity().Size();
+		if (Shot)
+		{
+			Owner->ResetShot();
+			Shot = false;
+		}
 	}
 
 }
