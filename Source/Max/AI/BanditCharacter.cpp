@@ -54,26 +54,49 @@ void ABanditCharacter::FireProjectile()
 	}
 }
 
-float ABanditCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+//float ABanditCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+//{
+//	Health -= DamageAmount;
+//	if (Health <= 0.f)
+//	{
+//		//Do Death Animation
+//		//Play Death Audio
+//		
+//		this->SetActorEnableCollision(false);
+//
+//	}
+//	else
+//	{
+//		//Do Damage Animation
+//		//Play Damage Audio
+//		//Apply Knockback
+//		
+//	}
+//
+//
+//	return Health;
+//}
+
+void ABanditCharacter::StopBehaviorTree()
 {
-	Health -= DamageAmount;
-	if (Health <= 0.f)
+	if (BanditController)
 	{
-		//Do Death Animation
-		//Play Death Audio
-		
-		this->SetActorEnableCollision(false);
-		Destroy();
-	}
-	else
-	{
-		//Do Damage Animation
-		//Play Damage Audio
-		//Apply Knockback
-		
-	}
+		BanditController->GetBehaviorComp()->StopTree();
 
-
-	return Health;
+	}
 }
+
+void ABanditCharacter::StartBehaviorTree()
+{
+	if (BanditController)
+	{
+		BanditController->GetBehaviorComp()->StartTree(*BehaviorTree);
+
+	}
+}
+
+//void ABanditCharacter::OnEnemyDead()
+//{
+//
+//}
 

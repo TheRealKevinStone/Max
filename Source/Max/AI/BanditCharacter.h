@@ -29,11 +29,20 @@ public:
 	void FireProjectile();
 
 	//Taking Damage from player
-	UFUNCTION()
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+	//UFUNCTION()
+	//virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Bandit")
 	void ResetShot() { Shot = false; }
+
+	UFUNCTION(BlueprintCallable, Category = "Bandit")
+	void StopBehaviorTree();
+
+	UFUNCTION(BlueprintCallable, Category = "Bandit")
+	void StartBehaviorTree();
+
+	//UFUNCTION(BlueprintCallable, Category = "EnemyManager")
+	//void OnEnemyDead();
 
 public:
 	UPROPERTY(EditDefaultsOnly)
@@ -49,12 +58,18 @@ public:
 	//TArray<ATestTargetPoint*> WaypointList;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float Health;
+	float BanditHealth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MaxHealth;
 
 	ABanditController* BanditController;
 
 	//UPROPERTY(BlueprintReadWrite)
 	bool Shot;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool isActive;
 
 	uint32 ArrayReserveNumber=10;
 };
