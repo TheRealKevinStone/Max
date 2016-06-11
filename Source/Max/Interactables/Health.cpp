@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Max.h"
-#include "Max/CharacterControls/MaxCharacter.h"
 #include "Health.h"
 
 
@@ -26,6 +25,11 @@ AHealth::AHealth()
 void AHealth::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//to use max as reference when needed
+	AMaxCharacter* Max = Cast<AMaxCharacter>(*TActorIterator<AMaxCharacter>(GetWorld()));
+
+	HealthCollider->SetSimulatePhysics(false);
 	
 }
 
@@ -38,11 +42,16 @@ void AHealth::Tick( float DeltaTime )
 
 void AHealth::OnOverLap(class AActor* OtherActor)
 {
-	//Max = Cast<AMaxCharacter>(OtherActor);
+	//AMaxCharacter* Max = Cast<AMaxCharacter>(OtherActor);
 
-	//if (HealthSFX)
+	//if (Max)
 	//{
-		//UGameplayStatics::PlaySoundAtLocation(this, HealthSFX, GetActorLocation(), 1, 1);
+	//	float CurrentHealth = Max->Health;
+	//	CurrentHealth += HealthValue;
+	//	//Max->Health(CurrentHealth);
+	//	Event_ApplyToPlayer(Max);
 	//}
+
+	
 }
 

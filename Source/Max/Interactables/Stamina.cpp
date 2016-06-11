@@ -1,26 +1,26 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Max.h"
-#include "Currency.h"
+#include "Stamina.h"
 
 
 // Sets default values
-ACurrency::ACurrency()
+AStamina::AStamina()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	CurrencyCollider = CreateDefaultSubobject<USphereComponent>(TEXT("Currency Collider"));
-	RootComponent = CurrencyCollider;
+	StaminaCollider = CreateDefaultSubobject<USphereComponent>(TEXT("Stamina Collider"));
+	RootComponent = StaminaCollider;
 
-	CurrencyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Currency Mesh"));
-	CurrencyMesh->AttachTo(RootComponent);
+	StaminaMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Currency Mesh"));
+	StaminaMesh->AttachTo(RootComponent);
 
 	//OnActorBeginOverlap.AddDynamic(this, &::OnOverlap);
 }
 
 // Called when the game starts or when spawned
-void ACurrency::BeginPlay()
+void AStamina::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -43,7 +43,7 @@ void ACurrency::BeginPlay()
 }
 
 // Called every frame
-void ACurrency::Tick( float DeltaTime )
+void AStamina::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
@@ -63,7 +63,7 @@ void ACurrency::Tick( float DeltaTime )
 			set actor location lerp, get actorlocation - max location, repel from player
 	*/
 
-	CurrencyCollider->AddRelativeRotation(FRotator(XAxisRotate, YAxisRotate, ZAxisRotate), true, false);
+	StaminaCollider->AddRelativeRotation(FRotator(XAxisRotate, YAxisRotate, ZAxisRotate), true, false);
 
 }
 

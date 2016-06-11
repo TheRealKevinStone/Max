@@ -4,8 +4,8 @@
 #include "MaxGameMode.h"
 #include "CharacterControls/MaxCharacter.h"
 #include "UserInterface/HealthBar.h"
-#include "UserInterface/ManaBar.h"
-#include "UserInterface/StaminaBar.h"
+//#include "UserInterface/ManaBar.h"
+//#include "UserInterface/StaminaBar.h"
 
 AMaxGameMode::AMaxGameMode()
 {
@@ -17,7 +17,7 @@ AMaxGameMode::AMaxGameMode()
 	//}
 
 	HUDClass = AHealthBar::StaticClass();
-	HUDClass = AManaBar::StaticClass();
-	HUDClass = AStaminaBar::StaticClass();
+	/*HUDClass = AManaBar::StaticClass();
+	HUDClass = AStaminaBar::StaticClass();*/
 
 }

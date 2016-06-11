@@ -3,16 +3,16 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
-#include "Currency.generated.h"
+#include "Stamina.generated.h"
 
 UCLASS()
-class MAX_API ACurrency : public AActor
+class MAX_API AStamina : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ACurrency();
+	AStamina();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -22,7 +22,7 @@ public:
 
 	//value for the pickup. default for now at 100
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	uint8 CurrencyVal = 100;
+	uint8 StaminaVal = 100;
 
 	//axis rotations (for effect)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -39,15 +39,15 @@ protected:
 
 	//money pickup sfx
 	UPROPERTY(EditAnywhere, Category = Sound)
-		USoundCue* CurrencySFX;
+		USoundCue* StaminaSFX;
 
 	//collider for currency pick up
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		USphereComponent* CurrencyCollider;
+		USphereComponent* StaminaCollider;
 
 	//mesh for currency pick up
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UStaticMeshComponent* CurrencyMesh;
+		UStaticMeshComponent* StaminaMesh;
 
 protected:
 

@@ -21,9 +21,12 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
+	////to use max as reference when needed
+	//AMaxCharacter* Max = Cast<AMaxCharacter>(*TActorIterator<AMaxCharacter>(GetWorld()));
+
 	//how much health you'll get
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float HealthValue = 15.f;
+		float HealthValue = 15.f;
 
 	//axis rotations (for effect)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -47,14 +50,17 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* HealthMesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TSubclassOf<AHealth> HealthDrop;
+
 protected:
 
 	//when an actor overlaps with this one (will be player)
 	UFUNCTION()
 	virtual void OnOverLap(class AActor* OtherActor);
 
-	//UFUNCTION(BlueprintImplementableEvent, Category = Drop, meta = (DisplayName = "Apply to Player")) 
-	//void Event_ApplyToPlayer(AMaxCharacter* Max);
+	UFUNCTION(BlueprintImplementableEvent, Category = Drop, meta = (DisplayName = "Apply to Player")) 
+	void Event_ApplyToPlayer(AMaxCharacter* Max);
 
 	
 };

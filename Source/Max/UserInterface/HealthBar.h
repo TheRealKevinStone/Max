@@ -19,4 +19,16 @@ class MAX_API AHealthBar : public AHUD
 	
 	//UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UTexture2D* HealthBarTexture;
+
+	void DrawManaBar();
+
+	//UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UTexture2D* ManaBarTexture;
+
+	void DrawStaminaBar();
+
+	//UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UTexture2D* StaminaBarTexture;
+
+	UTexture2D* LoadAsset(FString aPath);
 };
