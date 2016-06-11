@@ -30,6 +30,8 @@ void AHealth::BeginPlay()
 	AMaxCharacter* Max = Cast<AMaxCharacter>(*TActorIterator<AMaxCharacter>(GetWorld()));
 
 	HealthCollider->SetSimulatePhysics(false);
+
+	GEngine->AddOnScreenDebugMessage(3, 9000.f, FColor::Green, FString::Printf(TEXT("HealthPoints = ")) + FString::SanitizeFloat(Max->HealthPoints));
 	
 }
 
@@ -42,15 +44,16 @@ void AHealth::Tick( float DeltaTime )
 
 void AHealth::OnOverLap(class AActor* OtherActor)
 {
-	//AMaxCharacter* Max = Cast<AMaxCharacter>(OtherActor);
+	AMaxCharacter* Max = Cast<AMaxCharacter>(OtherActor);
+	//UE_LOG(YourLog, Warning, TEXT("MyCharacter's Health is %f"), MyCharacter->Health)
 
-	//if (Max)
-	//{
-	//	float CurrentHealth = Max->Health;
-	//	CurrentHealth += HealthValue;
-	//	//Max->Health(CurrentHealth);
-	//	Event_ApplyToPlayer(Max);
-	//}
+	if (Max)
+	{
+		float CurrentHealthPoints = Max->getHealthtPoints();
+		CurrentHealthPoints += HealthValue;
+		Max->setHP(CurrentHealthPoints);
+		Event_ApplyToPlayer(Max);
+	}
 
 	
 }

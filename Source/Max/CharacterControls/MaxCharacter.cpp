@@ -120,9 +120,9 @@ void AMaxCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 float AMaxCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
 	//Take away from health
-	Health -= DamageAmount;
+	HealthPoints -= DamageAmount;
 	//Check if player is alive
-	if (Health <= 0.f)
+	if (HealthPoints <= 0.f)
 	{
 		//Do Death Animation
 		//Play Audio
@@ -137,7 +137,7 @@ float AMaxCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageE
 		//Apply Knockback
 		GEngine->AddOnScreenDebugMessage(1, 50.f, FColor::Blue, TEXT("Player Damaged"));
 	}
-	return Health;
+	return HealthPoints;
 }
 
 void AMaxCharacter::TurnAtRate(float Rate)
