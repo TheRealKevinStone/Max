@@ -30,5 +30,5 @@ class MAX_API AHealthBar : public AHUD
 	//UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UTexture2D* StaminaBarTexture;
 
-	UTexture2D* LoadAsset(FString aPath);
+	//UTexture2D* LoadAsset(FString aPath);
 };

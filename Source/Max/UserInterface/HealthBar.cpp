@@ -7,18 +7,18 @@
 AHealthBar::AHealthBar(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	//static ConstructorHelpers::FObjectFinder<UTexture2D> HealthTextPath(TEXT("/Game/UI/TempHealth"));
-	//static ConstructorHelpers::FObjectFinder<UTexture2D> ManaTextPath(TEXT("/Game/UI/TempMana"));
-	//static ConstructorHelpers::FObjectFinder<UTexture2D> StaminaTextPath(TEXT("/Game/UI/TempStamina"));
+	static ConstructorHelpers::FObjectFinder<UTexture2D> HealthTextPath(TEXT("/Game/UI/TempHealth"));
+	static ConstructorHelpers::FObjectFinder<UTexture2D> ManaTextPath(TEXT("/Game/UI/TempMana"));
+	static ConstructorHelpers::FObjectFinder<UTexture2D> StaminaTextPath(TEXT("/Game/UI/TempStamina"));
 
-	//HealthBarTexture = HealthTextPath.Object;
-	//ManaBarTexture = ManaTextPath.Object;
-	//StaminaBarTexture = StaminaTextPath.Object;
+	HealthBarTexture = HealthTextPath.Object;
+	ManaBarTexture = ManaTextPath.Object;
+	StaminaBarTexture = StaminaTextPath.Object;
 }
 
-int32 TestHealth = 200;
-int32 TestMana = 200;
-int32 TestStamina = 200;
+int32 TestHealth = 100;
+int32 TestMana = 100;
+int32 TestStamina = 100;
 
 
 void AHealthBar::DrawHUD()
@@ -35,7 +35,7 @@ void AHealthBar::DrawHUD()
 void AHealthBar::DrawHealthBar()
 {
 
-	if (!HealthBarTexture)
+	/*if (!HealthBarTexture)
 	{
 		HealthBarTexture = LoadAsset("/Game/UI/TempHealth");
 		
@@ -43,11 +43,11 @@ void AHealthBar::DrawHealthBar()
 		{
 			return;
 		}
-	}
+	}*/
 
 	float ScaleHealthUI = Canvas->ClipY / Canvas->ClipX;
 
-	if (GetAsyncKeyState(VK_NUMPAD7) != 0 && TestHealth < 196)
+	if (GetAsyncKeyState(VK_NUMPAD7) != 0 && TestHealth < 96)
 	{
 		TestHealth += 5;
 	}
@@ -59,13 +59,13 @@ void AHealthBar::DrawHealthBar()
 
 	FCanvasIcon HealthBarIcon = UCanvas::MakeIcon(HealthBarTexture, 0, 0, TestHealth, 20);
 
-	Canvas->DrawIcon(HealthBarIcon, (Canvas->SizeX)/5, 20, ScaleHealthUI);
+	Canvas->DrawIcon(HealthBarIcon, (Canvas->SizeX)/ 9, 20, ScaleHealthUI);
 }
 
 void AHealthBar::DrawManaBar()
 {
 
-	if (!ManaBarTexture)
+	/*if (!ManaBarTexture)
 	{
 		ManaBarTexture = LoadAsset("/Game/UI/ManaBar");
 
@@ -73,11 +73,11 @@ void AHealthBar::DrawManaBar()
 		{
 			return;
 		}
-	}
+	}*/
 
 	float ScaleManaUI = Canvas->ClipY / Canvas->ClipX;
 
-	if (GetAsyncKeyState(VK_NUMPAD8) != 0 && TestMana < 196)
+	if (GetAsyncKeyState(VK_NUMPAD8) != 0 && TestMana < 96)
 	{
 		TestMana += 5;
 	}
@@ -89,13 +89,13 @@ void AHealthBar::DrawManaBar()
 
 	FCanvasIcon ManaBarIcon = UCanvas::MakeIcon(ManaBarTexture, 0, 0, TestMana, 20);
 
-	Canvas->DrawIcon(ManaBarIcon, (Canvas->SizeX) / 2.5, 20, ScaleManaUI);
+	Canvas->DrawIcon(ManaBarIcon, (Canvas->SizeX) / 9, 5, ScaleManaUI);
 }
 
 void AHealthBar::DrawStaminaBar()
 {
 
-	if (!StaminaBarTexture)
+	/*if (!StaminaBarTexture)
 	{
 		StaminaBarTexture = LoadAsset("/Game/UI/StaminaBarTexture");
 
@@ -103,11 +103,11 @@ void AHealthBar::DrawStaminaBar()
 		{
 			return;
 		}
-	}
+	}*/
 
 	float ScaleManaUI = Canvas->ClipY / Canvas->ClipX;
 
-	if (GetAsyncKeyState(VK_NUMPAD9) != 0 && TestStamina < 196)
+	if (GetAsyncKeyState(VK_NUMPAD9) != 0 && TestStamina < 96)
 	{
 		TestStamina += 5;
 	}
@@ -119,15 +119,15 @@ void AHealthBar::DrawStaminaBar()
 
 	FCanvasIcon StaminaBarIcon = UCanvas::MakeIcon(StaminaBarTexture, 0, 0, TestStamina, 20);
 
-	Canvas->DrawIcon(StaminaBarIcon, (Canvas->SizeX) / 7.5, 20, ScaleManaUI);
+	Canvas->DrawIcon(StaminaBarIcon, (Canvas->SizeX) / 9, 1, ScaleManaUI);
 }
 
-UTexture2D* AHealthBar::LoadAsset(FString aPath)
-{
-
-	FStreamableManager* stream = new FStreamableManager;
-	
-	FStringAssetReference ref(aPath);
-
-	return Cast<UTexture2D>(stream->SynchronousLoad(ref));
-}
+//UTexture2D* AHealthBar::LoadAsset(FString aPath)
+//{
+//
+//	FStreamableManager* stream = new FStreamableManager;
+//	
+//	FStringAssetReference ref(aPath);
+//
+//	return Cast<UTexture2D>(stream->SynchronousLoad(ref));
+//}
