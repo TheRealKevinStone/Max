@@ -55,6 +55,8 @@ void AHealth::OnOverLap(class AActor* OtherActor)
 		Event_ApplyToPlayer(Max);
 	}
 
+	Destroy();
+
 	
 }
 
