@@ -2,6 +2,7 @@
 
 #include "Max.h"
 #include "HealthBar.h"
+#include "CharacterControls/MaxCharacter.h"
 #include "Engine/Canvas.h"
 
 AHealthBar::AHealthBar(const FObjectInitializer& ObjectInitializer)
@@ -16,9 +17,9 @@ AHealthBar::AHealthBar(const FObjectInitializer& ObjectInitializer)
 	StaminaBarTexture = StaminaTextPath.Object;
 }
 
-int32 TestHealth = 100;
-int32 TestMana = 100;
-int32 TestStamina = 100;
+int32 TestHealth = 350;
+int32 TestMana = 350;
+int32 TestStamina = 350;
 
 
 void AHealthBar::DrawHUD()
@@ -47,7 +48,7 @@ void AHealthBar::DrawHealthBar()
 
 	float ScaleHealthUI = Canvas->ClipY / Canvas->ClipX;
 
-	if (GetAsyncKeyState(VK_NUMPAD7) != 0 && TestHealth < 96)
+	/*if (GetAsyncKeyState(VK_NUMPAD7) != 0 && TestHealth < 96)
 	{
 		TestHealth += 5;
 	}
@@ -55,11 +56,11 @@ void AHealthBar::DrawHealthBar()
 	if (GetAsyncKeyState(VK_NUMPAD4) != 0 && TestHealth > 5)
 	{
 		TestHealth -= 5;
-	}
+	}*/
 
 	FCanvasIcon HealthBarIcon = UCanvas::MakeIcon(HealthBarTexture, 0, 0, TestHealth, 20);
 
-	Canvas->DrawIcon(HealthBarIcon, (Canvas->SizeX)/ 9, 20, ScaleHealthUI);
+	Canvas->DrawIcon(HealthBarIcon, (Canvas->SizeX)/ 10, 20, ScaleHealthUI);
 }
 
 void AHealthBar::DrawManaBar()
@@ -67,7 +68,7 @@ void AHealthBar::DrawManaBar()
 
 	/*if (!ManaBarTexture)
 	{
-		ManaBarTexture = LoadAsset("/Game/UI/ManaBar");
+		ManaBarTexture = LoadAsset("/Game/UI/TempMana");
 
 		if (!ManaBarTexture)
 		{
@@ -89,12 +90,12 @@ void AHealthBar::DrawManaBar()
 
 	FCanvasIcon ManaBarIcon = UCanvas::MakeIcon(ManaBarTexture, 0, 0, TestMana, 20);
 
-	Canvas->DrawIcon(ManaBarIcon, (Canvas->SizeX) / 9, 5, ScaleManaUI);
+	Canvas->DrawIcon(ManaBarIcon, (Canvas->SizeX) / 10, 40, ScaleManaUI);
 }
+
 
 void AHealthBar::DrawStaminaBar()
 {
-
 	/*if (!StaminaBarTexture)
 	{
 		StaminaBarTexture = LoadAsset("/Game/UI/StaminaBarTexture");
@@ -105,7 +106,7 @@ void AHealthBar::DrawStaminaBar()
 		}
 	}*/
 
-	float ScaleManaUI = Canvas->ClipY / Canvas->ClipX;
+	float ScaleStaminaUI = Canvas->ClipY / Canvas->ClipX;
 
 	if (GetAsyncKeyState(VK_NUMPAD9) != 0 && TestStamina < 96)
 	{
@@ -119,7 +120,7 @@ void AHealthBar::DrawStaminaBar()
 
 	FCanvasIcon StaminaBarIcon = UCanvas::MakeIcon(StaminaBarTexture, 0, 0, TestStamina, 20);
 
-	Canvas->DrawIcon(StaminaBarIcon, (Canvas->SizeX) / 9, 1, ScaleManaUI);
+	Canvas->DrawIcon(StaminaBarIcon, (Canvas->SizeX) / 10, 60, ScaleStaminaUI);
 }
 
 //UTexture2D* AHealthBar::LoadAsset(FString aPath)
