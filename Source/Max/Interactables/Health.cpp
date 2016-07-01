@@ -10,7 +10,7 @@ AHealth::AHealth()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	//Max = Cast<AMaxCharacter>(*TActorIterator<AMaxCharacter>(GetWorld()));
+	//AMaxCharacter* Max = Cast<AMaxCharacter>(*TActorIterator<AMaxCharacter>(GetWorld()));
 
 	HealthCollider = CreateDefaultSubobject<USphereComponent>(TEXT("Health Collider"));
 	RootComponent = HealthCollider;
@@ -27,11 +27,9 @@ void AHealth::BeginPlay()
 	Super::BeginPlay();
 
 	//to use max as reference when needed
-	AMaxCharacter* Max = Cast<AMaxCharacter>(*TActorIterator<AMaxCharacter>(GetWorld()));
+	//AMaxCharacter* Max = Cast<AMaxCharacter>(*TActorIterator<AMaxCharacter>(GetWorld()));
 
 	HealthCollider->SetSimulatePhysics(false);
-
-	GEngine->AddOnScreenDebugMessage(3, 9000.f, FColor::Green, FString::Printf(TEXT("HealthPoints = ")) + FString::SanitizeFloat(Max->HealthPoints));
 	
 }
 
@@ -39,6 +37,12 @@ void AHealth::BeginPlay()
 void AHealth::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
+
+	AMaxCharacter* Max = Cast<AMaxCharacter>(*TActorIterator<AMaxCharacter>(GetWorld()));
+
+	GEngine->AddOnScreenDebugMessage(3, 9000.f, FColor::Green, FString::Printf(TEXT("HealthPoints = ")) + FString::SanitizeFloat(Max->HealthPoints));
+
+	HealthCollider->AddRelativeRotation(FRotator(XAxisRotate, YAxisRotate, ZAxisRotate), true, false);
 
 }
 
@@ -53,6 +57,8 @@ void AHealth::OnOverLap(class AActor* OtherActor)
 		CurrentHealthPoints += HealthValue;
 		Max->setHP(CurrentHealthPoints);
 		Event_ApplyToPlayer(Max);
+
+		GEngine->AddOnScreenDebugMessage(8, 3.f, FColor::Green, FString::Printf(TEXT("Health COllected, Updated Health = ")) + FString::SanitizeFloat(Max->HealthPoints));
 	}
 
 	Destroy();
