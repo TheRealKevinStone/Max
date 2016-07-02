@@ -13,8 +13,11 @@ AGib::AGib()
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	RootComponent = Root;
 
-	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
-	Collider->AttachTo(RootComponent);
+	//Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
+	////Collider->BodyInstance.SetCollisionProfileName("Projectile");
+	////OnActorBeginOverlap.AddDynamic(this, &ABaseProjectile::OnActorOverlap);
+	////Collider->OnComponentBeginOverlap.AddDynamic(this, &AGib::OnExplosion);
+	//Collider->AttachTo(RootComponent);
 
 	GibMesh1 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gib1"));
 	GibMesh1->AttachTo(RootComponent);
@@ -43,8 +46,8 @@ void AGib::BeginPlay()
 {
 	Super::BeginPlay();
 	FVector Origin = this->GetActorLocation();
-	SetActorLocation(FVector(Origin.X, Origin.Y, FloorOffset));
-
+	//SetActorLocation(FVector(Origin.X, Origin.Y, FloorOffset));
+	//IsAttacked = false;
 
 	//Applying Impulse force and setting physics on
 	GibMesh1->SetSimulatePhysics(true);
@@ -75,36 +78,60 @@ void AGib::BeginPlay()
 	//}
 }
 
-void AGib::Tick(float DeltaSeconds)
-{
-	Super::Tick(DeltaSeconds);
+//void AGib::Tick(float DeltaSeconds)
+//{
+//	Super::Tick(DeltaSeconds);
+//
+//	//more experimenting with collision with explosion
+//	//if (!TimesUp)
+//	//{
+//	//	if (CurrentTimer <= ExplosionDuration)
+//	//	{
+//	//		TArray<AActor*> OverlappingActors;
+//	//		Collider->GetOverlappingActors(OverlappingActors);
+//	//		for (AActor* CollidedActor : OverlappingActors)
+//	//		{
+//	//			AMaxCharacter* Player = Cast<AMaxCharacter>(CollidedActor);
+//	//			if (Player)
+//	//			{
+//	//				if (!IsAttacked)
+//	//				{
+//	//					//Apply Damage
+//	//					//UGameplayStatics::ApplyDamage(Player,Damage, this->GetInstigatorController(), this, UDamageType::StaticClass());
+//	//					IsAttacked = true;
+//	//					
+//	//					//Deactivate Impact particle effect and explosion
+//	//					
+//	//				}
+//	//			}
+//	//		}
+//	//		
+//	//	}
+//	//	else
+//	//	{
+//	//		TimesUp = true;
+//	//	}
+//	//	CurrentTimer += DeltaSeconds;
+//	//}
+//
+//}
 
-	if (!TimesUp)
-	{
-		CurrentTimer += DeltaSeconds;
-
-		if (CurrentTimer <= ExplosionDuration)
-		{
-			TArray<AActor*> OverlappingActors;
-			Collider->GetOverlappingActors(OverlappingActors);
-			for (AActor* CollidedActor : OverlappingActors)
-			{
-				AMaxCharacter* Player = Cast<AMaxCharacter>(CollidedActor);
-				if (Player)
-				{
-					if (!IsAttacked)
-					{
-						//Apply Damage
-						//UGameplayStatics::ApplyDamage(Player,Damage,
-						IsAttacked = true;
-						
-						//Deactivate Impact particle effect and explosion
-
-					}
-				}
-			}
-		}
-	}
-
-}
+//Attempt to do On Trigger Enter into a function
+//void AGib::OnExplosion(class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+//{
+//	if (OtherActor != GetOwner())
+//	{
+//		AMaxCharacter* Player = Cast<AMaxCharacter>(OtherActor);
+//		if (Player)
+//		{
+//			if (!IsAttacked)
+//			{
+//				//Apply Damage
+//				UGameplayStatics::ApplyDamage(Player, Damage, this->GetInstigatorController(), this, UDamageType::StaticClass());
+//				IsAttacked = true;
+//				Collider->BodyInstance.SetCollisionProfileName("IgnoreCollision");
+//			}
+//		}
+//	}
+//}
 
