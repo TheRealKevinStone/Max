@@ -3,6 +3,7 @@
 #include "Max.h"
 #include "FireDart.h"
 #include "AI/BanditCharacter.h"
+#include "AI/DamageTypes/Burning_DT.h"
 #include "AI/AI_Weapons/BaseTicker.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
@@ -61,7 +62,7 @@ void AFireDart::OnHit_Implementation(AActor * OtherActor)
 		ABaseTicker* Ticker = Cast<ABaseTicker>(OtherActor);
 		if (Bandit)
 		{
-			UGameplayStatics::ApplyDamage(Bandit, Damage, this->GetInstigatorController(), this, UDamageType::StaticClass());
+			UGameplayStatics::ApplyDamage(Bandit, Damage, this->GetInstigatorController(), this, UBurning_DT::StaticClass());
 			this->Destroy();
 		}
 		else if (Ticker)
