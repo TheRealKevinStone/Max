@@ -38,8 +38,7 @@ public:
 
 	//Getting waypoint from Array
 	ATestTargetPoint* CurrentWaypoint();
-	
-	virtual void BanditFrozen();
+
 
 protected:
 	UPROPERTY(VisibleAnywhere)

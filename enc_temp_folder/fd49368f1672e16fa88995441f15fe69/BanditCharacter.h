@@ -41,9 +41,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Bandit")
 	void StartBehaviorTree();
 
-	UFUNCTION(BlueprintCallable, Category = "Bandit")
-	void FrozenFeetHit();
-
 	//UFUNCTION(BlueprintCallable, Category = "EnemyManager")
 	//void OnEnemyDead();
 
