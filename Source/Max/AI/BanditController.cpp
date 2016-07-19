@@ -119,8 +119,5 @@ ATestTargetPoint* ABanditController::CurrentWaypoint()
 	
 }
 
-void ABanditController::BanditFrozen()
-{
-	BlackboardComp->SetValueAsBool(TEXT("isFrozen"), true);
-}
+
 

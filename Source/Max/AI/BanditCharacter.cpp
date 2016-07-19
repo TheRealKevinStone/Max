@@ -95,14 +95,6 @@ void ABanditCharacter::StartBehaviorTree()
 	}
 }
 
-void ABanditCharacter::FrozenFeetHit()
-{
-	if (BanditController)
-	{
-		BanditController->BanditFrozen();
-	}
-}
-
 //void ABanditCharacter::OnEnemyDead()
 //{
 //
