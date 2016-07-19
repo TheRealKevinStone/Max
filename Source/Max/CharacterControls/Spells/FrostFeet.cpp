@@ -44,7 +44,6 @@ void AFrostFeet::BeginPlay()
 
 void AFrostFeet::OnHit_Implementation(AActor * OtherActor)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Frost Feet Collision"));
 	if (OtherActor != GetOwner())
 	{
 		ABanditCharacter* Bandit = Cast<ABanditCharacter>(OtherActor);
