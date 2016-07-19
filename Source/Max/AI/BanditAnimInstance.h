@@ -28,6 +28,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool Shot;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool isFrozen;
 public:
 	virtual void NativeUpdateAnimation(float DeltaTime) override;
 	

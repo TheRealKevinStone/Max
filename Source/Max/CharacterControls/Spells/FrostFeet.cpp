@@ -14,6 +14,8 @@ AFrostFeet::AFrostFeet()
 
 
 	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
+	Collider->BodyInstance.SetCollisionProfileName("Projectile");
+	RootComponent = Collider;
 	OnActorBeginOverlap.AddDynamic(this, &AFrostFeet::OnHit);
 
 	SetActorEnableCollision(true);
@@ -27,6 +29,7 @@ void AFrostFeet::BeginPlay()
 	if (Player)
 	{
 		FVector SpawnPoint = Player->GetActorLocation();
+		SetActorRotation(FRotator::ZeroRotator);
 		this->SetActorLocation(SpawnPoint);
 	}
 
@@ -41,6 +44,7 @@ void AFrostFeet::BeginPlay()
 
 void AFrostFeet::OnHit_Implementation(AActor * OtherActor)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Frost Feet Collision"));
 	if (OtherActor != GetOwner())
 	{
 		ABanditCharacter* Bandit = Cast<ABanditCharacter>(OtherActor);
