@@ -20,7 +20,7 @@ void ABanditCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	BanditController = Cast<ABanditController>(GetController());
-	
+	BanditHealth = MaxHealth;
 	//To look for waypoints in the world.
 	//for (ATestTargetPoint* Waypoint : WaypointList)
 	//{

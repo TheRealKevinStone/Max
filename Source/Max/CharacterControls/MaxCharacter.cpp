@@ -135,6 +135,7 @@ float AMaxCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageE
 		//Do Damage Animation
 		//Play Damage Audio
 		//Apply Knockback
+		LaunchCharacter(GetActorForwardVector()*KnockbackForce, true, true);
 		GEngine->AddOnScreenDebugMessage(1, 50.f, FColor::Blue, TEXT("Player Damaged"));
 	}
 	return HealthPoints;

@@ -99,6 +99,7 @@ void AGib::Tick(float DeltaSeconds)
 					{
 						//Apply Damage
 						UGameplayStatics::ApplyDamage(Player,Damage, this->GetInstigatorController(), this, UDamageType::StaticClass());
+						
 						IsAttacked = true;
 						
 						//Deactivate Impact particle effect and explosion

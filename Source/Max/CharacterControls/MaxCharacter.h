@@ -45,6 +45,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float HealthPoints = 100.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float KnockbackForce;
+
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	float getHealthtPoints() { return HealthPoints; }
 	

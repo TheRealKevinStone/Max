@@ -66,6 +66,9 @@ public:
 	float ExplosionDuration;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float KnockbackForce;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Damage;
 
 	bool TimesUp;
