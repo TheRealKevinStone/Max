@@ -44,15 +44,19 @@ void ARockPunch::Tick( float DeltaTime )
 			for (AActor* CollidedActor : OverlappingActors)
 			{
 				ABanditCharacter* Bandit = Cast<ABanditCharacter>(CollidedActor);
+				ABaseTicker* Ticker = Cast<ABaseTicker>(CollidedActor);
 				if (Bandit)
 				{
 					if (!isAttacked)
 					{
 						UGameplayStatics::ApplyDamage(Bandit, Damage, this->GetInstigatorController(), this, UDamageType::StaticClass());
-						//Bandit->LaunchCharacter(&Bandit->GetActorForwardVector*KnockbackForce,true,true);
-						//Bandit->RockPunchLaunch();
 						isAttacked = true;
 					}
+				}
+				else if (Ticker)
+				{
+					UGameplayStatics::ApplyDamage(Ticker, Damage, this->GetInstigatorController(), this, UDamageType::StaticClass());
+					isAttacked = true;
 				}
 			}
 		}

@@ -4,6 +4,7 @@
 
 #include "GameFramework/Character.h"
 #include "CharacterControls/MaxCharacter.h"
+#include "TickerController.h"
 #include "AI/AI_Aesthetic/Gib.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BaseTicker.generated.h"
@@ -33,6 +34,8 @@ public:
 	//Explosion function to spawn gibs
 	UFUNCTION(BlueprintCallable,Category= "Ticker")
 	void ExplosionGib();
+
+	virtual void FrozenSpellHit();
 	
 public:
 	//Property for behavior tree
@@ -53,6 +56,8 @@ public:
 protected:
 	//Cache for player
 	AMaxCharacter* Player;
+
+	//ATickerController* TickerController;
 	//check if you exploded
 	bool Exploded;
 	//Check if player is near

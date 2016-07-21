@@ -2,6 +2,7 @@
 
 #include "Max.h"
 #include "AI/BanditCharacter.h"
+#include "AI/AI_Weapons/BaseTicker.h"
 #include "CharacterControls/MaxCharacter.h"
 #include "FrostFeet.h"
 
@@ -47,9 +48,14 @@ void AFrostFeet::OnHit_Implementation(AActor * OtherActor)
 	if (OtherActor != GetOwner())
 	{
 		ABanditCharacter* Bandit = Cast<ABanditCharacter>(OtherActor);
+		ABaseTicker* Ticker = Cast<ABaseTicker>(OtherActor);
 		if (Bandit)
 		{
 			Bandit->FrozenFeetHit();
+		}
+		else if (Ticker)
+		{
+			Ticker->FrozenSpellHit();
 		}
 	}
 }

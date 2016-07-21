@@ -34,6 +34,8 @@ public:
 
 	void Sleep();
 
+	void GotFrozen();
+
 	void RandomMoveTo();
 
 	FVector GetTickerPosition()
@@ -60,7 +62,7 @@ public:
 	UPROPERTY(transient)
 	UBlackboardComponent* BlackboardTicker;
 	
-	ABaseTicker* Ticker;
+	//
 
 	AMaxCharacter* Player;
 

@@ -49,7 +49,7 @@ void ATickerController::Possess(APawn * Pawn)
 	Super::Possess(Pawn);
 
 	//Cast ticker from pawn overload
-	Ticker = Cast<ABaseTicker>(Pawn);
+	ABaseTicker* Ticker = Cast<ABaseTicker>(Pawn);
 
 	//check for ticker and if theres a behavior tree
 	if (Ticker&&Ticker->BehaviorTreeBaseTick)
@@ -117,6 +117,13 @@ void ATickerController::RandomMoveTo()
 	}
 }
 
-
+void ATickerController::GotFrozen()
+{
+	if (BlackboardTicker)
+	{
+		BlackboardTicker->SetValueAsBool(TEXT("isFrozen"), true);
+	}
+	
+}
 
 

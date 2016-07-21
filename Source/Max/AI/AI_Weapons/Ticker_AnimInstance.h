@@ -15,14 +15,16 @@ class MAX_API UTicker_AnimInstance : public UAnimInstance
 	
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool bEnableExplodeState;
+	bool bEnableExplodeState;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool bEnableDeadState;
+	bool bEnableDeadState;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float Speed;
+	float Speed;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool isFrozen;
 
 public:
 	virtual void NativeUpdateAnimation(float DeltaTime) override;

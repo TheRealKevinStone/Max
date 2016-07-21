@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Max.h"
-#include "TickerController.h"
 #include "BaseTicker.h"
 
 
@@ -43,7 +42,6 @@ void ABaseTicker::OnOverlap(AActor * OtherActor, UPrimitiveComponent * OtherComp
 		curForwardVector.ProjectOnTo(FVector(1, 1, 0));
 		//curForwardVector.Normalize();
 		LaunchCharacter(curForwardVector*KnockbackMin, true, true);
-
 	}
 }
 
@@ -75,6 +73,15 @@ void ABaseTicker::ExplosionGib()
 				}
 			}
 		}
+	}
+}
+
+void ABaseTicker::FrozenSpellHit()
+{
+	ATickerController* TickController = Cast<ATickerController>(GetController());
+	if (TickController)
+	{
+		TickController->GotFrozen();
 	}
 }
 
