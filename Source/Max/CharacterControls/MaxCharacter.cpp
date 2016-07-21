@@ -267,7 +267,7 @@ void AMaxCharacter::Dash()
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-		FVector LaunchVelocity = GetVelocity().SafeNormal() * DashForce;
+		FVector LaunchVelocity = GetVelocity().GetSafeNormal() * DashForce;
 		LaunchVelocity.Z = 0.f;
 
 		LaunchCharacter(LaunchVelocity, true, false);
