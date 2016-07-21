@@ -50,6 +50,7 @@ void ARockPunch::Tick( float DeltaTime )
 					{
 						UGameplayStatics::ApplyDamage(Bandit, Damage, this->GetInstigatorController(), this, UDamageType::StaticClass());
 						//Bandit->LaunchCharacter(&Bandit->GetActorForwardVector*KnockbackForce,true,true);
+						//Bandit->RockPunchLaunch();
 						isAttacked = true;
 					}
 				}

@@ -44,6 +44,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Bandit")
 	void FrozenFeetHit();
 
+	virtual void RockPunchLaunch();
+
 	//UFUNCTION(BlueprintCallable, Category = "EnemyManager")
 	//void OnEnemyDead();
 
@@ -73,6 +75,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool isActive;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float RockPunch_KB;
 
 	uint32 ArrayReserveNumber=10;
 };

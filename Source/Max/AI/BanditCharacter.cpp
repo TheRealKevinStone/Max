@@ -103,6 +103,11 @@ void ABanditCharacter::FrozenFeetHit()
 	}
 }
 
+void ABanditCharacter::RockPunchLaunch()
+{
+	LaunchCharacter(GetActorForwardVector()*RockPunch_KB, true, true);
+}
+
 //void ABanditCharacter::OnEnemyDead()
 //{
 //
