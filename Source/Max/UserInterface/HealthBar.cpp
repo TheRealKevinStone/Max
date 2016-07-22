@@ -3,6 +3,9 @@
 #include "Max.h"
 #include "HealthBar.h"
 #include "CharacterControls/MaxCharacter.h"
+#include "Interactables/Health.h"
+#include "Interactables/Mana.h"
+#include "Interactables/Stamina.h"
 #include "Engine/Canvas.h"
 
 AHealthBar::AHealthBar(const FObjectInitializer& ObjectInitializer)
