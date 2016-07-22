@@ -8,7 +8,6 @@
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "CharacterControls/MaxCharacter.h"
-#include "BaseTicker.h"
 #include "TickerController.generated.h"
 
 /**
