@@ -54,7 +54,9 @@ AMaxCharacter::AMaxCharacter()
 void AMaxCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	MoveSpeed = CurWalkSpeed;
+	GetCharacterMovement()->MaxWalkSpeed = MoveSpeed;
+	//FiredartMana = MySpellBook->FireDartMana;
 }
 
 // Called every frame
@@ -62,25 +64,48 @@ void AMaxCharacter::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Yellow, FString::Printf(TEXT("Dashing: %s"), bIsDashing ? TEXT("true") : TEXT("false")));
-	if (bIsDashing && Controller != NULL)
+	GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Yellow, FString::Printf(TEXT("Dashing: %s"), isDashing ? TEXT("true") : TEXT("false")));
+	if (isDashing && Controller != NULL)
 	{
-		//// find out which way is forward
-		//const FRotator Rotation = Controller->GetControlRotation();
-		//const FRotator YawRotation(0, Rotation.Yaw, 0);
+		//if player ran out of stamina and isnt exhausted
+		if (StaminaPoints == 0 && !isExhausted)
+		{
+			//Turn off dash function and reduce to walking speed
+			isDashing = false;
+			isExhausted = true;
+			MoveSpeed = CurWalkSpeed;
 
-		//// get forward vector
-		//const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		}
+		//if theres still stamina then decrease stamina points and set to run
+		else
+		{
+			StaminaPoints -= DeltaTime*DecrementRate;
+			StaminaPoints = FMath::Clamp<float>(StaminaPoints, 0, MaxStamina);
+			MoveSpeed = CurRunSpeed;
+		}
+	}
+	else
+	{
+		MoveSpeed = CurWalkSpeed;
+		//Recover stamina if not running
+		if (StaminaPoints < MaxStamina)
+		{
+			StaminaPoints += DeltaTime*RecoveryRate;
+			StaminaPoints = FMath::Clamp<float>(StaminaPoints, 0, MaxStamina);
+		}
+		//if player has enough stamina to use dash
+		if (StaminaPoints >= MaxStamina / 2.f)
+		{
+			isExhausted = false;
+		}
+	}
+	//Setting movement speed to character movement walk speed.
+	GetCharacterMovement()->MaxWalkSpeed = MoveSpeed;
 
-		//// get right vector 
-		//const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	if (ManaPoints < MaxMana && !isCasting)
+	{
+		ManaPoints += DeltaTime*ManaRecoverRate;
 
-		//FVector LaunchVelocity = GetVelocity().SafeNormal() * 1200.f;
-		//DashVelocity.Z = 0.f;
-		//LaunchCharacter(DashVelocity, true, false);
-
-		//FVector MovementDirection = GetVelocity().SafeNormal();
-		//AddMovementInput(MovementDirection, 1.0f);
 	}
 }
 
@@ -110,9 +135,16 @@ void AMaxCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 
 	// Spell Casting Inputs
 	InputComponent->BindAction("CastSpellOne", IE_Pressed, this, &AMaxCharacter::OnFire1);
-	//InputComponent->BindAction("CastSpellOne", IE_Released, this, &AMaxCharacter::OnFire);
+	InputComponent->BindAction("CastSpellOne", IE_Released, this, &AMaxCharacter::OnRelease);
 
 	InputComponent->BindAction("CastSpellTwo", IE_Pressed, this, &AMaxCharacter::OnFire2);
+	InputComponent->BindAction("CastSpellTwo", IE_Released, this, &AMaxCharacter::OnRelease);
+
+	InputComponent->BindAction("CastSpellThree", IE_Pressed, this, &AMaxCharacter::OnFire3);
+	InputComponent->BindAction("CastSpellThree", IE_Released, this, &AMaxCharacter::OnRelease);
+
+	InputComponent->BindAction("CastSpellFour", IE_Pressed, this, &AMaxCharacter::OnFire4);
+	InputComponent->BindAction("CastSpellFour", IE_Released, this, &AMaxCharacter::OnRelease);
 
 
 }
@@ -188,20 +220,22 @@ void AMaxCharacter::MoveRight(float Value)
 void AMaxCharacter::OnFire1()
 {
 	// try and fire a projectile
-	if (Fireball != NULL)
+	if (Firedart != NULL)
 	{
 		const FRotator SpawnRotation = GetControlRotation();
 		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
 		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
 
 		UWorld* const World = GetWorld();
-		if (World != NULL)
+		if (World != NULL && ManaPoints>FiredartMana && !isCasting)
 		{
 			// spawn the projectile at the muzzle
 			World->SpawnActor<AActor>(Firedart, SpawnLocation, SpawnRotation);
+			ManaPoints -= FiredartMana;
 		}
 	}
 
+	
 	// try and play the sound if specified
 	//if (FireSound != NULL)
 	//{
@@ -231,10 +265,11 @@ void AMaxCharacter::OnFire2()
 		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
 
 		UWorld* const World = GetWorld();
-		if (World != NULL)
+		if (World != NULL&&ManaPoints>FireballMana && !isCasting)
 		{
 			// spawn the projectile at the muzzle
 			World->SpawnActor<AActor>(Fireball, SpawnLocation, SpawnRotation);
+			ManaPoints -= FireballMana;
 		}
 	}
 
@@ -257,23 +292,76 @@ void AMaxCharacter::OnFire2()
 
 }
 
+void AMaxCharacter::OnFire3()
+{
+	if (IceBlock != NULL)
+	{
+		const FRotator SpawnRotation = GetControlRotation();
+		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
+
+		UWorld* const World = GetWorld();
+		if (World != NULL&&ManaPoints>IceBlockMana && !isCasting)
+		{
+			// spawn the projectile at the muzzle
+			World->SpawnActor<AActor>(IceBlock, SpawnLocation, SpawnRotation);
+			ManaPoints -= IceBlockMana;
+		}
+	}
+}
+
+void AMaxCharacter::OnFire4()
+{
+	if (RockPunch != NULL)
+	{
+		const FRotator SpawnRotation = GetControlRotation();
+		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
+
+		UWorld* const World = GetWorld();
+		if (World != NULL&&ManaPoints>RockPunchMana && !isCasting)
+		{
+			// spawn the projectile at the muzzle
+			World->SpawnActor<AActor>(RockPunch, SpawnLocation, SpawnRotation);
+			ManaPoints -= RockPunchMana;
+		}
+	}
+}
+
+void AMaxCharacter::OnRelease()
+{
+	isCasting = false;
+}
+
 void AMaxCharacter::Dash()
 {
-	bIsDashing = true;
-
-	if (GetVelocity().Z == 0.f)
+	//Check if player isnt sprinting,exhausted and has enough stamina to dash
+	if (!isDashing&&!isExhausted&&StaminaPoints > 0)
 	{
-		// find out which way is forward
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-		FVector LaunchVelocity = GetVelocity().GetSafeNormal() * DashForce;
-		LaunchVelocity.Z = 0.f;
-
-		LaunchCharacter(LaunchVelocity, true, false);
+		//enable dash
+		isDashing = true;
+		//adjust move speed for character movement
+		MoveSpeed = CurRunSpeed;
 	}
 
 
+
+
+
+
+
+	//bIsDashing = true;
+	//if (GetVelocity().Z == 0.f)
+	//{
+	//	// find out which way is forward
+	//	const FRotator Rotation = Controller->GetControlRotation();
+	//	const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		//FVector LaunchVelocity = GetVelocity().GetSafeNormal() * DashForce;
+		//LaunchVelocity.Z = 0.f;
+
+		//LaunchCharacter(LaunchVelocity, true, false);
+	//}
 	//// get forward vector
 	//const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 
@@ -290,5 +378,5 @@ void AMaxCharacter::Dash()
 
 void AMaxCharacter::StopDashing()
 {
-	bIsDashing = false;
+	isDashing = false;
 }

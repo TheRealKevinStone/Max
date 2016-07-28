@@ -12,4 +12,9 @@ class MAX_API MaxSpellbook
 public:
 	MaxSpellbook();
 	~MaxSpellbook();
+
+public:
+	AFireDart* FireDart;
+
+	float FireDartMana = FireDart->ReturnManaCost();
 };

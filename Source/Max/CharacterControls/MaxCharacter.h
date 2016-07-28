@@ -34,9 +34,6 @@ public:
 	float BackHopForce;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float DashForce;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USceneComponent* SpellOffsetComponent;
 
 	/***** HEALTH *****/
@@ -110,20 +107,67 @@ public:
 			StaminaPoints = setStaminaPoints;
 		}
 	}
+	//*****DASH******//
+	//Stamina decrement rate
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Max")
+	float DecrementRate;
 	
+	//Stamina recovery rate
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Max")
+	float RecoveryRate;
 
+	//This is the current speed we would run at if we wanted to dash
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Max")
+	float CurRunSpeed;
 
+	//Default walk speed
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Max")
+	float CurWalkSpeed;
+
+	//Current walk speed
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Max")
+	float MoveSpeed;
+
+	//indicate if dashing
+	bool isDashing = false;
+
+	//if stamina ran out
+	bool isExhausted = false;
+
+	void Dash();
+	void StopDashing();
 
 protected:
+	//*********Spells***********//
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 	TSubclassOf<class AActor> Firedart;
 
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 	TSubclassOf<class AActor> Fireball;
 
-protected:
-	bool bIsDashing;
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class AActor> IceBlock;
 
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class AActor> RockPunch;
+
+	MaxSpellbook* MySpellBook;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category=Projectile)
+	float FiredartMana;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
+	float FireballMana;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
+	float IceBlockMana;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
+	float RockPunchMana;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
+	float ManaRecoverRate;
+
+	bool isCasting;
 protected:
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
@@ -145,8 +189,9 @@ protected:
 
 	void OnFire1();
 	void OnFire2();
-	void Dash();
-	void StopDashing();
+	void OnFire3();
+	void OnFire4();
+	void OnRelease();
 
 protected:
 	// Called when the game starts or when spawned

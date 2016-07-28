@@ -28,12 +28,19 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
+	
+
 	/** called when projectile hits something */
 	//UFUNCTION()
 	//void OnHit(AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Damage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float ManaCost;
+
+	UFUNCTION(BlueprintCallable,Category="Spells")
+	float ReturnManaCost() { return ManaCost; };
 	/** Returns CollisionComp subobject **/
 	FORCEINLINE class USphereComponent* GetCollisionComp() const { return CollisionComp; }
 	/** Returns ProjectileMovement subobject **/
