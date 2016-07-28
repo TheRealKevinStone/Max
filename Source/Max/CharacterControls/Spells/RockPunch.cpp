@@ -17,7 +17,7 @@ ARockPunch::ARockPunch()
 
 	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
 	Collider->BodyInstance.SetCollisionProfileName("Projectile");
-	Collider->AttachTo(RootComponent);
+	Collider->SetupAttachment(RootComponent);
 	SetActorEnableCollision(true);
 }
 

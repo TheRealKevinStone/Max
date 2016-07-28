@@ -16,7 +16,7 @@ AHealth::AHealth()
 	RootComponent = HealthCollider;
 
 	HealthMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Health Mesh"));
-	HealthMesh->AttachTo(RootComponent);
+	HealthMesh->SetupAttachment(RootComponent);
 
 	OnActorBeginOverlap.AddDynamic(this, &AHealth::OnOverLap);
 }
@@ -46,7 +46,7 @@ void AHealth::Tick( float DeltaTime )
 
 }
 
-void AHealth::OnOverLap(class AActor* OtherActor)
+void AHealth::OnOverLap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	AMaxCharacter* Max = Cast<AMaxCharacter>(OtherActor);
 	//UE_LOG(YourLog, Warning, TEXT("MyCharacter's Health is %f"), MyCharacter->Health)

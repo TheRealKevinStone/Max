@@ -19,7 +19,7 @@ public:
 	UProjectileMovementComponent* ProjectileComp;
 
 	UFUNCTION()
-	virtual void OnActorOverlap(AActor* OtherActor);
+	virtual void OnActorOverlap(AActor* OverlappedActor, AActor* OtherActor);
 
 
 public:

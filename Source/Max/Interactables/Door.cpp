@@ -16,7 +16,7 @@ ADoor::ADoor()
 
 	//creating a mesh component for the door (model)
 	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DoorMesh"));
-	DoorMesh->AttachTo(RootComponent);
+	DoorMesh->SetupAttachment(RootComponent);;
 
 }
 

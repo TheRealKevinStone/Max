@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "AI/Navigation/NavAreas/NavArea.h"
-#include "NavArea_Jump.generated.h"
+//#include "AI/Navigation/NavAreas/NavArea.h"
+//#include "NavArea_Jump.generated.h"
 /*
 This script will implement a special "jump" navigation area
 
@@ -12,42 +12,42 @@ Navigation areas can apply a specific set of flags and costs to the navigation m
 
 */
 
-UENUM()
-namespace ENavAreaFlag
-{
-	enum Type
-	{
-		Default,
-		Jump,
-		Crouch,
-	};
-}
-
-/*
-Note that we're not using the first bit, since it has a special meaning in our navmesh internals. 
-If first bit in a area is set it means it's walkable, and it's treated as not walkable otherwise. 
-
-Let's also implement some helper functions for operating on area flags:
-*/
-namespace FNavAreaHelper
-{
-	FORCEINLINE bool IsSet(uint16 Flags, ENavAreaFlag::Type Bit) { return (Flags & (1 << Bit)) != 0; }
-	FORCEINLINE void Set(uint16& Flags, ENavAreaFlag::Type Bit) { Flags |= (1 << Bit); }
-
-	FORCEINLINE bool IsNavLink(const FNavPathPoint& PathVert) { return (FNavMeshNodeFlags(PathVert.Flags).PathFlags & RECAST_STRAIGHTPATH_OFFMESH_CONNECTION) != 0; }
-	FORCEINLINE bool HasJumpFlag(const FNavPathPoint& PathVert) { return IsSet(FNavMeshNodeFlags(PathVert.Flags).AreaFlags, ENavAreaFlag::Jump); }
-	FORCEINLINE bool HasCrouchFlag(const FNavPathPoint& PathVert) { return IsSet(FNavMeshNodeFlags(PathVert.Flags).AreaFlags, ENavAreaFlag::Crouch); }
-}
-
-
-UCLASS()
-class UNavArea_Jump : public UNavArea
-{
-	GENERATED_UCLASS_BODY()
-	
-};
-
-
+//UENUM()
+//namespace ENavAreaFlag
+//{
+//	enum Type
+//	{
+//		Default,
+//		Jump,
+//		Crouch,
+//	};
+//}
+//
+///*
+//Note that we're not using the first bit, since it has a special meaning in our navmesh internals. 
+//If first bit in a area is set it means it's walkable, and it's treated as not walkable otherwise. 
+//
+//Let's also implement some helper functions for operating on area flags:
+//*/
+//namespace FNavAreaHelper
+//{
+//	FORCEINLINE bool IsSet(uint16 Flags, ENavAreaFlag::Type Bit) { return (Flags & (1 << Bit)) != 0; }
+//	FORCEINLINE void Set(uint16& Flags, ENavAreaFlag::Type Bit) { Flags |= (1 << Bit); }
+//
+//	FORCEINLINE bool IsNavLink(const FNavPathPoint& PathVert) { return (FNavMeshNodeFlags(PathVert.Flags).PathFlags & RECAST_STRAIGHTPATH_OFFMESH_CONNECTION) != 0; }
+//	FORCEINLINE bool HasJumpFlag(const FNavPathPoint& PathVert) { return IsSet(FNavMeshNodeFlags(PathVert.Flags).AreaFlags, ENavAreaFlag::Jump); }
+//	FORCEINLINE bool HasCrouchFlag(const FNavPathPoint& PathVert) { return IsSet(FNavMeshNodeFlags(PathVert.Flags).AreaFlags, ENavAreaFlag::Crouch); }
+//}
+//
+//
+//UCLASS()
+//class UNavArea_Jump : public UNavArea
+//{
+//	GENERATED_UCLASS_BODY()
+//	
+//};
+//
+//
 
 /**
 Dear Future Franco

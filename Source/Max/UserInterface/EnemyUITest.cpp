@@ -15,9 +15,9 @@ AEnemyUITest::AEnemyUITest(const FObjectInitializer& ObjectInitializer)
 	RootComponent = EnemyCollider;
 
 	EnemyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Enemy Mesh"));
-	EnemyMesh->AttachTo(RootComponent);
+	EnemyMesh->SetupAttachment(RootComponent);
 
-	OnActorBeginOverlap.AddDynamic(this, &AEnemyUITest::OnOverlap);
+	//OnActorBeginOverlap.AddDynamic(this, &AEnemyUITest::OnOverlap);
 }
 
 // Called when the game starts or when spawned

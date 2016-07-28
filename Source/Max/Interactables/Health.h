@@ -57,7 +57,7 @@ protected:
 
 	//when an actor overlaps with this one (will be player)
 	UFUNCTION()
-	virtual void OnOverLap(class AActor* OtherActor);
+	virtual void OnOverLap(AActor* OverlappedActor, AActor* OtherActor);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = Drop, meta = (DisplayName = "Apply to Player")) 
 	void Event_ApplyToPlayer(AMaxCharacter* Max);

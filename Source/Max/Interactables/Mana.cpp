@@ -14,7 +14,7 @@ AMana::AMana()
 	RootComponent = ManaCollider;
 
 	ManaMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mana Mesh"));
-	ManaMesh->AttachTo(RootComponent);
+	ManaMesh->SetupAttachment(RootComponent);
 
 	//OnActorBeginOverlap.AddDynamic(this, &::OnOverlap);
 

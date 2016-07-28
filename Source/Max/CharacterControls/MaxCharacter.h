@@ -86,7 +86,7 @@ public:
 	}
 
 	/***** STAMINA *****/
-	float MaxStamina = 100.0f;
+	float MaxStamina;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float StaminaPoints = 100.0f;
@@ -109,23 +109,23 @@ public:
 	}
 	//*****DASH******//
 	//Stamina decrement rate
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Max")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MaxMovement")
 	float DecrementRate;
 	
 	//Stamina recovery rate
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Max")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MaxMovement")
 	float RecoveryRate;
 
 	//This is the current speed we would run at if we wanted to dash
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Max")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MaxMovement")
 	float CurRunSpeed;
 
 	//Default walk speed
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Max")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MaxMovement")
 	float CurWalkSpeed;
 
 	//Current walk speed
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Max")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MaxMovement")
 	float MoveSpeed;
 
 	//indicate if dashing
@@ -139,32 +139,32 @@ public:
 
 protected:
 	//*********Spells***********//
-	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	UPROPERTY(EditDefaultsOnly, Category = Spells)
 	TSubclassOf<class AActor> Firedart;
 
-	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	UPROPERTY(EditDefaultsOnly, Category = Spells)
 	TSubclassOf<class AActor> Fireball;
 
-	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	UPROPERTY(EditDefaultsOnly, Category = Spells)
 	TSubclassOf<class AActor> IceBlock;
 
-	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	UPROPERTY(EditDefaultsOnly, Category = Spells)
 	TSubclassOf<class AActor> RockPunch;
 
 	MaxSpellbook* MySpellBook;
-	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category=Projectile)
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category= Spells)
 	float FiredartMana;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spells)
 	float FireballMana;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spells)
 	float IceBlockMana;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spells)
 	float RockPunchMana;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spells)
 	float ManaRecoverRate;
 
 	bool isCasting;

@@ -3,11 +3,11 @@
 #include "Max.h"
 #include "BanditCharacter.h"
 #include "CharacterControls/MaxCharacter.h"
-#include "Navigation/JumpPathComponent.h"
+//#include "Navigation/JumpPathComponent.h"
 #include "BanditController.h"
 
 ABanditController::ABanditController(const FObjectInitializer& ObjectInitializer)
-	:Super(ObjectInitializer.SetDefaultSubobjectClass<UJumpPathComponent>(TEXT("PathFollowingComponent")))
+//	:Super(ObjectInitializer.SetDefaultSubobjectClass<UJumpPathComponent>(TEXT("PathFollowingComponent")))
 {
 	BehaviorTreeComp = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorTreeComp"));
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));

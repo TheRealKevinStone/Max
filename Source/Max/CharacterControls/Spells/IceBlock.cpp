@@ -15,13 +15,13 @@ AIceBlock::AIceBlock()
 
 	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
 	Collider->BodyInstance.SetCollisionProfileName(TEXT("BlockAll"));
-	Collider->AttachTo(RootComponent);
+	Collider->SetupAttachment(RootComponent);
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	Mesh->AttachTo(RootComponent);
+	Mesh->SetupAttachment(RootComponent);
 
 	SpawnParticle = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("SpawnParticle"));
-	SpawnParticle->AttachTo(RootComponent);
+	SpawnParticle->SetupAttachment(RootComponent);
 
 }
 
