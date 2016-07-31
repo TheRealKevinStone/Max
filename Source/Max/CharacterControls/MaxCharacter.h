@@ -36,6 +36,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USceneComponent* SpellOffsetComponent;
 
+	/****** ROCK PUNCH *****/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	uint8 NumberOfRocks = 7;
+	float MaxDegreesOfSpread = 7.5f;
+
 	/***** HEALTH *****/
 	float MaxHealth = 100.0f;
 

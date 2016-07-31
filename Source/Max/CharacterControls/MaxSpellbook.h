@@ -17,4 +17,6 @@ public:
 	AFireDart* FireDart;
 
 	float FireDartMana = FireDart->ReturnManaCost();
+
+	void RockPunch(FVector OriginPoint, FRotator ForwardRotation);
 };

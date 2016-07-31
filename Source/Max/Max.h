@@ -9,6 +9,7 @@
 
 DECLARE_LOG_CATEGORY_EXTERN(LogMax, Log, All);
 
+#define COLLISION_DAMAGEABLE        ECC_GameTraceChannel2
 
 #endif
 

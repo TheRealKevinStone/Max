@@ -258,6 +258,66 @@ void AMaxCharacter::OnFire1()
 
 void AMaxCharacter::OnFire2()
 {
+	if (RockPunch != NULL)
+	{
+		UWorld* const World = GetWorld();
+		if (World != NULL&&ManaPoints>RockPunchMana && !isCasting)
+		{
+			// spawn the projectile at the muzzle
+			//World->SpawnActor<AActor>(RockPunch, SpawnLocation, SpawnRotation);
+			//ManaPoints -= RockPunchMana;
+			/*MySpellBook->RockPunch(SpawnLocation, SpawnRotation);*/
+
+			// For each rock in NumberOfRocks do a line trace
+			for (uint8 i = 0; i < NumberOfRocks; i++)
+			{
+				float PitchOffSet = FMath::FRandRange(-MaxDegreesOfSpread, MaxDegreesOfSpread);
+				float YawOffSet = FMath::FRandRange(-MaxDegreesOfSpread, MaxDegreesOfSpread);
+				const FRotator SpawnRotation = GetControlRotation() + FRotator(PitchOffSet, YawOffSet, 0.f);
+				// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+				const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
+
+				// Collect infor for the trace
+				const FVector StartTrace = SpawnLocation; // trace start is the camera location
+				const FVector Direction = SpawnRotation.Vector(); // Get a unit vector pointing forward from our start location
+				const FVector EndTrace = StartTrace + Direction * 2000; // Define the distance of the Trace
+
+																		// Perform trace to retrieve hit info
+				FCollisionQueryParams TraceParams(FName(TEXT("GrabTrace")), true, this);
+				TraceParams.bTraceAsyncScene = true;
+				TraceParams.bReturnPhysicalMaterial = true;
+
+				// simple trace function
+				FHitResult ObjectHit(ForceInit);
+				GetWorld()->LineTraceSingleByChannel(ObjectHit, StartTrace, EndTrace, COLLISION_DAMAGEABLE, TraceParams);
+
+				// Debug line for the trace
+				DrawDebugLine(GetWorld(), StartTrace, EndTrace, FColor(255, 0, 0, 255), true, 1.5f);
+			}
+		}
+	}
+}
+
+void AMaxCharacter::OnFire3()
+{
+	if (IceBlock != NULL)
+	{
+		const FRotator SpawnRotation = GetControlRotation();
+		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
+
+		UWorld* const World = GetWorld();
+		if (World != NULL&&ManaPoints>IceBlockMana && !isCasting)
+		{
+			// spawn the projectile at the muzzle
+			World->SpawnActor<AActor>(IceBlock, SpawnLocation, SpawnRotation);
+			ManaPoints -= IceBlockMana;
+		}
+	}
+}
+
+void AMaxCharacter::OnFire4()
+{
 	// try and fire a projectile
 	if (Fireball != NULL)
 	{
@@ -290,43 +350,6 @@ void AMaxCharacter::OnFire2()
 	//		AnimInstance->Montage_Play(FireAnimation, 1.f);
 	//	}
 	//}
-
-}
-
-void AMaxCharacter::OnFire3()
-{
-	if (IceBlock != NULL)
-	{
-		const FRotator SpawnRotation = GetControlRotation();
-		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
-
-		UWorld* const World = GetWorld();
-		if (World != NULL&&ManaPoints>IceBlockMana && !isCasting)
-		{
-			// spawn the projectile at the muzzle
-			World->SpawnActor<AActor>(IceBlock, SpawnLocation, SpawnRotation);
-			ManaPoints -= IceBlockMana;
-		}
-	}
-}
-
-void AMaxCharacter::OnFire4()
-{
-	if (RockPunch != NULL)
-	{
-		const FRotator SpawnRotation = GetControlRotation();
-		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
-
-		UWorld* const World = GetWorld();
-		if (World != NULL&&ManaPoints>RockPunchMana && !isCasting)
-		{
-			// spawn the projectile at the muzzle
-			World->SpawnActor<AActor>(RockPunch, SpawnLocation, SpawnRotation);
-			ManaPoints -= RockPunchMana;
-		}
-	}
 }
 
 void AMaxCharacter::OnRelease()
