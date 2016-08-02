@@ -43,7 +43,7 @@ void AFrostFeet::BeginPlay()
 //
 //}
 
-void AFrostFeet::OnHit_Implementation(AActor* OverlappedActor, AActor* OtherActor)
+void AFrostFeet::OnHit_Implementation(AActor * OtherActor) 
 {
 	if (OtherActor != GetOwner())
 	{

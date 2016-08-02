@@ -20,8 +20,8 @@ ABaseProjectile::ABaseProjectile()
 	Damage = 1;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	Mesh->SetupAttachment(RootComponent);
-	
+	Mesh->AttachTo(RootComponent);
+
 
 	ProjectileComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
 	ProjectileComp->UpdatedComponent = ColliderSphere;
@@ -37,8 +37,7 @@ ABaseProjectile::ABaseProjectile()
 
 }
 
-void ABaseProjectile::OnActorOverlap(AActor* OverlappedActor,AActor* OtherActor)
-{
+void ABaseProjectile::OnActorOverlap(AActor * OtherActor) {
 	if (OtherActor != GetOwner())
 	{
 		//Cast to player

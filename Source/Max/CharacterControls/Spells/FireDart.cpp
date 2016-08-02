@@ -54,7 +54,7 @@ void AFireDart::Tick( float DeltaTime )
 
 }
 
-void AFireDart::OnHit_Implementation(AActor* OverlappedActor, AActor* OtherActor)
+void AFireDart::OnHit_Implementation(AActor * OtherActor) 
 {
 	if (OtherActor != GetOwner())
 	{

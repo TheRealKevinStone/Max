@@ -14,7 +14,7 @@ AStamina::AStamina()
 	RootComponent = StaminaCollider;
 
 	StaminaMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Currency Mesh"));
-	StaminaMesh->SetupAttachment(RootComponent);
+	StaminaMesh->AttachTo(RootComponent);
 
 	//OnActorBeginOverlap.AddDynamic(this, &::OnOverlap);
 }

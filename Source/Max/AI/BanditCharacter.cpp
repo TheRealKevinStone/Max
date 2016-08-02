@@ -11,7 +11,7 @@ ABanditCharacter::ABanditCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	AIControllerClass = ABanditController::StaticClass();
 	ProjectilePoint = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSpawnPoint"));
-	ProjectilePoint->SetupAttachment(RootComponent);
+	ProjectilePoint->AttachTo(RootComponent);
 	//WaypointList.Reserve(ArrayReserveNumber);
 }
 

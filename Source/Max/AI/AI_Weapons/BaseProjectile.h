@@ -19,8 +19,7 @@ public:
 	UProjectileMovementComponent* ProjectileComp;
 
 	UFUNCTION()
-	virtual void OnActorOverlap(AActor* OverlappedActor, AActor* OtherActor);
-
+	virtual void OnActorOverlap(AActor* OtherActor);
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)

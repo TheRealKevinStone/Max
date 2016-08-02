@@ -48,6 +48,5 @@ public:
 	
 public:
 	UFUNCTION(BlueprintNativeEvent, Category = Projectile)
-	void OnHit(AActor* OverlappedActor, AActor* OtherActor);
-
+		void OnHit(AActor* OtherActor);
 };

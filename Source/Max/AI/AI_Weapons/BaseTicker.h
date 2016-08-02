@@ -26,8 +26,7 @@ public:
 	//virtual void Tick( float DeltaSeconds ) override;
 	//Check for collisions
 	UFUNCTION()
-	virtual void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & Sweep);
-	//Taking Damage from player
+		virtual void OnOverlap(AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);	//Taking Damage from player
 	UFUNCTION()
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 

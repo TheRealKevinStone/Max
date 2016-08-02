@@ -31,9 +31,13 @@ void AHealthBar::DrawHUD()
 {
 	Super::DrawHUD();
 	AMaxCharacter* Player = Cast<AMaxCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
-	TestHealth = Player->HealthPoints;
-	TestMana = Player->ManaPoints;
-	TestStamina = Player->StaminaPoints;
+	if (Player)
+	{
+		TestHealth = Player->HealthPoints;
+		TestMana = Player->ManaPoints;
+		TestStamina = Player->StaminaPoints;
+	}
+
 	DrawHealthBar();
 	
 	DrawManaBar();

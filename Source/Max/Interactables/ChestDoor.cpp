@@ -14,7 +14,7 @@ AChestDoor::AChestDoor()
 	RootComponent = ChestDoorCollider;
 
 	ChestDoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Chest Door Mesh"));
-	ChestDoorMesh->SetupAttachment(RootComponent);
+	ChestDoorMesh->AttachTo(RootComponent);
 
 }
 

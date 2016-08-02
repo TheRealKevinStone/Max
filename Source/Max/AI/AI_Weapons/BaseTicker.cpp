@@ -32,7 +32,7 @@ void ABaseTicker::BeginPlay()
 
 }
 
-void ABaseTicker::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & Sweept)
+void ABaseTicker::OnOverlap(AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult) 
 {
 	ABaseTicker* OtherTicker = Cast<ABaseTicker>(OtherActor);
 	if (OtherTicker)

@@ -14,28 +14,28 @@ AGib::AGib()
 	RootComponent = Root;
 
 	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
-	Collider->SetupAttachment(RootComponent);
+	Collider->AttachTo(RootComponent);
 
 	GibMesh1 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gib1"));
-	GibMesh1->SetupAttachment(RootComponent);
+	GibMesh1->AttachTo(RootComponent);
 
 	GibMesh2 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gib2"));
-	GibMesh2->SetupAttachment(RootComponent);
-	
+	GibMesh2->AttachTo(RootComponent);
+
 	GibMesh3 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gib3"));
-	GibMesh3->SetupAttachment(RootComponent);
+	GibMesh3->AttachTo(RootComponent);
 	
 	GibMesh4 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gib4"));
-	GibMesh4->SetupAttachment(RootComponent);
+	GibMesh4->AttachTo(RootComponent);
 	
 	GibMesh5 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gib5"));
-	GibMesh5->SetupAttachment(RootComponent);
+	GibMesh5->AttachTo(RootComponent);
 	
 	GibMesh6 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gib6"));
-	GibMesh6->SetupAttachment(RootComponent);
+	GibMesh6->AttachTo(RootComponent);
 	
 	Particles = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Particles"));
-	Particles->SetupAttachment(RootComponent);
+	Particles->AttachTo(RootComponent);
 }
 
 // Called when the game starts or when spawned
