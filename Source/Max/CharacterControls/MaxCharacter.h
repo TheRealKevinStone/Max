@@ -22,6 +22,10 @@ public:
 	// Sets default values for this character's properties
 	AMaxCharacter();
 
+	/*** DEBUG STUFF ***/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bIsDebugging = true;
+
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	float BaseTurnRate;
@@ -37,9 +41,19 @@ public:
 	USceneComponent* SpellOffsetComponent;
 
 	/****** ROCK PUNCH *****/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "RockPunch")
 	uint8 NumberOfRocks = 7;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "RockPunch")
 	float MaxDegreesOfSpread = 7.5f;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "RockPunch")
+	float RockPunchRange = 2000.f;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "RockPunch")
+	float RateOfFire = 0.25f;
+
+	float RockPunchTimer;
 
 	/***** HEALTH *****/
 	float MaxHealth = 100.0f;

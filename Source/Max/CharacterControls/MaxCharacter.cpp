@@ -58,6 +58,7 @@ void AMaxCharacter::BeginPlay()
 	MoveSpeed = CurWalkSpeed;
 	GetCharacterMovement()->MaxWalkSpeed = MoveSpeed;
 	//FiredartMana = MySpellBook->FireDartMana;
+	RockPunchTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld());
 }
 
 // Called every frame
@@ -260,8 +261,9 @@ void AMaxCharacter::OnFire2()
 {
 	if (RockPunch != NULL)
 	{
+		float CoolDownRemaining = UGameplayStatics::GetRealTimeSeconds(GetWorld()) - RateOfFire;
 		UWorld* const World = GetWorld();
-		if (World != NULL&&ManaPoints>RockPunchMana && !isCasting)
+		if (World != NULL && ManaPoints > RockPunchMana && !isCasting && CoolDownRemaining >= RockPunchTimer)
 		{
 			// spawn the projectile at the muzzle
 			//World->SpawnActor<AActor>(RockPunch, SpawnLocation, SpawnRotation);
@@ -273,27 +275,35 @@ void AMaxCharacter::OnFire2()
 			{
 				float PitchOffSet = FMath::FRandRange(-MaxDegreesOfSpread, MaxDegreesOfSpread);
 				float YawOffSet = FMath::FRandRange(-MaxDegreesOfSpread, MaxDegreesOfSpread);
+				//float RandomRollRotation = FMath::FRandRange(0.f, 360.f);
 				const FRotator SpawnRotation = GetControlRotation() + FRotator(PitchOffSet, YawOffSet, 0.f);
+
 				// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
 				const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
 
 				// Collect infor for the trace
 				const FVector StartTrace = SpawnLocation; // trace start is the camera location
 				const FVector Direction = SpawnRotation.Vector(); // Get a unit vector pointing forward from our start location
-				const FVector EndTrace = StartTrace + Direction * 2000; // Define the distance of the Trace
+				const FVector EndTrace = StartTrace + Direction * RockPunchRange; // Define the distance of the Trace
 
-																		// Perform trace to retrieve hit info
-				FCollisionQueryParams TraceParams(FName(TEXT("GrabTrace")), true, this);
+				// Perform trace to retrieve hit info
+				FCollisionQueryParams TraceParams(FName(TEXT("RockPunchTrace")), true, this);
 				TraceParams.bTraceAsyncScene = true;
 				TraceParams.bReturnPhysicalMaterial = true;
 
-				// simple trace function
+				// Simple trace function
 				FHitResult ObjectHit(ForceInit);
 				GetWorld()->LineTraceSingleByChannel(ObjectHit, StartTrace, EndTrace, COLLISION_DAMAGEABLE, TraceParams);
 
 				// Debug line for the trace
-				DrawDebugLine(GetWorld(), StartTrace, EndTrace, FColor(255, 0, 0, 255), true, 1.5f);
+				if (bIsDebugging)
+				{
+					DrawDebugLine(GetWorld(), StartTrace, EndTrace, FColor(255, 0, 0, 255), true, 1.5f);
+				}
 			}
+
+			// Update RockPunchTimer
+			RockPunchTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld());
 		}
 	}
 }
