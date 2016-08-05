@@ -40,20 +40,41 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USceneComponent* SpellOffsetComponent;
 
+	/****** LIGHTING BOLT *****/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lightning Bolt")
+	float BoltCoolDown = 0.125f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lightning Bolt")
+	float BoltRange = 2000.f;
+
+	float BoltTimer;
+
 	/****** ROCK PUNCH *****/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "RockPunch")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rock Punch")
 	uint8 NumberOfRocks = 7;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "RockPunch")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rock Punch")
 	float MaxDegreesOfSpread = 7.5f;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "RockPunch")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rock Punch")
 	float RockPunchRange = 2000.f;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "RockPunch")
-	float RateOfFire = 0.25f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rock Punch")
+	float RockPunchCoolDown = 0.25f;
 
 	float RockPunchTimer;
+
+	/****** FIREBALL *****/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire Ball")
+	float FireBallCoolDown = 5.f;
+
+	float FireBallTimer;
+
+	/***** ICE BLOCK *****/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ice Block")
+	float IceBlockCoolDown = 10.f;
+
+	float IceBlockTimer;
 
 	/***** HEALTH *****/
 	float MaxHealth = 100.0f;

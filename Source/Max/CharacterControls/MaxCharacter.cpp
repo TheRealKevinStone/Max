@@ -58,7 +58,10 @@ void AMaxCharacter::BeginPlay()
 	MoveSpeed = CurWalkSpeed;
 	GetCharacterMovement()->MaxWalkSpeed = MoveSpeed;
 	//FiredartMana = MySpellBook->FireDartMana;
-	RockPunchTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld());
+	RockPunchTimer = 0.f;
+	BoltTimer = 0.f;
+	FireBallTimer = 0.f;
+	IceBlockTimer = 0.f;
 }
 
 // Called every frame
@@ -222,7 +225,7 @@ void AMaxCharacter::MoveRight(float Value)
 void AMaxCharacter::OnFire1()
 {
 	// try and fire a projectile
-	if (Firedart != NULL)
+	if (Firedart != NULL && UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= BoltTimer)
 	{
 		const FRotator SpawnRotation = GetControlRotation();
 		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
@@ -235,6 +238,9 @@ void AMaxCharacter::OnFire1()
 			World->SpawnActor<AActor>(Firedart, SpawnLocation, SpawnRotation);
 			ManaPoints -= FiredartMana;
 		}
+
+		// Update BoltTimer to the next time we can cast
+		BoltTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + BoltCoolDown;
 	}
 
 	
@@ -261,9 +267,8 @@ void AMaxCharacter::OnFire2()
 {
 	if (RockPunch != NULL)
 	{
-		float CoolDownRemaining = UGameplayStatics::GetRealTimeSeconds(GetWorld()) - RateOfFire;
 		UWorld* const World = GetWorld();
-		if (World != NULL && ManaPoints > RockPunchMana && !isCasting && CoolDownRemaining >= RockPunchTimer)
+		if (World != NULL && ManaPoints > RockPunchMana && !isCasting &&  UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= RockPunchTimer)
 		{
 			// spawn the projectile at the muzzle
 			//World->SpawnActor<AActor>(RockPunch, SpawnLocation, SpawnRotation);
@@ -303,7 +308,7 @@ void AMaxCharacter::OnFire2()
 			}
 
 			// Update RockPunchTimer
-			RockPunchTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld());
+			RockPunchTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + RockPunchCoolDown;
 		}
 	}
 }
@@ -317,11 +322,14 @@ void AMaxCharacter::OnFire3()
 		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
 
 		UWorld* const World = GetWorld();
-		if (World != NULL&&ManaPoints>IceBlockMana && !isCasting)
+		if (World != NULL&&ManaPoints>IceBlockMana && !isCasting && UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= IceBlockTimer)
 		{
 			// spawn the projectile at the muzzle
 			World->SpawnActor<AActor>(IceBlock, SpawnLocation, SpawnRotation);
 			ManaPoints -= IceBlockMana;
+			
+			// Update IceBlockTimer
+			IceBlockTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + IceBlockCoolDown;
 		}
 	}
 }
@@ -336,11 +344,14 @@ void AMaxCharacter::OnFire4()
 		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
 
 		UWorld* const World = GetWorld();
-		if (World != NULL&&ManaPoints>FireballMana && !isCasting)
+		if (World != NULL && ManaPoints > FireballMana && !isCasting && UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= FireBallTimer)
 		{
 			// spawn the projectile at the muzzle
 			World->SpawnActor<AActor>(Fireball, SpawnLocation, SpawnRotation);
 			ManaPoints -= FireballMana;
+
+			// Update FireBallTimer
+			FireBallTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + FireBallCoolDown;
 		}
 	}
 
