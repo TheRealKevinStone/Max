@@ -334,7 +334,7 @@ void AMaxCharacter::CastLightningBolt()
 		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
 
 		UWorld* const World = GetWorld();
-		if (World != NULL && ManaPoints>FiredartMana && !isCasting)
+		if (World != NULL && ManaPoints > FiredartMana && !isCasting)
 		{
 			// spawn the projectile at the muzzle
 			World->SpawnActor<AActor>(Firedart, SpawnLocation, SpawnRotation);
