@@ -208,6 +208,11 @@ protected:
 	float ManaRecoverRate;
 
 	bool isCasting;
+
+	bool bIsCastingLightningBolt;
+	bool bIsCastingFireBall;
+	bool bIsCastingRockPunch;
+	bool bIsCastingIceBlock;
 protected:
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
@@ -231,7 +236,15 @@ protected:
 	void OnFire2();
 	void OnFire3();
 	void OnFire4();
-	void OnRelease();
+	void OnRelease1();
+	void OnRelease2();
+	void OnRelease3();
+	void OnRelease4();
+
+	void CastFireBall();
+	void CastLightningBolt();
+	void CastRockPunch();
+	void CastIceBlock();
 
 protected:
 	// Called when the game starts or when spawned

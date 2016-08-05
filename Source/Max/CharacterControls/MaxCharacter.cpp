@@ -112,6 +112,24 @@ void AMaxCharacter::Tick( float DeltaTime )
 		ManaPoints += DeltaTime*ManaRecoverRate;
 
 	}
+
+	// Check to see if we want to cast spells this frame
+	if (bIsCastingFireBall)
+	{
+		CastFireBall();
+	}
+	else if (bIsCastingIceBlock)
+	{
+		CastIceBlock();
+	}
+	else if (bIsCastingRockPunch)
+	{
+		CastRockPunch();
+	}
+	else if (bIsCastingLightningBolt)
+	{
+		CastLightningBolt();
+	}
 }
 
 // Called to bind functionality to input
@@ -140,16 +158,16 @@ void AMaxCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 
 	// Spell Casting Inputs
 	InputComponent->BindAction("CastSpellOne", IE_Pressed, this, &AMaxCharacter::OnFire1);
-	InputComponent->BindAction("CastSpellOne", IE_Released, this, &AMaxCharacter::OnRelease);
+	InputComponent->BindAction("CastSpellOne", IE_Released, this, &AMaxCharacter::OnRelease1);
 
 	InputComponent->BindAction("CastSpellTwo", IE_Pressed, this, &AMaxCharacter::OnFire2);
-	InputComponent->BindAction("CastSpellTwo", IE_Released, this, &AMaxCharacter::OnRelease);
+	InputComponent->BindAction("CastSpellTwo", IE_Released, this, &AMaxCharacter::OnRelease2);
 
 	InputComponent->BindAction("CastSpellThree", IE_Pressed, this, &AMaxCharacter::OnFire3);
-	InputComponent->BindAction("CastSpellThree", IE_Released, this, &AMaxCharacter::OnRelease);
+	InputComponent->BindAction("CastSpellThree", IE_Released, this, &AMaxCharacter::OnRelease3);
 
 	InputComponent->BindAction("CastSpellFour", IE_Pressed, this, &AMaxCharacter::OnFire4);
-	InputComponent->BindAction("CastSpellFour", IE_Released, this, &AMaxCharacter::OnRelease);
+	InputComponent->BindAction("CastSpellFour", IE_Released, this, &AMaxCharacter::OnRelease4);
 
 
 }
@@ -224,117 +242,49 @@ void AMaxCharacter::MoveRight(float Value)
 
 void AMaxCharacter::OnFire1()
 {
-	// try and fire a projectile
-	if (Firedart != NULL && UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= BoltTimer)
-	{
-		const FRotator SpawnRotation = GetControlRotation();
-		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
-
-		UWorld* const World = GetWorld();
-		if (World != NULL && ManaPoints>FiredartMana && !isCasting)
-		{
-			// spawn the projectile at the muzzle
-			World->SpawnActor<AActor>(Firedart, SpawnLocation, SpawnRotation);
-			ManaPoints -= FiredartMana;
-		}
-
-		// Update BoltTimer to the next time we can cast
-		BoltTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + BoltCoolDown;
-	}
-
-	
-	// try and play the sound if specified
-	//if (FireSound != NULL)
-	//{
-	//	UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
-	//}
-
-	//// try and play a firing animation if specified
-	//if (FireAnimation != NULL)
-	//{
-	//	// Get the animation object for the arms mesh
-	//	UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
-	//	if (AnimInstance != NULL)
-	//	{
-	//		AnimInstance->Montage_Play(FireAnimation, 1.f);
-	//	}
-	//}
-
+	bIsCastingLightningBolt = true;
 }
 
 void AMaxCharacter::OnFire2()
 {
-	if (RockPunch != NULL)
-	{
-		UWorld* const World = GetWorld();
-		if (World != NULL && ManaPoints > RockPunchMana && !isCasting &&  UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= RockPunchTimer)
-		{
-			// spawn the projectile at the muzzle
-			//World->SpawnActor<AActor>(RockPunch, SpawnLocation, SpawnRotation);
-			//ManaPoints -= RockPunchMana;
-			/*MySpellBook->RockPunch(SpawnLocation, SpawnRotation);*/
-
-			// For each rock in NumberOfRocks do a line trace
-			for (uint8 i = 0; i < NumberOfRocks; i++)
-			{
-				float PitchOffSet = FMath::FRandRange(-MaxDegreesOfSpread, MaxDegreesOfSpread);
-				float YawOffSet = FMath::FRandRange(-MaxDegreesOfSpread, MaxDegreesOfSpread);
-				//float RandomRollRotation = FMath::FRandRange(0.f, 360.f);
-				const FRotator SpawnRotation = GetControlRotation() + FRotator(PitchOffSet, YawOffSet, 0.f);
-
-				// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-				const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
-
-				// Collect infor for the trace
-				const FVector StartTrace = SpawnLocation; // trace start is the camera location
-				const FVector Direction = SpawnRotation.Vector(); // Get a unit vector pointing forward from our start location
-				const FVector EndTrace = StartTrace + Direction * RockPunchRange; // Define the distance of the Trace
-
-				// Perform trace to retrieve hit info
-				FCollisionQueryParams TraceParams(FName(TEXT("RockPunchTrace")), true, this);
-				TraceParams.bTraceAsyncScene = true;
-				TraceParams.bReturnPhysicalMaterial = true;
-
-				// Simple trace function
-				FHitResult ObjectHit(ForceInit);
-				GetWorld()->LineTraceSingleByChannel(ObjectHit, StartTrace, EndTrace, COLLISION_DAMAGEABLE, TraceParams);
-
-				// Debug line for the trace
-				if (bIsDebugging)
-				{
-					DrawDebugLine(GetWorld(), StartTrace, EndTrace, FColor(255, 0, 0, 255), true, 1.5f);
-				}
-			}
-
-			// Update RockPunchTimer
-			RockPunchTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + RockPunchCoolDown;
-		}
-	}
+	bIsCastingRockPunch = true;
 }
 
 void AMaxCharacter::OnFire3()
 {
-	if (IceBlock != NULL)
-	{
-		const FRotator SpawnRotation = GetControlRotation();
-		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
-
-		UWorld* const World = GetWorld();
-		if (World != NULL&&ManaPoints>IceBlockMana && !isCasting && UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= IceBlockTimer)
-		{
-			// spawn the projectile at the muzzle
-			World->SpawnActor<AActor>(IceBlock, SpawnLocation, SpawnRotation);
-			ManaPoints -= IceBlockMana;
-			
-			// Update IceBlockTimer
-			IceBlockTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + IceBlockCoolDown;
-		}
-	}
+	bIsCastingIceBlock = true;
 }
 
 void AMaxCharacter::OnFire4()
+{
+	bIsCastingFireBall = true;
+}
+
+void AMaxCharacter::OnRelease1()
+{
+	isCasting = false;
+	bIsCastingLightningBolt = false;
+}
+
+void AMaxCharacter::OnRelease2()
+{
+	isCasting = false;
+	bIsCastingRockPunch = false;
+}
+
+void AMaxCharacter::OnRelease3()
+{
+	isCasting = false;
+	bIsCastingIceBlock = false;
+}
+
+void AMaxCharacter::OnRelease4()
+{
+	isCasting = false;
+	bIsCastingFireBall = false;
+}
+
+void AMaxCharacter::CastFireBall()
 {
 	// try and fire a projectile
 	if (Fireball != NULL)
@@ -371,54 +321,130 @@ void AMaxCharacter::OnFire4()
 	//		AnimInstance->Montage_Play(FireAnimation, 1.f);
 	//	}
 	//}
+
 }
 
-void AMaxCharacter::OnRelease()
+void AMaxCharacter::CastLightningBolt()
 {
-	isCasting = false;
+	// try and fire a projectile
+	if (Firedart != NULL && UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= BoltTimer)
+	{
+		const FRotator SpawnRotation = GetControlRotation();
+		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
+
+		UWorld* const World = GetWorld();
+		if (World != NULL && ManaPoints>FiredartMana && !isCasting)
+		{
+			// spawn the projectile at the muzzle
+			World->SpawnActor<AActor>(Firedart, SpawnLocation, SpawnRotation);
+			ManaPoints -= FiredartMana;
+		}
+
+		// Update BoltTimer to the next time we can cast
+		BoltTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + BoltCoolDown;
+	}
+
+
+	// try and play the sound if specified
+	//if (FireSound != NULL)
+	//{
+	//	UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
+	//}
+
+	//// try and play a firing animation if specified
+	//if (FireAnimation != NULL)
+	//{
+	//	// Get the animation object for the arms mesh
+	//	UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+	//	if (AnimInstance != NULL)
+	//	{
+	//		AnimInstance->Montage_Play(FireAnimation, 1.f);
+	//	}
+	//}
+}
+
+void AMaxCharacter::CastRockPunch()
+{
+	if (RockPunch != NULL)
+	{
+		UWorld* const World = GetWorld();
+		if (World != NULL && ManaPoints > RockPunchMana && !isCasting &&  UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= RockPunchTimer)
+		{
+			// spawn the projectile at the muzzle
+			//World->SpawnActor<AActor>(RockPunch, SpawnLocation, SpawnRotation);
+			//ManaPoints -= RockPunchMana;
+			/*MySpellBook->RockPunch(SpawnLocation, SpawnRotation);*/
+
+			// For each rock in NumberOfRocks do a line trace
+			for (uint8 i = 0; i < NumberOfRocks; i++)
+			{
+				float PitchOffSet = FMath::FRandRange(-MaxDegreesOfSpread, MaxDegreesOfSpread);
+				float YawOffSet = FMath::FRandRange(-MaxDegreesOfSpread, MaxDegreesOfSpread);
+				//float RandomRollRotation = FMath::FRandRange(0.f, 360.f);
+				const FRotator SpawnRotation = GetControlRotation() + FRotator(PitchOffSet, YawOffSet, 0.f);
+
+				// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+				const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
+
+				// Collect infor for the trace
+				const FVector StartTrace = SpawnLocation; // trace start is the camera location
+				const FVector Direction = SpawnRotation.Vector(); // Get a unit vector pointing forward from our start location
+				const FVector EndTrace = StartTrace + Direction * RockPunchRange; // Define the distance of the Trace
+
+																				  // Perform trace to retrieve hit info
+				FCollisionQueryParams TraceParams(FName(TEXT("RockPunchTrace")), true, this);
+				TraceParams.bTraceAsyncScene = true;
+				TraceParams.bReturnPhysicalMaterial = true;
+
+				// Simple trace function
+				FHitResult ObjectHit(ForceInit);
+				GetWorld()->LineTraceSingleByChannel(ObjectHit, StartTrace, EndTrace, COLLISION_DAMAGEABLE, TraceParams);
+
+				// Debug line for the trace
+				if (bIsDebugging)
+				{
+					DrawDebugLine(GetWorld(), StartTrace, EndTrace, FColor(255, 0, 0, 255), true, 1.5f);
+				}
+			}
+
+			// Update RockPunchTimer
+			RockPunchTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + RockPunchCoolDown;
+		}
+	}
+}
+
+void AMaxCharacter::CastIceBlock()
+{
+	if (IceBlock != NULL)
+	{
+		const FRotator SpawnRotation = GetControlRotation();
+		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
+
+		UWorld* const World = GetWorld();
+		if (World != NULL && ManaPoints > IceBlockMana && !isCasting && UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= IceBlockTimer)
+		{
+			// spawn the projectile at the muzzle
+			World->SpawnActor<AActor>(IceBlock, SpawnLocation, SpawnRotation);
+			ManaPoints -= IceBlockMana;
+
+			// Update IceBlockTimer
+			IceBlockTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + IceBlockCoolDown;
+		}
+	}
 }
 
 void AMaxCharacter::Dash()
 {
 	//Check if player isnt sprinting,exhausted and has enough stamina to dash
-	if (!isDashing&&!isExhausted&&StaminaPoints > 0)
+	if (!isDashing && !isExhausted && StaminaPoints > 0)
 	{
 		//enable dash
 		isDashing = true;
 		//adjust move speed for character movement
 		MoveSpeed = CurRunSpeed;
 	}
-
-
-
-
-
-
-
-	//bIsDashing = true;
-	//if (GetVelocity().Z == 0.f)
-	//{
-	//	// find out which way is forward
-	//	const FRotator Rotation = Controller->GetControlRotation();
-	//	const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-		//FVector LaunchVelocity = GetVelocity().GetSafeNormal() * DashForce;
-		//LaunchVelocity.Z = 0.f;
-
-		//LaunchCharacter(LaunchVelocity, true, false);
-	//}
-	//// get forward vector
-	//const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-
-	//// get right vector 
-	//const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-
-	//FVector LaunchVelocity = GetVelocity().SafeNormal() * 1200.f;
-	//DashVelocity.Z = 0.f;
-	//LaunchCharacter(DashVelocity, true, false);
-
-	//FVector MovementDirection = GetVelocity().SafeNormal();
-	//AddMovementInput(MovementDirection, 1.0f);
 }
 
 void AMaxCharacter::StopDashing()
