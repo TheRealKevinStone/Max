@@ -5,6 +5,7 @@
 #include "AIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Perception/AIPerceptionComponent.h"
 #include "TestTargetPoint.h"
 #include "Perception/PawnSensingComponent.h"
 #include "BanditController.generated.h"
@@ -41,6 +42,9 @@ public:
 	
 	virtual void BanditFrozen();
 
+	//for timer function
+	void ResetSight();
+
 protected:
 	UPROPERTY(VisibleAnywhere)
 	UBehaviorTreeComponent* BehaviorTreeComp;
@@ -51,6 +55,9 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UPawnSensingComponent* PawnSensing;
 
+	UPROPERTY(VisibleAnywhere)
+	UAIPerceptionComponent* AIPerception;
+
 	UFUNCTION()
 	void OnSeenPlayer(APawn* Player);
 	
@@ -59,6 +66,26 @@ protected:
 	uint16 WaypointIndex;
 
 	uint32 ArrayMax=10;
+
+	//Timer to handle to keep track of our timer
+	FTimerHandle TimerHandle;
+
+	//if player is found
+	bool PlayerSpotted;
+
+	//determine if player is still near
+	bool PlayerSightedNear;
+
+	bool TurnOffRotation;
+
+	//Players last location seen
+	FVector LastKnownLocation;
+
+	FName PlayerSpottedKeyName = TEXT("PlayerSpotted");
+
+	FName PlayerSightedNearKeyName = TEXT("PlayerNearby");
+
+	FName LastKnownLocationKeyName = TEXT("PlayersLastknownLocation");
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -69,8 +96,8 @@ public:
 
 	
 private:
-	UObject* CurrentTarget;
-
+	FVector CurrentTarget;
+	bool isItPlayer;
 
 public:
 	/*    Returns BlackboardComp Subobject   */

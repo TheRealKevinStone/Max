@@ -20,11 +20,11 @@ class MAX_API UDistanceTo : public UBTService_BlackboardBase
 protected:
 	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 
-	float Distance = 0.0f;
+	float Distance;
 	
 	UBlackboardComponent* Blackboard;
 
-	AMaxCharacter* Player;
+	AActor* Player;
 
 	ABanditController* BanditController;
 

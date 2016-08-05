@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Max.h"
+#include "CharacterControls/MaxCharacter.h"
 #include "BanditCharacter.h"
 
 
@@ -21,6 +22,13 @@ void ABanditCharacter::BeginPlay()
 	Super::BeginPlay();
 	BanditController = Cast<ABanditController>(GetController());
 	BanditHealth = MaxHealth;
+	AMaxCharacter* Max = Cast<AMaxCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	if (Max)
+	{
+		BanditController->GetBlackboardComp()->SetValueAsObject(TEXT("Player"), Max);
+		BanditController->GetBlackboardComp()->SetValueAsVector(TEXT("StartPoint"), GetActorLocation());
+		BanditController->GetBlackboardComp()->SetValueAsObject(TEXT("CurrentTarget"), this);
+	}
 	//To look for waypoints in the world.
 	//for (ATestTargetPoint* Waypoint : WaypointList)
 	//{

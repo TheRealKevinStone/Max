@@ -14,11 +14,12 @@ EBTNodeResult::Type UResetPlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	}
 	else
 	{
-		OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("MaxCharacter"), NULL);
+		//OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("MaxCharacter"), NULL);
 		OwnerComp.GetBlackboardComponent()->SetValueAsFloat(TEXT("DistanceToPlayer"), 0.f);
+		OwnerComp.GetBlackboardComponent()->SetValueAsBool(TEXT("PlayerNearby"), false);
 		return EBTNodeResult::Succeeded;
 	}
-
+	return EBTNodeResult::Succeeded;
 
 }
 
