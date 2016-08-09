@@ -373,7 +373,7 @@ void AMaxCharacter::CastRockPunch()
 		{
 			// spawn the projectile at the muzzle
 			//World->SpawnActor<AActor>(RockPunch, SpawnLocation, SpawnRotation);
-			//ManaPoints -= RockPunchMana;
+			ManaPoints -= RockPunchMana;
 			/*MySpellBook->RockPunch(SpawnLocation, SpawnRotation);*/
 
 			// For each rock in NumberOfRocks do a line trace

@@ -39,7 +39,7 @@ void ABanditController::Possess(APawn* Pawn)
 
 void ABanditController::OnSeenPlayer(APawn* Player)
 {
-	PlayerSpotted = true;
+	/*PlayerSpotted = true;
 	PlayerSightedNear = true;
 	LastKnownLocation = Player->GetActorLocation();
 
@@ -48,7 +48,7 @@ void ABanditController::OnSeenPlayer(APawn* Player)
 	BlackboardComp->SetValueAsVector(LastKnownLocationKeyName, LastKnownLocation);
 	
 
-
+*/
 
 	//*******Attempt to code the last known position method but moved it to BP*************
 	//FActorPerceptionBlueprintInfo Info;

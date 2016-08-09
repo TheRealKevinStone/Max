@@ -24,11 +24,14 @@ EBTNodeResult::Type UDetermineTarget::ExecuteTask(UBehaviorTreeComponent & Owner
 	//DistanceToPlayer= OwnerComp.GetBlackboardComponent()->GetValueAsFloat(TEXT("DistanceToPlayer"));
 	if (PlayerSpotted) 
 	{
-		//Go to player
 		AActor* Player = Cast<AActor>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(TEXT("Player")));
-		CurrentTarget = Player->GetActorLocation();
-		OwnerComp.GetBlackboardComponent()->SetValueAsVector(TEXT("CurrentTarget"), CurrentTarget);
-		return EBTNodeResult::Succeeded;
+		if (CurrentBanditController->LineOfSightTo(Player, FVector::ZeroVector, false))
+		{
+			//Go to player
+			CurrentTarget = Player->GetActorLocation();
+			OwnerComp.GetBlackboardComponent()->SetValueAsVector(TEXT("CurrentTarget"), CurrentTarget);
+			return EBTNodeResult::Succeeded;
+		}
 	}
 	else if (!PlayerSpotted&&PlayerNearby)
 	{
