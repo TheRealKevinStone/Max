@@ -12,6 +12,7 @@ void UMax_AnimInstance::NativeUpdateAnimation(float DeltaTime)
 	if (Owner)
 	{
 		Speed = Owner->GetVelocity().Size();
+		Dash = Owner->isDashing;
 	}
 }
 

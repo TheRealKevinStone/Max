@@ -17,6 +17,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Speed;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool Dash;
+
 public:
 	virtual void NativeUpdateAnimation(float DeltaTime) override;
 	
