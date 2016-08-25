@@ -174,6 +174,13 @@ public:
 	//if stamina ran out
 	bool isExhausted = false;
 
+	bool isCasting;
+
+	bool bIsCastingLightningBolt;
+	bool bIsCastingFireBall;
+	bool bIsCastingRockPunch;
+	bool bIsCastingIceBlock;
+
 	void Dash();
 	void StopDashing();
 
@@ -207,12 +214,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spells)
 	float ManaRecoverRate;
 
-	bool isCasting;
 
-	bool bIsCastingLightningBolt;
-	bool bIsCastingFireBall;
-	bool bIsCastingRockPunch;
-	bool bIsCastingIceBlock;
 protected:
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);

@@ -11,9 +11,15 @@ void UMax_AnimInstance::NativeUpdateAnimation(float DeltaTime)
 	AMaxCharacter* Owner = Cast<AMaxCharacter>(TryGetPawnOwner());
 	if (Owner)
 	{
+		
 		Speed = Owner->GetVelocity().Size();
 		bDash = Owner->isDashing;
 		bIsJumping = Owner->IsJumpProvidingForce();
+		bSpellOne = Owner->bIsCastingLightningBolt;
+		bSpellTwo = Owner->bIsCastingRockPunch;
+		bSpellThree = Owner->bIsCastingIceBlock;
+		bSpellFour = Owner->bIsCastingFireBall;
+
 	}
 }
 
