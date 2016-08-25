@@ -18,7 +18,22 @@ public:
 	float Speed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool Dash;
+	bool bDash;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bIsJumping;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bSpellOne;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bSpellTwo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bSpellThree;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bSpellFour;
 
 public:
 	virtual void NativeUpdateAnimation(float DeltaTime) override;
