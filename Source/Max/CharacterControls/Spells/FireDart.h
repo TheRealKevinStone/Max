@@ -27,7 +27,6 @@ public:
 	
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
-
 	
 
 	/** called when projectile hits something */
@@ -38,6 +37,10 @@ public:
 	float Damage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float ManaCost;
+
+	//Set explosion
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<class AActor>Explosion;
 
 	UFUNCTION(BlueprintCallable,Category="Spells")
 	float ReturnManaCost() { return ManaCost; };
