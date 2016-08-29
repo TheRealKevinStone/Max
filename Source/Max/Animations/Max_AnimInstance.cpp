@@ -15,10 +15,10 @@ void UMax_AnimInstance::NativeUpdateAnimation(float DeltaTime)
 		Speed = Owner->GetVelocity().Size();
 		bDash = Owner->isDashing;
 		bIsJumping = Owner->IsJumpProvidingForce();
-		bSpellOne = Owner->bIsCastingLightningBolt;
-		bSpellTwo = Owner->bIsCastingRockPunch;
-		bSpellThree = Owner->bIsCastingIceBlock;
-		bSpellFour = Owner->bIsCastingFireBall;
+		bLightningBolt = Owner->bIsCastingLightningBolt;
+		bRockPunch = Owner->bIsCastingRockPunch;
+		bIceBlock = Owner->bIsCastingIceBlock;
+		bFireBall = Owner->bIsCastingFireBall;
 
 	}
 }

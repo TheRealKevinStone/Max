@@ -32,16 +32,16 @@ public:
 
 	//FireDart/Gatling
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bSpellOne;
+	bool bLightningBolt;
 	//Rock Punch
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bSpellTwo;
+	bool bRockPunch;
 	//Ice Block
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bSpellThree;
+	bool bIceBlock;
 	//Fireball
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bSpellFour;
+	bool bFireBall;
 
 
 public:
