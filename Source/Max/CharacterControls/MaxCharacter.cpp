@@ -425,6 +425,7 @@ void AMaxCharacter::CastIceBlock()
 		UWorld* const World = GetWorld();
 		if (World != NULL && ManaPoints > IceBlockMana && !isCasting && UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= IceBlockTimer)
 		{
+			bCanCastIceBlock = true;
 			// spawn the projectile at the muzzle
 			World->SpawnActor<AActor>(IceBlock, SpawnLocation, SpawnRotation);
 			ManaPoints -= IceBlockMana;
@@ -432,14 +433,19 @@ void AMaxCharacter::CastIceBlock()
 			// Update IceBlockTimer
 			IceBlockTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + IceBlockCoolDown;
 		}
+		else
+		{
+			bCanCastIceBlock = false;
+		}
 	}
 }
 
 void AMaxCharacter::Dash()
 {
 	//Check if player isnt sprinting,exhausted and has enough stamina to dash
-	if (!isDashing && !isExhausted && StaminaPoints > 0)
+	if (!isDashing && !isExhausted && StaminaPoints > 0 )
 	{
+		
 		//enable dash
 		isDashing = true;
 		//adjust move speed for character movement

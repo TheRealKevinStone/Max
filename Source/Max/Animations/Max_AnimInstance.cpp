@@ -19,7 +19,8 @@ void UMax_AnimInstance::NativeUpdateAnimation(float DeltaTime)
 		bRockPunch = Owner->bIsCastingRockPunch;
 		bIceBlock = Owner->bIsCastingIceBlock;
 		bFireBall = Owner->bIsCastingFireBall;
-
+		bisCasting = Owner->isCasting;
+		bCanIceBlock = Owner->bCanCastIceBlock;
 	}
 }
 

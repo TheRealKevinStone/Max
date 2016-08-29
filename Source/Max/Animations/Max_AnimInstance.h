@@ -28,7 +28,7 @@ public:
 
 	//Is player casting anything?
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool isCasting;
+	bool bisCasting;
 
 	//FireDart/Gatling
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -42,6 +42,9 @@ public:
 	//Fireball
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bFireBall;
+	//Check if you can cast Iceblock
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bCanIceBlock;
 
 
 public:

@@ -181,6 +181,9 @@ public:
 	bool bIsCastingRockPunch;
 	bool bIsCastingIceBlock;
 
+	//For animInstance
+	bool bCanCastIceBlock;
+
 	void Dash();
 	void StopDashing();
 
