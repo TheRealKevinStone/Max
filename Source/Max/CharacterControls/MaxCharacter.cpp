@@ -422,10 +422,10 @@ void AMaxCharacter::CastIceBlock()
 {
 	if (IceBlock != NULL)
 	{
-		const FRotator SpawnRotation = this->GetControlRotation();
+		const FRotator SpawnRotation = FRotator::ZeroRotator;
 		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
 		FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
-		SpawnLocation.X -= 150.f;
+		SpawnLocation.X -= 200.f;
 		UWorld* const World = GetWorld();
 		if (World != NULL && ManaPoints > IceBlockMana && !isCasting && UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= IceBlockTimer)
 		{

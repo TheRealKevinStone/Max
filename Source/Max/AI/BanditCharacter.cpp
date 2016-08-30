@@ -23,6 +23,7 @@ void ABanditCharacter::BeginPlay()
 	BanditController = Cast<ABanditController>(GetController());
 	BanditHealth = MaxHealth;
 	AMaxCharacter* Max = Cast<AMaxCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	StopBehaviorTree();
 	if (Max)
 	{
 		BanditController->GetBlackboardComp()->SetValueAsObject(TEXT("Player"), Max);
