@@ -184,6 +184,9 @@ float AMaxCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageE
 		//Play Audio
 		//Set collision off
 		GEngine->AddOnScreenDebugMessage(1, 2.f, FColor::Blue, TEXT("Player Dead"));
+		FString CurrentLevel = GetWorld()->GetName();
+		FName ConvertedName = FName(*CurrentLevel);
+		UGameplayStatics::OpenLevel(this, ConvertedName, false);
 		SetActorEnableCollision(false);
 	}
 	else
