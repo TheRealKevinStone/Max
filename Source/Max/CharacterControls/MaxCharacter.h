@@ -163,10 +163,10 @@ public:
 	//Default walk speed
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MaxMovement")
 	float CurWalkSpeed;
-
-	//Current walk speed
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MaxMovement")
+	
 	float MoveSpeed;
+	
+	bool bIsGrounded;
 
 	//indicate if dashing
 	bool isDashing = false;

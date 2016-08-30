@@ -70,7 +70,8 @@ void AMaxCharacter::Tick( float DeltaTime )
 	Super::Tick( DeltaTime );
 
 	GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Yellow, FString::Printf(TEXT("Dashing: %s"), isDashing ? TEXT("true") : TEXT("false")));
-	if (isDashing && Controller != NULL)
+	bIsGrounded = &UCharacterMovementComponent::IsMovingOnGround;
+	if (isDashing && Controller != NULL && bIsGrounded)
 	{
 		//if player ran out of stamina and isnt exhausted
 		if (StaminaPoints == 0 && !isExhausted)
@@ -418,10 +419,10 @@ void AMaxCharacter::CastIceBlock()
 {
 	if (IceBlock != NULL)
 	{
-		const FRotator SpawnRotation = GetControlRotation();
+		const FRotator SpawnRotation = this->GetControlRotation();
 		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
-
+		FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
+		SpawnLocation.X -= 150.f;
 		UWorld* const World = GetWorld();
 		if (World != NULL && ManaPoints > IceBlockMana && !isCasting && UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= IceBlockTimer)
 		{
