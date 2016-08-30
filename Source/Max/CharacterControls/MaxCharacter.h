@@ -77,6 +77,7 @@ public:
 	float IceBlockTimer;
 
 	/***** HEALTH *****/
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float MaxHealth = 100.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -103,6 +104,7 @@ public:
 		}
 
 	/***** MANA *****/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MaxMana = 100.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -126,6 +128,7 @@ public:
 	}
 
 	/***** STAMINA *****/
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float MaxStamina;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

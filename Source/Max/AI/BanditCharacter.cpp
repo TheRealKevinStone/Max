@@ -97,11 +97,13 @@ void ABanditCharacter::StopBehaviorTree()
 
 void ABanditCharacter::StartBehaviorTree()
 {
+
 	if (BanditController)
 	{
-		BanditController->GetBehaviorComp()->StartTree(*BehaviorTree);
+ 		BanditController->GetBehaviorComp()->StartTree(*BehaviorTree);
 
 	}
+	GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Green, TEXT("Start Behavior"));
 }
 
 void ABanditCharacter::FrozenFeetHit()
@@ -109,12 +111,13 @@ void ABanditCharacter::FrozenFeetHit()
 	if (BanditController)
 	{
 		BanditController->BanditFrozen();
+
 	}
 }
 
 void ABanditCharacter::RockPunchLaunch()
 {
-	LaunchCharacter(GetActorForwardVector()*RockPunch_KB, true, true);
+	//LaunchCharacter(GetActorForwardVector()*RockPunch_KB, true, true);
 }
 
 //void ABanditCharacter::OnEnemyDead()
