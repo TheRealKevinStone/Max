@@ -40,6 +40,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USceneComponent* SpellOffsetComponent;
 
+	/******* TARGETING PARAMS *******/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Targeting")
+	float TargetingRange = 15000.f;
+
 	/****** LIGHTING BOLT *****/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lightning Bolt")
 	float BoltCoolDown = 0.125f;
@@ -253,6 +257,10 @@ protected:
 	void CastLightningBolt();
 	void CastRockPunch();
 	void CastIceBlock();
+
+	FVector GetTargetedObject();
+	void RotateCharacterTowardsTarget(FVector Target);
+	void RotateCharacterForward();
 
 protected:
 	// Called when the game starts or when spawned

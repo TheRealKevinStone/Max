@@ -246,11 +246,13 @@ void AMaxCharacter::MoveRight(float Value)
 void AMaxCharacter::OnFire1()
 {
 	bIsCastingLightningBolt = true;
+	RotateCharacterTowardsTarget(GetTargetedObject());
 }
 
 void AMaxCharacter::OnFire2()
 {
 	bIsCastingRockPunch = true;
+	RotateCharacterForward();
 }
 
 void AMaxCharacter::OnFire3()
@@ -459,4 +461,66 @@ void AMaxCharacter::Dash()
 void AMaxCharacter::StopDashing()
 {
 	isDashing = false;
+}
+
+FVector AMaxCharacter::GetTargetedObject()
+{
+	// Shoot a ray stright out from the camera
+	FVector CamLocation;
+	FRotator CamRotation;
+
+	Controller->GetPlayerViewPoint(CamLocation, CamRotation);
+
+	// Collect infor for the trace
+	const FVector StartTrace = CamLocation; // trace start is the camera location
+	const FVector Direction = CamRotation.Vector(); // Get a unit vector pointing forward from our start location
+	const FVector EndTrace = StartTrace + Direction * TargetingRange; // Define the distance of the Trace
+
+																	  // Perform trace to retrieve hit info
+	FCollisionQueryParams TraceParams(FName(TEXT("TargetingTrace")), true, this);
+	TraceParams.bTraceAsyncScene = true;
+	TraceParams.bReturnPhysicalMaterial = true;
+
+	// Simple trace function
+	FHitResult ObjectHit(ForceInit);
+	GetWorld()->LineTraceSingleByChannel(ObjectHit, StartTrace, EndTrace, COLLISION_TARGETABLE, TraceParams);
+
+	// Get the vector of the hit
+	FVector HitVector = ObjectHit.Location;
+
+	// Debug line for the trace
+	if (bIsDebugging)
+	{
+		DrawDebugLine(GetWorld(), StartTrace, EndTrace, FColor(0, 255, 0, 255), true, 1.5f);
+		//GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Yellow, FString::Printf(TEXT("Hit Vector: %s"), HitVector));
+	}
+
+	// Return the vector of the hit target in world coordinates
+	return HitVector;
+}
+
+void AMaxCharacter::RotateCharacterTowardsTarget(FVector Target)
+{
+	// Find the vector between the player and the target
+	FVector LookAtVector = Target - GetActorLocation();
+
+	// Caculate Yaw rotation to face the target
+	FRotator LookRotation = FRotator(0.f, LookAtVector.Rotation().Yaw, 0.f);
+
+	// Make player face the target
+	this->SetActorRotation(LookRotation);
+}
+
+void AMaxCharacter::RotateCharacterForward()
+{
+	// Get Camera's Rotation
+	FVector CamLocation;
+	FRotator CamRotation;
+
+	Controller->GetPlayerViewPoint(CamLocation, CamRotation);
+
+	// Rotate Player so they are in line with the camera rotation
+	// AKA facing forward.
+	FRotator LookRotation = FRotator(0.f, CamRotation.Yaw, 0.f);
+	this->SetActorRotation(LookRotation);
 }
