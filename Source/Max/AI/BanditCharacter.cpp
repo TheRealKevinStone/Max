@@ -27,7 +27,7 @@ void ABanditCharacter::BeginPlay()
 	if (Max)
 	{
 		BanditController->GetBlackboardComp()->SetValueAsObject(TEXT("Player"), Max);
-		BanditController->GetBlackboardComp()->SetValueAsVector(TEXT("StartPoint"), GetActorLocation());
+		//BanditController->GetBlackboardComp()->SetValueAsVector(TEXT("StartPoint"), GetActorLocation());
 		BanditController->GetBlackboardComp()->SetValueAsObject(TEXT("CurrentTarget"), this);
 	}
 	//To look for waypoints in the world.

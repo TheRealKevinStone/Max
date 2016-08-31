@@ -118,6 +118,7 @@ FVector ABanditController::GetCurrentTarget()
 	{
 		AActor* Player =Cast<AActor>(BlackboardComp->GetValueAsObject(TEXT("Player")));
 		CurrentTarget = Player->GetActorLocation();
+		BlackboardComp->SetValueAsVector(TEXT("CurrentTarget"), CurrentTarget);
 	}
 	return CurrentTarget;
 }
