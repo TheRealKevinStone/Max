@@ -77,6 +77,7 @@ public:
 	float IceBlockTimer;
 
 	/***** HEALTH *****/
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float MaxHealth = 100.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -103,6 +104,7 @@ public:
 		}
 
 	/***** MANA *****/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MaxMana = 100.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -126,6 +128,7 @@ public:
 	}
 
 	/***** STAMINA *****/
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float MaxStamina;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -163,16 +166,26 @@ public:
 	//Default walk speed
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MaxMovement")
 	float CurWalkSpeed;
-
-	//Current walk speed
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MaxMovement")
+	
 	float MoveSpeed;
+	
+	bool bIsGrounded;
 
 	//indicate if dashing
 	bool isDashing = false;
 
 	//if stamina ran out
 	bool isExhausted = false;
+
+	bool isCasting;
+
+	bool bIsCastingLightningBolt;
+	bool bIsCastingFireBall;
+	bool bIsCastingRockPunch;
+	bool bIsCastingIceBlock;
+
+	//For animInstance
+	bool bCanCastIceBlock;
 
 	void Dash();
 	void StopDashing();
@@ -207,12 +220,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spells)
 	float ManaRecoverRate;
 
-	bool isCasting;
 
-	bool bIsCastingLightningBolt;
-	bool bIsCastingFireBall;
-	bool bIsCastingRockPunch;
-	bool bIsCastingIceBlock;
 protected:
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);

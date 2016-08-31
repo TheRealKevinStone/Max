@@ -5,7 +5,9 @@
 #include "AIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Navigation/CrowdFollowingComponent.h"
 #include "Perception/AIPerceptionComponent.h"
+#include "DetourCrowdAIController.h"
 #include "TestTargetPoint.h"
 #include "Perception/PawnSensingComponent.h"
 #include "BanditController.generated.h"
@@ -57,6 +59,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	UAIPerceptionComponent* AIPerception;
+
+	UCrowdFollowingComponent* CrowdComp;
 
 	UFUNCTION()
 	void OnSeenPlayer(APawn* Player);

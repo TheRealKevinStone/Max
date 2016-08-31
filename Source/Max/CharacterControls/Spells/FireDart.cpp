@@ -62,13 +62,29 @@ void AFireDart::OnHit_Implementation(AActor * OtherActor)
 		ABaseTicker* Ticker = Cast<ABaseTicker>(OtherActor);
 		if (Bandit)
 		{
-			UGameplayStatics::ApplyDamage(Bandit, Damage, this->GetInstigatorController(), this, UBurning_DT::StaticClass());
-			this->Destroy();
+			if (Explosion)
+			{
+				UWorld* const World = GetWorld();
+				const FVector SpawnLocation = GetActorLocation();
+				const FRotator SpawnRotation = GetActorRotation();
+				World->SpawnActor<AActor>(Explosion, SpawnLocation,SpawnRotation);
+				UGameplayStatics::ApplyDamage(Bandit, Damage, this->GetInstigatorController(), this, UDamageType::StaticClass());
+				this->Destroy();
+			}
+			
 		}
 		else if (Ticker)
 		{
-			UGameplayStatics::ApplyDamage(Ticker, Damage, this->GetInstigatorController(), this, UDamageType::StaticClass());
-			this->Destroy();
+			if (Explosion)
+			{
+				UWorld* const World = GetWorld();
+				const FVector SpawnLocation = GetActorLocation();
+				const FRotator SpawnRotation = GetActorRotation();
+				World->SpawnActor<AActor>(Explosion, SpawnLocation, SpawnRotation);
+				UGameplayStatics::ApplyDamage(Ticker, Damage, this->GetInstigatorController(), this, UDamageType::StaticClass());
+				this->Destroy();
+			}
+
 		}
 	}
 	

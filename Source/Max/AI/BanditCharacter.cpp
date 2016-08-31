@@ -23,6 +23,7 @@ void ABanditCharacter::BeginPlay()
 	BanditController = Cast<ABanditController>(GetController());
 	BanditHealth = MaxHealth;
 	AMaxCharacter* Max = Cast<AMaxCharacter>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	StopBehaviorTree();
 	if (Max)
 	{
 		BanditController->GetBlackboardComp()->SetValueAsObject(TEXT("Player"), Max);
@@ -31,7 +32,7 @@ void ABanditCharacter::BeginPlay()
 	}
 	//To look for waypoints in the world.
 	//for (ATestTargetPoint* Waypoint : WaypointList)
-	//{
+	//{	
 	//	if (Waypoint)
 	//	{
 	//		if (BanditController)
@@ -96,11 +97,13 @@ void ABanditCharacter::StopBehaviorTree()
 
 void ABanditCharacter::StartBehaviorTree()
 {
+
 	if (BanditController)
 	{
-		BanditController->GetBehaviorComp()->StartTree(*BehaviorTree);
+ 		BanditController->GetBehaviorComp()->StartTree(*BehaviorTree);
 
 	}
+	GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Green, TEXT("Start Behavior"));
 }
 
 void ABanditCharacter::FrozenFeetHit()
@@ -108,12 +111,13 @@ void ABanditCharacter::FrozenFeetHit()
 	if (BanditController)
 	{
 		BanditController->BanditFrozen();
+
 	}
 }
 
 void ABanditCharacter::RockPunchLaunch()
 {
-	LaunchCharacter(GetActorForwardVector()*RockPunch_KB, true, true);
+	//LaunchCharacter(GetActorForwardVector()*RockPunch_KB, true, true);
 }
 
 //void ABanditCharacter::OnEnemyDead()

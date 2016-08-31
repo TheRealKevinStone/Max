@@ -70,7 +70,8 @@ void AMaxCharacter::Tick( float DeltaTime )
 	Super::Tick( DeltaTime );
 
 	GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Yellow, FString::Printf(TEXT("Dashing: %s"), isDashing ? TEXT("true") : TEXT("false")));
-	if (isDashing && Controller != NULL)
+	bIsGrounded = &UCharacterMovementComponent::IsMovingOnGround;
+	if (isDashing && Controller != NULL && bIsGrounded)
 	{
 		//if player ran out of stamina and isnt exhausted
 		if (StaminaPoints == 0 && !isExhausted)
@@ -183,6 +184,8 @@ float AMaxCharacter::TakeDamage(float DamageAmount, FDamageEvent const & DamageE
 		//Play Audio
 		//Set collision off
 		GEngine->AddOnScreenDebugMessage(1, 2.f, FColor::Blue, TEXT("Player Dead"));
+		FName ConvertedName = FName(*GetWorld()->GetName());
+		UGameplayStatics::OpenLevel(this, ConvertedName, false);
 		SetActorEnableCollision(false);
 	}
 	else
@@ -373,7 +376,7 @@ void AMaxCharacter::CastRockPunch()
 		{
 			// spawn the projectile at the muzzle
 			//World->SpawnActor<AActor>(RockPunch, SpawnLocation, SpawnRotation);
-			//ManaPoints -= RockPunchMana;
+			ManaPoints -= RockPunchMana;
 			/*MySpellBook->RockPunch(SpawnLocation, SpawnRotation);*/
 
 			// For each rock in NumberOfRocks do a line trace
@@ -418,13 +421,14 @@ void AMaxCharacter::CastIceBlock()
 {
 	if (IceBlock != NULL)
 	{
-		const FRotator SpawnRotation = GetControlRotation();
+		const FRotator SpawnRotation = FRotator::ZeroRotator;
 		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
-
+		FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
+		SpawnLocation.X -= 200.f;
 		UWorld* const World = GetWorld();
 		if (World != NULL && ManaPoints > IceBlockMana && !isCasting && UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= IceBlockTimer)
 		{
+			bCanCastIceBlock = true;
 			// spawn the projectile at the muzzle
 			World->SpawnActor<AActor>(IceBlock, SpawnLocation, SpawnRotation);
 			ManaPoints -= IceBlockMana;
@@ -432,14 +436,19 @@ void AMaxCharacter::CastIceBlock()
 			// Update IceBlockTimer
 			IceBlockTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + IceBlockCoolDown;
 		}
+		else
+		{
+			bCanCastIceBlock = false;
+		}
 	}
 }
 
 void AMaxCharacter::Dash()
 {
 	//Check if player isnt sprinting,exhausted and has enough stamina to dash
-	if (!isDashing && !isExhausted && StaminaPoints > 0)
+	if (!isDashing && !isExhausted && StaminaPoints > 0 )
 	{
+		
 		//enable dash
 		isDashing = true;
 		//adjust move speed for character movement

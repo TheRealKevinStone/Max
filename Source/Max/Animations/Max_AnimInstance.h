@@ -14,8 +14,38 @@ class MAX_API UMax_AnimInstance : public UAnimInstance
 	GENERATED_BODY()
 	
 public:
+	//Current Speed of player
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Speed;
+
+	//Is player dashing
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bDash;
+	
+	//Is player jumping
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bIsJumping;
+
+	//Is player casting anything?
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bisCasting;
+
+	//FireDart/Gatling
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bLightningBolt;
+	//Rock Punch
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bRockPunch;
+	//Ice Block
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bIceBlock;
+	//Fireball
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bFireBall;
+	//Check if you can cast Iceblock
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bCanIceBlock;
+
 
 public:
 	virtual void NativeUpdateAnimation(float DeltaTime) override;

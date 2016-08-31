@@ -7,11 +7,11 @@
 #include "BanditController.h"
 
 ABanditController::ABanditController(const FObjectInitializer& ObjectInitializer)
-	//:Super(ObjectInitializer.SetDefaultSubobjectClass<UJumpPathComponent>(TEXT("PathFollowingComponent")))
+	:Super(ObjectInitializer.SetDefaultSubobjectClass<UCrowdFollowingComponent>(TEXT("PathFollowingComponent")))
 {
 	BehaviorTreeComp = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("BehaviorTreeComp"));
 	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComp"));
-
+	CrowdComp = Cast<UCrowdFollowingComponent>(Cast<ABanditController>(this)->GetPathFollowingComponent());
 	PawnSensing = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSenseingComp"));
 	AIPerception = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerception"));
 	WaypointArray.Reserve(ArrayMax);
@@ -88,15 +88,6 @@ void ABanditController::OnSeenPlayer(APawn* Player)
 void ABanditController::UpdateControlRotation(float DeltaTime, bool bUpdatePawn)
 {
 	FVector FocalPoint = GetCurrentTarget();
-	//if (PlayerSpotted)
-	//{
-	//	//Look towards focus
-	//	FocalPoint = GetCurrentTarget();
-	//}
-	//else
-	//{
-	//	BlackboardComp
-	//}
 	
 	if (!FocalPoint.IsZero() && GetPawn())
 	{
