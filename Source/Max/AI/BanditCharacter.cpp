@@ -32,7 +32,7 @@ void ABanditCharacter::BeginPlay()
 	}
 	//To look for waypoints in the world.
 	//for (ATestTargetPoint* Waypoint : WaypointList)
-	//{
+	//{	
 	//	if (Waypoint)
 	//	{
 	//		if (BanditController)
