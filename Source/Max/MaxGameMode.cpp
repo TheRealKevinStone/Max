@@ -74,33 +74,34 @@ void AMaxGameMode::ChangeHUDState(uint8 NewState)
 
 bool AMaxGameMode::ApplyHUD(TSubclassOf<class UUserWidget> WidgetToApply, bool ShowMouseCursor, bool EnableClickEvents)
 {
-	//get refernce to player, and player controller
-	//AMaxCharacter* MaxCharacter = Cast<AMaxCharacter>(*TActorIterator<AMaxCharacter>(GetWorld()));
-	AMaxCharacter* MaxCharacter = Cast<AMaxCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
-	APlayerController* MyController = GetWorld()->GetFirstPlayerController();
+	////get refernce to player, and player controller
+	////AMaxCharacter* MaxCharacter = Cast<AMaxCharacter>(*TActorIterator<AMaxCharacter>(GetWorld()));
+	//AMaxCharacter* MaxCharacter = Cast<AMaxCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
+	//APlayerController* MyController = GetWorld()->GetFirstPlayerController();
 
-	//check before applying widget
-	if (WidgetToApply != nullptr)
-	{
-		//mouse events visibility
-		MyController->bShowMouseCursor = ShowMouseCursor;
-		MyController->bEnableClickEvents = EnableClickEvents;
+	////check before applying widget
+	//if (WidgetToApply != nullptr)
+	//{
+	//	//mouse events visibility
+	//	MyController->bShowMouseCursor = ShowMouseCursor;
+	//	MyController->bEnableClickEvents = EnableClickEvents;
 
-		//creat widget
-		CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), WidgetToApply);
+	//	//creat widget
+	//	CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), WidgetToApply);
 
-		if (CurrentWidget != nullptr)
-		{
-			CurrentWidget->AddToViewport();
-			return true;
-		}
-		else 
-		{ 
-			return false; 
-		}
-	}
-	else 
-	{ 
-		return false; 
-	}
+	//	if (CurrentWidget != nullptr)
+	//	{
+	//		//CurrentWidget->AddToViewport();
+	//		return true;
+	//	}
+	//	else 
+	//	{ 
+	//		return false; 
+	//	}
+	//}
+	//else 
+	//{ 
+	//	return false; 
+	//}
+	return false;
 }
