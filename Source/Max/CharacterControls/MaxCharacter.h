@@ -68,6 +68,9 @@ public:
 
 	float RockPunchTimer;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rock Punch")
+	float RockPunchDamage;
+
 	/****** FIREBALL *****/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire Ball")
 	float FireBallCoolDown = 5.f;

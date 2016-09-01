@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Max.h"
+#include "AI/BanditCharacter.h"
+#include "AI/AI_Weapons/BaseTicker.h"
 #include "MaxCharacter.h"
 
 
@@ -380,6 +382,9 @@ void AMaxCharacter::CastRockPunch()
 			//World->SpawnActor<AActor>(RockPunch, SpawnLocation, SpawnRotation);
 			ManaPoints -= RockPunchMana;
 			/*MySpellBook->RockPunch(SpawnLocation, SpawnRotation);*/
+			
+			//check if enemy got attacked already
+			bool EnemyHit = false;
 
 			// For each rock in NumberOfRocks do a line trace
 			for (uint8 i = 0; i < NumberOfRocks; i++)
@@ -405,6 +410,45 @@ void AMaxCharacter::CastRockPunch()
 				// Simple trace function
 				FHitResult ObjectHit(ForceInit);
 				GetWorld()->LineTraceSingleByChannel(ObjectHit, StartTrace, EndTrace, COLLISION_DAMAGEABLE, TraceParams);
+				
+				//check if it hit something
+				if (ObjectHit.bBlockingHit)
+				{
+					//check if its an enemy
+					if (ObjectHit.GetActor()->IsA(ABanditCharacter::StaticClass()))
+					{
+						ABanditCharacter* Bandit = Cast<ABanditCharacter>(ObjectHit.GetActor());
+						if (Bandit)
+						{
+							if (!EnemyHit)
+							{
+								UGameplayStatics::ApplyDamage(Bandit, RockPunchDamage, GetInstigatorController(), this, UDamageType::StaticClass());
+								EnemyHit = true;
+							}
+						} 
+						else
+						{
+							return;
+						}
+					}
+					else if (ObjectHit.GetActor()->IsA(ABaseTicker::StaticClass()))
+					{
+						ABaseTicker* Ticker = Cast<ABaseTicker>(ObjectHit.GetActor());
+						if (Ticker)
+						{
+							if (!EnemyHit)
+							{
+								UGameplayStatics::ApplyDamage(Ticker, RockPunchDamage, GetInstigatorController(), this, UDamageType::StaticClass());
+								EnemyHit = true;
+							}
+						}
+						else
+						{
+							return;
+						}
+					}
+				}
+
 
 				// Debug line for the trace
 				if (bIsDebugging)
