@@ -169,8 +169,8 @@ void AMaxCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 	InputComponent->BindAction("CastSpellThree", IE_Pressed, this, &AMaxCharacter::OnFire3);
 	InputComponent->BindAction("CastSpellThree", IE_Released, this, &AMaxCharacter::OnRelease3);
 
-	InputComponent->BindAction("CastSpellFour", IE_Pressed, this, &AMaxCharacter::OnFire4);
-	InputComponent->BindAction("CastSpellFour", IE_Released, this, &AMaxCharacter::OnRelease4);
+	//InputComponent->BindAction("CastSpellFour", IE_Pressed, this, &AMaxCharacter::OnFire4);
+	//InputComponent->BindAction("CastSpellFour", IE_Released, this, &AMaxCharacter::OnRelease4);
 
 
 }
@@ -293,24 +293,24 @@ void AMaxCharacter::OnRelease4()
 
 void AMaxCharacter::CastFireBall()
 {
-	// try and fire a projectile
-	if (Fireball != NULL)
-	{
-		const FRotator SpawnRotation = GetControlRotation();
-		// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-		const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
+	//// try and fire a projectile
+	//if (Fireball != NULL)
+	//{
+	//	const FRotator SpawnRotation = GetControlRotation();
+	//	// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+	//	const FVector SpawnLocation = SpellOffsetComponent->GetComponentLocation();
 
-		UWorld* const World = GetWorld();
-		if (World != NULL && ManaPoints > FireballMana && !isCasting && UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= FireBallTimer)
-		{
-			// spawn the projectile at the muzzle
-			World->SpawnActor<AActor>(Fireball, SpawnLocation, SpawnRotation);
-			ManaPoints -= FireballMana;
+	//	UWorld* const World = GetWorld();
+	//	if (World != NULL && ManaPoints > FireballMana && !isCasting && UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= FireBallTimer)
+	//	{
+	//		// spawn the projectile at the muzzle
+	//		World->SpawnActor<AActor>(Fireball, SpawnLocation, SpawnRotation);
+	//		ManaPoints -= FireballMana;
 
-			// Update FireBallTimer
-			FireBallTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + FireBallCoolDown;
-		}
-	}
+	//		// Update FireBallTimer
+	//		FireBallTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + FireBallCoolDown;
+	//	}
+	//}
 
 	// try and play the sound if specified
 	//if (FireSound != NULL)
