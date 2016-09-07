@@ -75,6 +75,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire Ball")
 	float FireBallCoolDown = 5.f;
 
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="Fire Ball")
 	float FireBallTimer;
 
 	/***** ICE BLOCK *****/
