@@ -51,7 +51,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lightning Bolt")
 	float BoltRange = 2000.f;
 
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
 	float BoltTimer;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool isLightningCoolDown;
 
 	/****** ROCK PUNCH *****/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rock Punch")
@@ -66,10 +70,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rock Punch")
 	float RockPunchCoolDown = 0.25f;
 
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
 	float RockPunchTimer;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Rock Punch")
 	float RockPunchDamage;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool isRockCooldown;
 
 	/****** FIREBALL *****/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire Ball")
@@ -82,7 +90,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ice Block")
 	float IceBlockCoolDown = 10.f;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float IceBlockTimer;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool isIceCooldown;
+
+	//For animInstance
+	bool bCanCastIceBlock;
 
 	/***** HEALTH *****/
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
@@ -192,8 +207,7 @@ public:
 	bool bIsCastingRockPunch;
 	bool bIsCastingIceBlock;
 
-	//For animInstance
-	bool bCanCastIceBlock;
+
 
 	void Dash();
 	void StopDashing();

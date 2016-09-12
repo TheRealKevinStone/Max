@@ -71,7 +71,7 @@ void AMaxCharacter::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 
-	GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Yellow, FString::Printf(TEXT("Dashing: %s"), isDashing ? TEXT("true") : TEXT("false")));
+	
 	bIsGrounded = &UCharacterMovementComponent::IsMovingOnGround;
 	if (isDashing && Controller != NULL && bIsGrounded)
 	{
@@ -113,7 +113,6 @@ void AMaxCharacter::Tick( float DeltaTime )
 	if (ManaPoints < MaxMana && !isCasting)
 	{
 		ManaPoints += DeltaTime*ManaRecoverRate;
-
 	}
 
 	// Check to see if we want to cast spells this frame
@@ -133,6 +132,29 @@ void AMaxCharacter::Tick( float DeltaTime )
 	{
 		CastLightningBolt();
 	}
+
+	if (isLightningCoolDown)
+	{
+		if (UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= BoltTimer)
+		{
+			isLightningCoolDown = false;
+		}
+	}
+	if (isRockCooldown)
+	{
+		if (UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= RockPunchTimer)
+		{
+			isRockCooldown = false;
+		}
+	}
+	if (isIceCooldown)
+	{
+		if (UGameplayStatics::GetRealTimeSeconds(GetWorld()) >= IceBlockTimer)
+		{
+			isIceCooldown = false;
+		}
+	}
+
 }
 
 // Called to bind functionality to input
@@ -347,7 +369,7 @@ void AMaxCharacter::CastLightningBolt()
 			World->SpawnActor<AActor>(Firedart, SpawnLocation, SpawnRotation);
 			ManaPoints -= FiredartMana;
 		}
-
+		isLightningCoolDown = true;
 		// Update BoltTimer to the next time we can cast
 		BoltTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + BoltCoolDown;
 	}
@@ -382,7 +404,7 @@ void AMaxCharacter::CastRockPunch()
 			//World->SpawnActor<AActor>(RockPunch, SpawnLocation, SpawnRotation);
 			ManaPoints -= RockPunchMana;
 			/*MySpellBook->RockPunch(SpawnLocation, SpawnRotation);*/
-			
+			isRockCooldown = true;
 			//check if enemy got attacked already
 			bool EnemyHit = false;
 
@@ -479,6 +501,7 @@ void AMaxCharacter::CastIceBlock()
 			World->SpawnActor<AActor>(IceBlock, SpawnLocation, SpawnRotation);
 			ManaPoints -= IceBlockMana;
 
+			isIceCooldown = true;
 			// Update IceBlockTimer
 			IceBlockTimer = UGameplayStatics::GetRealTimeSeconds(GetWorld()) + IceBlockCoolDown;
 		}
